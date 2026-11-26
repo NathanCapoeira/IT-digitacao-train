@@ -6,7 +6,18 @@ $msbuild=(Get-Command MSBuild.exe -ErrorAction Stop).Source
 & $PSScriptRoot\build-legacy-core.ps1 -FrameworkPathOverride $refs
 if($LASTEXITCODE -ne 0){throw 'Legacy Core compile failed.'}
 $projects=@('src\ITDigitacao.Legacy.App\ITDigitacao.Legacy.App.csproj','src\ITDigitacao.Legacy.Shortcut\Criar-Atalho.csproj')
-foreach($project in $projects){& $msbuild (Join-Path $root $project) /t:Rebuild /p:Configuration=Release /p:Platform=x86 "/p:FrameworkPathOverride=$refs" /nologo;if($LASTEXITCODE -ne 0){throw "Build failed: $project"}}
+foreach($project in $projects){
+ $buildOutput=@(& $msbuild (Join-Path $root $project) /t:Rebuild /p:Configuration=Release /p:Platform=x86 "/p:FrameworkPathOverride=$refs" /nologo 2>&1)
+ $buildExitCode=$LASTEXITCODE
+ foreach($line in $buildOutput){Write-Host $line}
+ if($buildExitCode -ne 0){
+  $details=@($buildOutput | ForEach-Object {$_.ToString()} | Where-Object {$_ -match 'error\s+(CS|MSB|MC)\d+|error:'} | Select-Object -First 8)
+  if($details.Count -eq 0){$details=@($buildOutput | Select-Object -Last 8 | ForEach-Object {$_.ToString()})}
+  $message=($details -join ' | ') -replace '%','%25' -replace "`r",'' -replace "`n",'%0A'
+  Write-Host "::error title=Legacy build diagnostic::$message"
+  throw "Build failed: $project (exit $buildExitCode)"
+ }
+}
 $app=Join-Path $root 'src\ITDigitacao.Legacy.App\bin\x86\Release'
 $shortcut=Join-Path $root 'src\ITDigitacao.Legacy.Shortcut\bin\x86\Release'
 $core=Join-Path $root 'src\ITDigitacao.Legacy.Core\bin\x86\Release\ITDigitacao.Legacy.Core.dll'
