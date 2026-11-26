@@ -83,7 +83,7 @@
                     <Ellipse Width="6" Height="6" Fill="#FFD7D7" Margin="0,0,5,0" />
                     <TextBlock Text="Offline" FontSize="12" />
                     <TextBlock Text="•" Margin="8,0" Foreground="#FFB8B8" FontSize="12" />
-                    <TextBlock Text="v1.1.0" FontSize="12" />
+                    <TextBlock Text="v1.2.0" FontSize="12" />
                 </StackPanel>
             </Grid>
         </Border>
@@ -91,6 +91,23 @@
         <ScrollViewer x:Name="PageScroller" VerticalScrollBarVisibility="Auto">
             <Grid MaxWidth="1150" Margin="20,18,20,12">
                 <views:HomeView x:Name="HomePage" StartRequested="StartRequested" />
+                <views:LibraryView x:Name="LibraryPage" Visibility="Collapsed" />
+                <views:PracticeView x:Name="PracticePage" Visibility="Collapsed" />
+                <StackPanel x:Name="SummaryPage" Visibility="Collapsed">
+                    <Border Style="{StaticResource BannerStyle}" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Sessão concluída" FontSize="30" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" />
+                            <TextBlock x:Name="SummaryMessage" Foreground="White" Margin="0,6,0,0" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource MetricCardStyle}">
+                        <TextBlock x:Name="SummaryMetrics" FontSize="18" TextWrapping="Wrap" />
+                    </Border>
+                    <WrapPanel Margin="0,12,0,0">
+                        <Button Content="Nova sessão" Click="NewSession_Click" Margin="0,0,8,8" Style="{StaticResource PrimaryButtonStyle}" />
+                        <Button Content="Voltar ao início" Click="ReturnHome_Click" Margin="0,0,8,8" Style="{StaticResource SecondaryButtonStyle}" />
+                    </WrapPanel>
+                </StackPanel>
                 <StackPanel x:Name="SectionPage" Visibility="Collapsed">
                     <Border Style="{StaticResource BannerStyle}">
                         <StackPanel>
@@ -103,8 +120,6 @@
                     <Border Style="{StaticResource CardStyle}" Margin="0,14,0,0">
                         <StackPanel>
                             <TextBlock Text="Em desenvolvimento" FontSize="21" FontWeight="Bold" />
-                            <TextBlock x:Name="SelectedPlan" FontWeight="SemiBold" TextWrapping="Wrap"
-                                       Foreground="{StaticResource BrandDarkBrush}" Margin="0,8,0,0" />
                             <TextBlock x:Name="SectionStatus" TextWrapping="Wrap" Margin="0,8,0,0" />
                             <Button Content="Voltar ao _início" Click="ReturnHome_Click" HorizontalAlignment="Left"
                                     Margin="0,16,0,0" Style="{StaticResource SecondaryButtonStyle}" />

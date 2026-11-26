@@ -42,6 +42,18 @@ jobs:
           @("Commit: $commit", 'Configuração: Release', 'Plataforma: x86', 'Framework: .NET Framework 4.8') |
             Set-Content -LiteralPath '.\dist\build-info.txt' -Encoding UTF8
 
+      - name: Testar catálogo e motor de digitação
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Continue'
+          $messages = & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-core.ps1 -Distribution .\dist 2>&1
+          $result = $LASTEXITCODE
+          $messages | Out-Host
+          if ($result -ne 0) {
+            $messages | Select-Object -First 14 | ForEach-Object { Write-Host "::error::$_" }
+            exit $result
+          }
+
       - name: Validar interface WPF e gerar captura
         shell: powershell
         run: |
@@ -54,7 +66,7 @@ jobs:
             exit $result
           }
 
-      - name: Publicar captura da tela inicial
+      - name: Publicar capturas WPF
         uses: actions/upload-artifact@v4
         with:
           name: IT-Digitacao-Captura-WPF-${{ github.sha }}

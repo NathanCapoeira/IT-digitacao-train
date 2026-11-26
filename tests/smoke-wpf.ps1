@@ -12,8 +12,10 @@ function Assert-That([bool]$Condition, [string]$Message) {
 }
 
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
-$assembly = [Reflection.Assembly]::LoadFrom((Resolve-Path -LiteralPath $Executable).Path)
-Assert-That ($assembly.GetName().Version.ToString() -eq '1.1.0.0') 'Unexpected executable version.'
+$executablePath = (Resolve-Path -LiteralPath $Executable).Path
+[Reflection.Assembly]::LoadFrom((Join-Path (Split-Path -Parent $executablePath) 'ITDigitacao.Core.dll')) | Out-Null
+$assembly = [Reflection.Assembly]::LoadFrom($executablePath)
+Assert-That ($assembly.GetName().Version.ToString() -eq '1.2.0.0') 'Unexpected executable version.'
 
 $app = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.App', $true))
 $app.InitializeComponent()
@@ -22,11 +24,11 @@ try {
     $window.Show()
     $homeView = $window.FindName('HomePage')
     $durationGrid = $homeView.FindName('DurationGrid')
-    $plan = $window.FindName('SelectedPlan')
+    $library = $window.FindName('LibraryPage')
     $sectionTitle = $window.FindName('SectionTitle')
     Assert-That ($homeView.SelectedMinutes -eq 10) 'Expected a default duration of 10 minutes.'
 
-    foreach ($asset in @('logo-it-digitacao.png', 'logo-instituto.png', 'mascote-boas-vindas.png')) {
+    foreach ($asset in @('logo-it-digitacao.png', 'logo-instituto.png', 'mascote-boas-vindas.png', 'mascote-ensinando.png', 'Categorias/tecnologia.png')) {
         $uri = [Uri]::new("pack://application:,,,/IT-Digitacao;component/Assets/$asset")
         $bitmap = [System.Windows.Media.Imaging.BitmapImage]::new($uri)
         Assert-That ($bitmap.PixelWidth -gt 0 -and $bitmap.PixelHeight -gt 0) "Could not decode $asset."
@@ -42,21 +44,24 @@ try {
     Assert-That ($durationGrid.Columns -eq 6) 'Expected 6 duration columns in a wide window.'
     Assert-That ($homeView.FindName('HeroTitle').ActualHeight -gt 0) 'The heading has no layout.'
 
-    New-Item -ItemType Directory -Path $CaptureDirectory -Force | Out-Null
-    $surface = $window.Content
-    $visualDpi = [System.Windows.Media.VisualTreeHelper]::GetDpi($surface)
-    $pixelWidth = [int][Math]::Ceiling($surface.ActualWidth * $visualDpi.DpiScaleX)
-    $pixelHeight = [int][Math]::Ceiling($surface.ActualHeight * $visualDpi.DpiScaleY)
-    $image = [System.Windows.Media.Imaging.RenderTargetBitmap]::new(
-        $pixelWidth, $pixelHeight, $visualDpi.PixelsPerInchX, $visualDpi.PixelsPerInchY,
-        [System.Windows.Media.PixelFormats]::Pbgra32
-    )
-    $image.Render($surface)
-    $encoder = [System.Windows.Media.Imaging.PngBitmapEncoder]::new()
-    $encoder.Frames.Add([System.Windows.Media.Imaging.BitmapFrame]::Create($image))
-    $capture = Join-Path (Resolve-Path -LiteralPath $CaptureDirectory).Path 'inicio-wpf.png'
-    $stream = [IO.File]::Create($capture)
-    try { $encoder.Save($stream) } finally { $stream.Dispose() }
+    function Capture([string]$FileName) {
+        New-Item -ItemType Directory -Path $CaptureDirectory -Force | Out-Null
+        $surface = $window.Content
+        $visualDpi = [System.Windows.Media.VisualTreeHelper]::GetDpi($surface)
+        $pixelWidth = [int][Math]::Ceiling($surface.ActualWidth * $visualDpi.DpiScaleX)
+        $pixelHeight = [int][Math]::Ceiling($surface.ActualHeight * $visualDpi.DpiScaleY)
+        $image = [System.Windows.Media.Imaging.RenderTargetBitmap]::new(
+            $pixelWidth, $pixelHeight, $visualDpi.PixelsPerInchX, $visualDpi.PixelsPerInchY,
+            [System.Windows.Media.PixelFormats]::Pbgra32
+        )
+        $image.Render($surface)
+        $encoder = [System.Windows.Media.Imaging.PngBitmapEncoder]::new()
+        $encoder.Frames.Add([System.Windows.Media.Imaging.BitmapFrame]::Create($image))
+        $capture = Join-Path (Resolve-Path -LiteralPath $CaptureDirectory).Path $FileName
+        $stream = [IO.File]::Create($capture)
+        try { $encoder.Save($stream) } finally { $stream.Dispose() }
+    }
+    Capture 'inicio-wpf.png'
 
     foreach ($card in $durationGrid.Children) {
         $card.IsChecked = $true
@@ -69,16 +74,42 @@ try {
     }
 
     Send-Click ($homeView.FindName('StartButton'))
-    Assert-That ($window.FindName('LibraryTab').IsChecked -and $sectionTitle.Text -eq 'Biblioteca educativa') 'Start did not open the library.'
-    Assert-That ($plan.Text -match '30 minutos' -and $plan.Visibility -eq 'Visible') 'The library lost the selected duration.'
+    $window.UpdateLayout()
+    Assert-That ($window.FindName('LibraryTab').IsChecked -and $library.IsVisible) 'Start did not open the library.'
+    Assert-That ($library.FindName('SessionText').Text -match '30 minutos') 'The library lost the selected duration.'
+    Assert-That ($library.FindName('CategoryCards').Items.Count -eq 10) 'Library does not show ten categories.'
+    Capture 'biblioteca-wpf.png'
 
+    $search = $library.FindName('SearchBox')
+    $search.Text = 'ZZZ inexistente'
+    Assert-That ($library.FindName('EmptyCard').Visibility -eq 'Visible' -and
+        -not $library.FindName('RandomButton').IsEnabled) 'Empty state or random guard failed.'
+    $search.Text = 'O MUNDO DA INTELIGENCIA ARTIFICIAL'
+    Assert-That ($library.FindName('ActivityCards').Items.Count -eq 1) 'Accent-insensitive activity search failed.'
+    Send-Click ($library.FindName('RandomButton'))
+    $practice = $window.FindName('PracticePage')
+    Assert-That ($practice.IsVisible -and $practice.FindName('ActivityTitle').Text -like '*artificial*') 'Random did not respect the search.'
+    $entry = $practice.FindName('Entry')
+    $paste = [System.Windows.Input.ApplicationCommands]::Paste
+    Assert-That (-not $paste.CanExecute($null, $entry) -and -not $entry.AllowDrop) 'Paste or drop is still enabled in the editor.'
+    Assert-That ($practice.FindName('ClockText').Text -eq '30:00') 'Session started before the first insertion.'
+    $entry.Text = 'X'
+    Assert-That ($practice.FindName('MetricText').Text -match 'Erros cometidos 1') 'First wrong attempt was not recorded.'
+    $entry.Text = 'I'
+    Assert-That ($practice.FindName('MetricText').Text -match 'Corrigidos 1') 'Correction was not reflected.'
+    $window.UpdateLayout()
+    Capture 'editor-wpf.png'
+    Send-Click ($window.FindName('LibraryTab'))
+    Assert-That ($library.FindName('ResumeButton').IsVisible) 'Library did not offer to resume.'
+    Send-Click ($library.FindName('ResumeButton'))
+    Assert-That ($practice.IsVisible -and $entry.Text -eq 'I') 'Editor lost the input after navigation.'
     Send-Click ($window.FindName('GuideTab'))
-    Assert-That ($sectionTitle.Text -eq 'Como digitar' -and $plan.Visibility -eq 'Collapsed') 'Guide navigation failed.'
+    Assert-That ($sectionTitle.Text -eq 'Como digitar') 'Guide navigation failed.'
     Send-Click ($window.FindName('SettingsTab'))
     Assert-That ($sectionTitle.Text -eq 'Configurações') 'Settings navigation failed.'
     Send-Click ($window.FindName('HomeTab'))
     Assert-That ($homeView.Visibility -eq 'Visible' -and $homeView.SelectedMinutes -eq 30) 'Home lost the session selection.'
-    Write-Host 'WPF smoke test passed: embedded art, layout, duration and navigation.'
+    Write-Host 'WPF smoke test passed: embedded art, layout, search, library, timer, input, paste, and navigation.'
 }
 finally {
     $window.Close()

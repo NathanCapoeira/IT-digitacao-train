@@ -4,6 +4,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITDigitacao.App", "src\ITDigitacao.App\ITDigitacao.App.csproj", "{E080B0DE-83E2-45ED-9044-119499040085}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITDigitacao.Core", "src\ITDigitacao.Core\ITDigitacao.Core.csproj", "{5DF88DEA-8D29-4A2E-9F48-6708923A75B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x86 = Release|x86
@@ -11,5 +13,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E080B0DE-83E2-45ED-9044-119499040085}.Release|x86.ActiveCfg = Release|x86
 		{E080B0DE-83E2-45ED-9044-119499040085}.Release|x86.Build.0 = Release|x86
+		{5DF88DEA-8D29-4A2E-9F48-6708923A75B8}.Release|x86.ActiveCfg = Release|x86
+		{5DF88DEA-8D29-4A2E-9F48-6708923A75B8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal

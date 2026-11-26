@@ -80,7 +80,7 @@ try {
         throw "MSBuild failed with exit code $buildExitCode."
     }
 
-    $distributionFiles = 'IT-Digitacao.exe', 'IT-Digitacao.exe.config'
+    $distributionFiles = 'IT-Digitacao.exe', 'IT-Digitacao.exe.config', 'ITDigitacao.Core.dll', 'atividades.json'
     foreach ($file in $distributionFiles) {
         $output = Join-Path $binaryDir $file
         if (-not (Test-Path -LiteralPath $output -PathType Leaf) -or

@@ -215,7 +215,8 @@
                     <Border x:Name="Frame" Background="{TemplateBinding Background}" CornerRadius="10"
                             BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="2"
                             Padding="{TemplateBinding Padding}">
-                        <ScrollViewer x:Name="PART_ContentHost" />
+                        <ScrollViewer x:Name="PART_ContentHost" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+                                      HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

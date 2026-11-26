@@ -21,6 +21,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -48,6 +49,18 @@
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\LibraryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\LibraryView.xaml.cs">
+      <DependentUpon>LibraryView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\PracticeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\PracticeView.xaml.cs">
+      <DependentUpon>PracticeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -58,9 +71,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="..\..\content\atividades.json">
+      <Link>atividades.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\mascote-ensinando.png" />
+    <Resource Include="Assets\Categorias\*.png" />
     <Resource Include="Assets\logo-it-digitacao.png" />
     <Resource Include="Assets\logo-instituto.png" />
     <Resource Include="Assets\mascote-boas-vindas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ITDigitacao.Core\ITDigitacao.Core.csproj">
+      <Project>{5DF88DEA-8D29-4A2E-9F48-6708923A75B8}</Project>
+      <Name>ITDigitacao.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
