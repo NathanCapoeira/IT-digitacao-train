@@ -1,0 +1,42 @@
+name: Build da Fase 1
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: WPF · Release x86
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - name: Compilar e preparar distribuição
+        shell: powershell
+        run: .\scripts\build.ps1
+
+      - name: Verificar distribuição e registrar o commit
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $exe = Get-Item -LiteralPath '.\dist\IT-Digitacao.exe'
+          if ($exe.Length -eq 0) { throw 'O executável está vazio.' }
+          $commit = git rev-parse --verify HEAD
+          if ($LASTEXITCODE -ne 0) { throw 'Não foi possível identificar o commit compilado.' }
+          @("Commit: $commit", 'Configuração: Release', 'Plataforma: x86', 'Framework: .NET Framework 4.8') |
+            Set-Content -LiteralPath '.\dist\build-info.txt' -Encoding UTF8
+
+      - name: Publicar artefato da Fase 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: IT-Digitacao-Fase-1-x86-${{ github.sha }}
+          path: dist/
+          if-no-files-found: error
