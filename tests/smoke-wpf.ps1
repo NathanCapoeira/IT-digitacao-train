@@ -79,6 +79,11 @@ try {
     Assert-That ($library.FindName('SessionText').Text -match '30 minutos') 'The library lost the selected duration.'
     Assert-That ($library.FindName('CategoryCards').Items.Count -eq 10) 'Library does not show ten categories.'
     Capture 'biblioteca-wpf.png'
+    $window.Width = 660
+    $window.UpdateLayout()
+    Assert-That ($library.FindName('CategoryCards').Tag -lt 5) 'Library did not reduce its column count.'
+    $window.Width = 1024
+    $window.UpdateLayout()
 
     function Find-CardButton($Visual) {
         if ($Visual -is [System.Windows.Controls.Button]) { return $Visual }
@@ -125,6 +130,11 @@ try {
     Assert-That ($practice.FindName('MetricText').Text -match 'Corrigidos 1') 'Correction was not reflected.'
     $window.UpdateLayout()
     Capture 'editor-wpf.png'
+    $window.Width = 660
+    $window.UpdateLayout()
+    Assert-That ($practice.FindName('EditorPanels').Columns -eq 1) 'Editor did not stack its panels at narrow width.'
+    $window.Width = 1024
+    $window.UpdateLayout()
     Send-Click ($window.FindName('LibraryTab'))
     Assert-That ($library.FindName('ResumeButton').IsVisible) 'Library did not offer to resume.'
     Send-Click ($library.FindName('ResumeButton'))
@@ -135,6 +145,16 @@ try {
     Assert-That ($sectionTitle.Text -eq 'Configurações') 'Settings navigation failed.'
     Send-Click ($window.FindName('HomeTab'))
     Assert-That ($homeView.Visibility -eq 'Visible' -and $homeView.SelectedMinutes -eq 30) 'Home lost the session selection.'
+    $privateInstance = [Reflection.BindingFlags]'NonPublic, Instance'
+    $sessionState = $window.GetType().GetField('session', $privateInstance).GetValue($window)
+    $timer = $window.GetType().GetField('displayTimer', $privateInstance).GetValue($window)
+    Assert-That ($timer.IsEnabled -and $sessionState.Started) 'The display timer stopped when leaving the editor.'
+    $sessionState.End()
+    $window.GetType().GetMethod('RefreshSession', $privateInstance).Invoke($window, $null) | Out-Null
+    Assert-That ($window.FindName('SummaryPage').IsVisible -and -not $timer.IsEnabled) 'Ending the session did not show results and stop the timer.'
+    Assert-That ($window.FindName('SummaryMetrics').Text -match 'Erros cometidos: 1') 'Summary did not preserve the attempt history.'
+    $window.UpdateLayout()
+    Capture 'resumo-wpf.png'
     Write-Host 'WPF smoke test passed: embedded art, layout, search, library, timer, input, paste, and navigation.'
 }
 finally {

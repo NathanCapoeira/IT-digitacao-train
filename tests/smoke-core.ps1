@@ -60,6 +60,24 @@ Assert-That ($repeated.CorrectAttempts -eq 3 -and $repeated.CurrentErrors -eq 1)
 $repeated.ApplyEdit('ab', 1, $false) | Out-Null
 Assert-That ($repeated.Complete -and $repeated.CorrectAttempts -eq 3) 'Undo counted as new typing.'
 
+$longActivity = $repository.Activities | Sort-Object WordCount -Descending | Select-Object -First 1
+$longEngine = [ITDigitacao.Core.TypingEngine]::new($longActivity.Text)
+$longEngine.Apply($longActivity.Text.Substring(0, $longActivity.Text.Length - 1)) | Out-Null
+Assert-That (-not $longEngine.Complete -and $longEngine.Progress -lt 100) 'An incomplete long text was accepted.'
+$longEngine.Apply($longActivity.Text) | Out-Null
+Assert-That ($longActivity.WordCount -ge 160 -and $longEngine.Complete -and $longEngine.CurrentErrors -eq 0) 'Long text did not complete correctly.'
+
+$manualClock = [TestClock]::new()
+$manualSession = [ITDigitacao.Core.SessionManager]::new(5, $manualClock)
+$manualSession.Open($repository.Activities[0]) | Out-Null
+$manualSession.Apply('X')
+$manualClock.Now = [TimeSpan]::FromSeconds(45)
+$manualSession.End()
+$manualClock.Now = [TimeSpan]::FromMinutes(12)
+$manualSession.Apply('C')
+Assert-That ($manualSession.Finished -and $manualSession.Elapsed.TotalSeconds -eq 45 -and
+    $manualSession.TotalErrors -eq 1 -and $manualSession.Engine.InputText -eq 'X') 'Manual end did not freeze time and input.'
+
 foreach ($minutes in 5,10,15,20,25,30) {
     $clock = [TestClock]::new()
     $session = [ITDigitacao.Core.SessionManager]::new($minutes, $clock)
