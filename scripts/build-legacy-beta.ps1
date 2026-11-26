@@ -11,6 +11,10 @@ $app=Join-Path $root 'src\ITDigitacao.Legacy.App\bin\x86\Release'
 $shortcut=Join-Path $root 'src\ITDigitacao.Legacy.Shortcut\bin\x86\Release'
 $core=Join-Path $root 'src\ITDigitacao.Legacy.Core\bin\x86\Release\ITDigitacao.Legacy.Core.dll'
 foreach($item in @((Join-Path $app 'IT-Digitacao.exe'),(Join-Path $shortcut 'Criar-Atalho.exe'),$core,(Join-Path $app 'atividades.json'),(Join-Path $app 'Assets\mascote-boas-vindas.png'),(Join-Path $app 'Assets\Categorias\tecnologia.png'))){if(!(Test-Path $item)){throw "Required fresh build output/resource missing: $item"}}
+$catalog=Get-Content (Join-Path $app 'atividades.json') -Raw | ConvertFrom-Json
+if($catalog.Categories.Count -ne 10 -or $catalog.Activities.Count -ne 50){throw "Catalog integrity check failed: categories=$($catalog.Categories.Count), activities=$($catalog.Activities.Count)"}
+$categoryImages=@(Get-ChildItem (Join-Path $app 'Assets\Categorias') -Filter '*.png' -File)
+if($categoryImages.Count -ne 10){throw "Expected 10 category illustrations in build output, found $($categoryImages.Count)"}
 $publish=Join-Path $root 'legacy-beta-stage'
 if(Test-Path $publish){Remove-Item $publish -Recurse -Force}
 New-Item -ItemType Directory -Path $publish | Out-Null
@@ -19,7 +23,6 @@ Copy-Item (Join-Path $shortcut 'Criar-Atalho.exe') $publish
 Copy-Item $core $publish
 Copy-Item (Join-Path $app 'atividades.json') $publish
 Copy-Item (Join-Path $app 'Assets') (Join-Path $publish 'Assets') -Recurse
-Copy-Item (Join-Path $app 'Categorias') (Join-Path $publish 'Assets\Categorias') -Recurse
 Copy-Item (Join-Path $root 'docs\legacy\LEIA-ME.txt') $publish
 Copy-Item (Join-Path $root 'docs\legacy\LIMITACOES-BETA.txt') $publish
 $assemblies=@((Join-Path $publish 'IT-Digitacao.exe'),(Join-Path $publish 'Criar-Atalho.exe'),(Join-Path $publish 'ITDigitacao.Legacy.Core.dll'))
@@ -38,5 +41,10 @@ if(Test-Path $zip){Remove-Item $zip -Force}
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [IO.Compression.ZipFile]::CreateFromDirectory($publish,$zip,[IO.Compression.CompressionLevel]::Optimal,$false)
 $extract=Join-Path $env:RUNNER_TEMP 'legacy-beta-integrity';if(Test-Path $extract){Remove-Item $extract -Recurse -Force};[IO.Compression.ZipFile]::ExtractToDirectory($zip,$extract)
-foreach($file in Get-ChildItem $publish -File){if((Get-FileHash $file.FullName).Hash -ne (Get-FileHash (Join-Path $extract $file.Name)).Hash){throw "ZIP integrity mismatch: $($file.Name)"}}
+foreach($file in Get-ChildItem $publish -File -Recurse){
+ $relative=$file.FullName.Substring($publish.Length).TrimStart([char[]]@('\','/'))
+ $unzipped=Join-Path $extract $relative
+ if(!(Test-Path $unzipped)){throw "ZIP is missing $relative"}
+ if((Get-FileHash $file.FullName).Hash -ne (Get-FileHash $unzipped).Hash){throw "ZIP integrity mismatch: $relative"}
+}
 Write-Host "Created validated package $zip"
