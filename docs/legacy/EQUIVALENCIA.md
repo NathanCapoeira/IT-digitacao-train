@@ -6,12 +6,12 @@ Base de auditoria: Standard em `d8962ed`; Legacy completa iniciada em `legacy/ne
 |---|---|---|
 | Início | duração 5–30 min, boas-vindas, mascote, início de sessão | Parcial na beta.2: banner em duas colunas, seleção em cards e benefícios; revisar responsividade e fidelidade visual |
 | Biblioteca | catálogo `content/atividades.json`, categorias e ilustrações | Parcial na beta.2: 10 cards ilustrados, contagens, busca, filtros e atividades; revisar estados e comportamento de retomada |
-| Prática | editor, comparação caractere a caractere, progresso, cronômetro, precisão, velocidade | A implementar |
+| Prática | editor, comparação caractere a caractere, progresso, cronômetro, precisão, velocidade | Parcial na beta.2: dois painéis adaptáveis, progresso, cronômetro e quatro métricas; falta realce por caractere e ferramentas completas |
 | Resultados | resumo e métricas da sessão | A implementar |
 | Conquistas | regras em `SessionAwards` e apresentação visual | A implementar |
 | Guia ABNT2 | mapa de teclas, dedos e exercício guiado | A implementar |
-| Configurações | fonte, som, métricas, concentração, feedback e efeitos | A implementar |
-| Persistência | preferências JSON no perfil do usuário | A implementar com serializer disponível no .NET 3.5 |
+| Configurações | fonte, som, métricas, concentração, feedback e efeitos | Persistência JSON implementada na beta.2; aplicação de algumas opções ainda parcial |
+| Persistência | preferências JSON no perfil do usuário | Implementada via Core Legacy em LocalApplicationData; coberta por teste de round-trip |
 | Atalho | não existe na Standard | Novo requisito Legacy |
 | Offline | assets e catálogo locais | Obrigatório |
 

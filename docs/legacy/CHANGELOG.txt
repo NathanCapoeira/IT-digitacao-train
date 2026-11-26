@@ -1,5 +1,7 @@
 IT Digitação Legacy 2.0.0-beta.2
-- Home ganhou banner institucional em duas colunas, seleção de duração em cards e cartões de benefícios.
-- Janela recebeu cabeçalho e rodapé institucionais e navegação responsiva.
-- Biblioteca passou a exibir as dez categorias com suas ilustrações, filtros de pesquisa/dificuldade e cards de atividade.
-- Beta permanece em desenvolvimento; ver LIMITACOES-BETA.txt.
+- Janela recebeu cabeçalho/rodapé institucionais e navegação mais próxima da Standard.
+- Home ganhou banner em duas colunas, mascote, duração em cards e benefícios.
+- Biblioteca ganhou banner, dez cards ilustrados, contagens, pesquisa, filtros e cards de atividade.
+- Editor ganhou cabeçalho com cronômetro, barra de ferramentas, painéis de referência/digitação com adaptação para largura menor e quatro métricas.
+- Configurações passam a salvar preferências JSON no perfil do usuário e aplicar tamanho de fonte/som.
+- Componentes reutilizáveis e cores institucionais foram centralizados.
