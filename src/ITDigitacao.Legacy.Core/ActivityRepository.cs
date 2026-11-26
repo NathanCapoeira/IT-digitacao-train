@@ -59,11 +59,13 @@ namespace ITDigitacao.Core
     public sealed class ActivityRepository
     {
         [DataContract]
+#pragma warning disable 0649 // Preenchidos pelo DataContractJsonSerializer durante a leitura do catálogo.
         private sealed class Catalog
         {
             [DataMember(IsRequired = true)] public Category[] Categories;
             [DataMember(IsRequired = true)] public Activity[] Activities;
         }
+#pragma warning restore 0649
 
         private static readonly CompareInfo SearchCulture = CultureInfo.GetCultureInfo("pt-BR").CompareInfo;
         private readonly Dictionary<string, Category> categoriesById;
@@ -85,7 +87,7 @@ namespace ITDigitacao.Core
         {
             try
             {
-                using (var reader = new StreamReader(stream, new UTF8Encoding(false, true), false, 4096, true))
+                using (var reader = new StreamReader(new NonClosingStream(stream), new UTF8Encoding(false, true), false, 4096))
                 {
                     var json = reader.ReadToEnd().TrimStart('\uFEFF');
                     using (var bytes = new MemoryStream(Encoding.UTF8.GetBytes(json)))
@@ -121,6 +123,24 @@ namespace ITDigitacao.Core
         {
             return SearchCulture.IndexOf(value, query, CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace) >= 0;
         }
+    }
+
+    // .NET 3.5 StreamReader lacks leaveOpen. Disposing this adapter leaves the caller's stream open.
+    internal sealed class NonClosingStream : Stream
+    {
+        private readonly Stream inner;
+        internal NonClosingStream(Stream inner) { if (inner == null) throw new ArgumentNullException("inner"); this.inner = inner; }
+        public override bool CanRead { get { return inner.CanRead; } }
+        public override bool CanSeek { get { return inner.CanSeek; } }
+        public override bool CanWrite { get { return inner.CanWrite; } }
+        public override long Length { get { return inner.Length; } }
+        public override long Position { get { return inner.Position; } set { inner.Position = value; } }
+        public override void Flush() { inner.Flush(); }
+        public override int Read(byte[] buffer, int offset, int count) { return inner.Read(buffer, offset, count); }
+        public override long Seek(long offset, SeekOrigin origin) { return inner.Seek(offset, origin); }
+        public override void SetLength(long value) { inner.SetLength(value); }
+        public override void Write(byte[] buffer, int offset, int count) { inner.Write(buffer, offset, count); }
+        protected override void Dispose(bool disposing) { /* ownership remains with caller */ }
     }
 
     internal static class ActivityValidator
