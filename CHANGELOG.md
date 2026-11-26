@@ -1,5 +1,12 @@
 # Histórico de alterações
 
+## 1.2.0 — Fases 4 e 5
+
+- Biblioteca offline com 10 categorias ilustradas, 30 textos em JSON, pesquisa, filtros e escolha aleatória.
+- Editor provisório com comparação Unicode, correção, progresso e bloqueio de colagem.
+- Sessões com temporizador monotônico, métricas e resumo em memória.
+- Testes de catálogo, motor e integração WPF no workflow Windows.
+
 ## 1.1.0 — Fases 2 e 3
 
 - Tela inicial institucional com marcas, mascote, ícones locais e escolha de duração.

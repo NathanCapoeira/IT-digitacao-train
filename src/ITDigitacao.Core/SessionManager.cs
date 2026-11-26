@@ -47,7 +47,7 @@ namespace ITDigitacao.Core
         public string LastCompletedId { get; private set; }
         public int TotalErrors => errors + (Engine?.ErrorAttempts ?? 0);
         public int CurrentErrors => Engine?.CurrentErrors ?? 0;
-        public int CorrectedErrors => corrected + Math.Max(0, (Engine?.ErrorAttempts ?? 0) - CurrentErrors);
+        public int CorrectedErrors => corrected + (Engine?.ResolvedErrors ?? 0);
         public double? Accuracy
         {
             get
@@ -86,12 +86,14 @@ namespace ITDigitacao.Core
             return true;
         }
 
-        public void Apply(string text)
+        public void Apply(string text) => ApplyEdit(text, -1, true);
+
+        public void ApplyEdit(string text, int offset, bool countAttempts)
         {
             Tick();
             if (Finished || Engine == null)
                 return;
-            if (Engine.Apply(text) > 0 && !Started)
+            if (Engine.ApplyEdit(text, offset, countAttempts) > 0 && !Started)
                 started = clock.Now;
         }
 
@@ -127,7 +129,7 @@ namespace ITDigitacao.Core
             bestCharacters[Activity.Id] = Math.Max(GetBest(Activity.Id), Engine.CurrentCorrect);
             correctAttempts += Engine.CorrectAttempts;
             errors += Engine.ErrorAttempts;
-            corrected += Math.Max(0, Engine.ErrorAttempts - Engine.CurrentErrors);
+            corrected += Engine.ResolvedErrors;
             Activity = null;
             Engine = null;
         }

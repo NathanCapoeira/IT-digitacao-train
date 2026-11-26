@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -43,7 +44,7 @@ namespace ITDigitacao.App.Views
             {
                 renderedEngine = engine;
                 ReferenceText.Inlines.Clear();
-                runs = new Run[engine.Reference.Length];
+                runs = new Run[engine.Reference.Count];
                 feedback = new int[runs.Length];
                 for (int i = 0; i < runs.Length; i++)
                 {
@@ -53,9 +54,10 @@ namespace ITDigitacao.App.Views
                 }
 
                 loading = true;
+                Entry.IsUndoEnabled = false;
                 Entry.Text = engine.InputText.Replace("\n", "\r\n");
                 Entry.CaretIndex = Entry.Text.Length;
-                Entry.ClearUndo();
+                Entry.IsUndoEnabled = true;
                 loading = false;
                 ReferenceScroller.ScrollToTop();
             }
@@ -86,7 +88,8 @@ namespace ITDigitacao.App.Views
         {
             if (loading || session?.Engine == null || session.Finished)
                 return;
-            session.Apply(Entry.Text);
+            int offset = e.Changes.Count == 1 ? e.Changes.First().Offset : -1;
+            session.ApplyEdit(Entry.Text, offset, e.UndoAction != UndoAction.Undo && e.UndoAction != UndoAction.Redo);
             UpdateFeedback();
             UpdateMetrics();
             Changed?.Invoke();

@@ -53,6 +53,13 @@ Assert-That ($editing.Complete -and $editing.CorrectAttempts -eq 2) 'Middle inse
 $editing.Apply('aão') | Out-Null
 Assert-That (-not $editing.Complete -and $editing.CorrectAttempts -eq 2) 'Deletion was counted as a new attempt.'
 
+$repeated = [ITDigitacao.Core.TypingEngine]::new('ab')
+$repeated.Apply('ab') | Out-Null
+$repeated.ApplyEdit('abb', 1, $true) | Out-Null
+Assert-That ($repeated.CorrectAttempts -eq 3 -and $repeated.CurrentErrors -eq 1) 'Repeated characters obscured an insertion position.'
+$repeated.ApplyEdit('ab', 1, $false) | Out-Null
+Assert-That ($repeated.Complete -and $repeated.CorrectAttempts -eq 3) 'Undo counted as new typing.'
+
 foreach ($minutes in 5,10,15,20,25,30) {
     $clock = [TestClock]::new()
     $session = [ITDigitacao.Core.SessionManager]::new($minutes, $clock)

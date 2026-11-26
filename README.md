@@ -1,6 +1,6 @@
 # IT Digitação
 
-**Instituto de Transformação • Fases 2 e 3 • Versão 1.1.0**
+**Instituto de Transformação • Fases 4 e 5 • Versão 1.2.0**
 
 *Aprenda. Pratique. Transforme.*
 
@@ -8,9 +8,17 @@ O IT Digitação é um aplicativo educacional para aproveitar o tempo restante d
 
 ## Tela inicial
 
-Escolha quanto tempo você tem para praticar, de 5 a 30 minutos. **Começar minha aventura** abre a Biblioteca e mostra a duração escolhida. Voltar ao início preserva a escolha. Biblioteca, Como digitar e Configurações já podem ser abertas e indicam o conteúdo previsto para as próximas fases.
+Escolha quanto tempo você tem para praticar, de 5 a 30 minutos. **Começar minha aventura** abre a Biblioteca, com dez categorias ilustradas e trinta textos em português. Pesquise pelo tema ou título e refine a busca por dificuldade. Você pode abrir uma categoria ou selecionar uma atividade ao acaso entre os resultados atuais.
 
-A janela é redimensionável. Os cartões alternam entre seis colunas e duas fileiras de três conforme a largura disponível. A aplicação usa recursos locais e funciona offline.
+O cronômetro começa no primeiro caractere avaliado. Ele continua enquanto você navega ou minimiza a janela. O editor provisório aceita edição manual e impede colagem e arraste de texto nesse campo. Em **Retomar texto atual**, a digitação é preservada. Escolher outro texto encerra a tentativa atual e mantém suas métricas na sessão. Guia e Configurações continuam com telas provisórias.
+
+### Métricas e conteúdo
+
+- **Precisão** é a proporção de tentativas de caracteres corretas. Erros corrigidos continuam no denominador. Remoções, navegação e desfazer/refazer não entram como tentativas.
+- **PPM líquida** usa cinco caracteres corretos por palavra. Divide-se o total pelo tempo corrido da sessão desde a primeira tentativa, inclusive pausas, navegação e inatividade. Para cada atividade conta o maior saldo registrado ao sair dela ou o saldo atual se for maior. Redigitar o mesmo trecho ou concluir o mesmo texto outra vez não aumenta o total por atividade. Até completar dez segundos, a PPM aparece como “—”.
+- **Progresso** mede caracteres corretos na posição esperada. A conclusão exige igualdade integral após normalizar acentos equivalentes em Unicode e as quebras de linha. Letras maiúsculas, espaços e pontuação continuam significativos.
+- **Estimativa de leitura e digitação** usa 20 palavras por minuto e arredonda para cima. O tempo real depende do ritmo do aluno.
+- O catálogo em `content/atividades.json` contém textos autorais. As tentativas de consulta a IBGE Educa, Banco Central, CERT.br, Embrapa, Agência Espacial Brasileira e Ministério da Saúde foram bloqueadas neste ambiente. O campo `Sources` fica vazio enquanto aguarda revisão factual, especialmente em ciências, segurança digital, finanças, cidadania, geografia e saúde.
 
 ### Baixar o aplicativo
 
@@ -25,7 +33,8 @@ Na página [GitHub Actions](https://github.com/NathanCapoeira/IT-digitacao-train
 | `src/ITDigitacao.App/Themes/` | Paleta, ícones vetoriais e componentes compartilhados |
 | `src/ITDigitacao.App/Views/HomeView.xaml` | Banner, escolha de duração e benefícios |
 | `src/ITDigitacao.App/Assets/` | Mascote e marcas com Build Action Resource |
-| `tests/smoke-wpf.ps1` | Teste de recursos, layout e navegação em Windows |
+| `src/ITDigitacao.Core/` | Catálogo JSON, comparação de caracteres, relógio e sessão independentes de WPF |
+| `tests/` | Testes do Core com relógio simulado e integração WPF no Windows |
 | `scripts/build.ps1` | Descoberta do MSBuild, compilação limpa e preparação da distribuição |
 | `.github/workflows/build-windows.yml` | Compilação no Windows e publicação do artefato de CI |
 
@@ -54,7 +63,7 @@ Get-Item .\dist\IT-Digitacao.exe
 
 Para um checkout existente atualizado, comece na raiz do projeto e execute a partir de `code .`. A opção `-ExecutionPolicy Bypass` vale somente para o processo PowerShell iniciado pelo comando.
 
-O script chama o MSBuild com `Rebuild`, `Configuration=Release` e `Platform=x86`. A pasta `dist` é preparada a partir de uma compilação bem-sucedida e contém `IT-Digitacao.exe` e `IT-Digitacao.exe.config`. Mantenha os dois arquivos juntos ao distribuir.
+O script chama o MSBuild com `Rebuild`, `Configuration=Release` e `Platform=x86`. A pasta `dist` é preparada a partir de uma compilação bem-sucedida e contém `IT-Digitacao.exe`, `IT-Digitacao.exe.config`, `ITDigitacao.Core.dll` e `atividades.json`. Mantenha todos na mesma pasta.
 
 ### Diagnóstico
 
@@ -74,15 +83,15 @@ O script chama o MSBuild com `Rebuild`, `Configuration=Release` e `Platform=x86`
 
 ## GitHub Actions
 
-O workflow **Build do IT Digitação** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build do IT Digitação → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-x86-…** na seção **Artifacts** da execução. O arquivo `build-info.txt` registra o commit compilado. A execução também publica a captura gerada pelo teste WPF. A distribuição contém a versão de desenvolvimento.
+O workflow **Build do IT Digitação** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build do IT Digitação → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-x86-…** na seção **Artifacts** da execução. O arquivo `build-info.txt` registra o commit compilado. A execução também publica as capturas geradas pelo teste WPF. A distribuição contém a versão de desenvolvimento.
 
 ## Validação no Windows
 
 Após um build bem-sucedido, abra o executável e confirme:
 
-1. Confira as marcas no cabeçalho e rodapé e o mascote no banner.
-2. Escolha uma duração diferente de 10 minutos e selecione **Começar minha aventura**. Confira a duração na Biblioteca e volte ao início.
-3. Abra **Como digitar** e **Configurações**. Use Tab e as setas nas opções de duração para conferir foco e seleção.
-4. Reduza e maximize a janela, confira o rearranjo dos seis cartões e use **Sair**.
+1. Escolha uma duração e abra a Biblioteca. Confira categorias, títulos, filtros e pesquisa.
+2. Abra um texto, digite com acentos e corrija um erro. Confira se precisão e contagem preservam a tentativa anterior.
+3. Volte à Biblioteca e retome a digitação. Confira que o tempo permanece em andamento.
+4. Encerre a sessão, confira o resumo e inicie outra sessão. Teste em janelas estreitas e nas escalas de DPI da instituição.
 
 A validação de Windows 7 SP1 depende dos pré-requisitos do framework e de teste real. Compatibilidade nas versões alvo, uso em máquinas de 2 GB de RAM e comportamento nas resoluções e escalas de DPI previstas são metas de validação.
