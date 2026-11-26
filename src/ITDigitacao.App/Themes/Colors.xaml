@@ -13,8 +13,11 @@
     <SolidColorBrush x:Key="BorderBrush" Color="#E2E5EA" />
     <SolidColorBrush x:Key="BrandTintBrush" Color="#FFF1F2" />
 
+    <SolidColorBrush x:Key="AchievementTintBrush" Color="#FFF3D7" />
+
     <LinearGradientBrush x:Key="BannerBrush" StartPoint="0,0" EndPoint="1,0.9">
-        <GradientStop Color="{StaticResource BrandRedColor}" Offset="0" />
+        <GradientStop Color="{StaticResource BrandDarkColor}" Offset="0" />
+        <GradientStop Color="{StaticResource BrandRedColor}" Offset="0.63" />
         <GradientStop Color="{StaticResource BrandDarkColor}" Offset="1" />
     </LinearGradientBrush>
 </ResourceDictionary>

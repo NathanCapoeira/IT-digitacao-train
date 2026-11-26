@@ -1,16 +1,20 @@
 # IT Digitação
 
-**Instituto de Transformação • Fase 1 • Versão 1.0.0**
+**Instituto de Transformação • Fases 2 e 3 • Versão 1.1.0**
 
 *Aprenda. Pratique. Transforme.*
 
 O IT Digitação é um aplicativo educacional para aproveitar o tempo restante da aula com atividades de digitação. A proposta é desenvolver precisão, concentração, leitura e vocabulário, com conteúdo voltado principalmente a crianças e adolescentes.
 
-## Fase 1
+## Tela inicial
 
-A primeira janela apresenta a identidade institucional e permite testar a atualização da mensagem, restaurar o estado inicial e sair. A janela é redimensionável e tem rolagem vertical para espaços menores. A interface usa recursos locais e funciona sem serviços externos.
+Escolha quanto tempo você tem para praticar, de 5 a 30 minutos. **Começar minha aventura** abre a Biblioteca e mostra a duração escolhida. Voltar ao início preserva a escolha. Biblioteca, Como digitar e Configurações já podem ser abertas e indicam o conteúdo previsto para as próximas fases.
 
-Biblioteca, exercícios, métricas de digitação, guia ABNT2, configurações e integração do logotipo e do mascote estão previstas para fases posteriores.
+A janela é redimensionável. Os cartões alternam entre seis colunas e duas fileiras de três conforme a largura disponível. A aplicação usa recursos locais e funciona offline.
+
+### Baixar o aplicativo
+
+Na página [GitHub Actions](https://github.com/NathanCapoeira/IT-digitacao-train/actions), abra a execução bem-sucedida mais recente de **Build do IT Digitação**. Com sua conta do GitHub conectada, baixe **IT-Digitacao-x86-…** na seção **Artifacts**. Extraia todos os arquivos e abra `IT-Digitacao.exe` na pasta extraída.
 
 ## Estrutura
 
@@ -18,7 +22,10 @@ Biblioteca, exercícios, métricas de digitação, guia ABNT2, configurações e
 | --- | --- |
 | `ITDigitacao.sln` | Solução MSBuild com configuração Release x86 |
 | `src/ITDigitacao.App/` | Aplicativo WPF em C# e XAML para .NET Framework 4.8 |
-| `src/ITDigitacao.App/Themes/` | Paleta institucional e estilos compartilhados |
+| `src/ITDigitacao.App/Themes/` | Paleta, ícones vetoriais e componentes compartilhados |
+| `src/ITDigitacao.App/Views/HomeView.xaml` | Banner, escolha de duração e benefícios |
+| `src/ITDigitacao.App/Assets/` | Mascote e marcas com Build Action Resource |
+| `tests/smoke-wpf.ps1` | Teste de recursos, layout e navegação em Windows |
 | `scripts/build.ps1` | Descoberta do MSBuild, compilação limpa e preparação da distribuição |
 | `.github/workflows/build-windows.yml` | Compilação no Windows e publicação do artefato de CI |
 
@@ -33,7 +40,7 @@ Biblioteca, exercícios, métricas de digitação, guia ABNT2, configurações e
 
 ## Compilar e executar
 
-Depois que o código da Fase 1 estiver disponível no GitHub, rode no PowerShell:
+Para obter o código e compilar, rode todo o bloco no PowerShell:
 
 ```powershell
 git clone https://github.com/NathanCapoeira/IT-digitacao-train.git
@@ -45,7 +52,7 @@ Get-Item .\dist\IT-Digitacao.exe
 & .\dist\IT-Digitacao.exe
 ```
 
-Para um checkout existente que já contenha a Fase 1, comece na raiz do projeto e execute a partir de `code .`. A opção `-ExecutionPolicy Bypass` vale somente para o processo PowerShell iniciado pelo comando.
+Para um checkout existente atualizado, comece na raiz do projeto e execute a partir de `code .`. A opção `-ExecutionPolicy Bypass` vale somente para o processo PowerShell iniciado pelo comando.
 
 O script chama o MSBuild com `Rebuild`, `Configuration=Release` e `Platform=x86`. A pasta `dist` é preparada a partir de uma compilação bem-sucedida e contém `IT-Digitacao.exe` e `IT-Digitacao.exe.config`. Mantenha os dois arquivos juntos ao distribuir.
 
@@ -67,15 +74,15 @@ O script chama o MSBuild com `Rebuild`, `Configuration=Release` e `Platform=x86`
 
 ## GitHub Actions
 
-O workflow **Build da Fase 1** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build da Fase 1 → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-Fase-1-x86-…** na seção **Artifacts** da execução. O arquivo `build-info.txt` registra o commit compilado. O artefato de CI é uma distribuição de desenvolvimento da Fase 1.
+O workflow **Build do IT Digitação** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build do IT Digitação → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-x86-…** na seção **Artifacts** da execução. O arquivo `build-info.txt` registra o commit compilado. A execução também publica a captura gerada pelo teste WPF. A distribuição contém a versão de desenvolvimento.
 
 ## Validação no Windows
 
 Após um build bem-sucedido, abra o executável e confirme:
 
-1. O cabeçalho, o banner e o rodapé aparecem com a identidade e a versão esperadas.
-2. **Testar interface** troca a mensagem para “Tudo pronto! A interface está funcionando.”. **Restaurar** retorna à mensagem de boas-vindas.
-3. A navegação por Tab mostra o foco dos botões. A janela continua legível ao reduzir, maximizar e restaurar, com rolagem quando necessário.
-4. **Sair** fecha o aplicativo.
+1. Confira as marcas no cabeçalho e rodapé e o mascote no banner.
+2. Escolha uma duração diferente de 10 minutos e selecione **Começar minha aventura**. Confira a duração na Biblioteca e volte ao início.
+3. Abra **Como digitar** e **Configurações**. Use Tab e as setas nas opções de duração para conferir foco e seleção.
+4. Reduza e maximize a janela, confira o rearranjo dos seis cartões e use **Sair**.
 
 A validação de Windows 7 SP1 depende dos pré-requisitos do framework e de teste real. Compatibilidade nas versões alvo, uso em máquinas de 2 GB de RAM e comportamento nas resoluções e escalas de DPI previstas são metas de validação.

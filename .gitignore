@@ -5,3 +5,5 @@ dist/
 .dist-stage-*/
 *.user
 *.suo
+
+captures/

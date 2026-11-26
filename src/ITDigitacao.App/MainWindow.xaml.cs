@@ -1,14 +1,11 @@
 using System;
 using System.Windows;
-using System.Windows.Automation.Peers;
+using System.Windows.Controls;
 
 namespace ITDigitacao.App
 {
     public partial class MainWindow : Window
     {
-        private const string WelcomeMessage = "Bem-vindo ao IT Digitação!";
-        private const string SuccessMessage = "Tudo pronto! A interface está funcionando.";
-
         public MainWindow()
         {
             InitializeComponent();
@@ -19,17 +16,30 @@ namespace ITDigitacao.App
             Width = Math.Min(Width, workArea.Width);
             Height = Math.Min(Height, workArea.Height);
 
-            StatusMessage.Text = WelcomeMessage;
+            ShowPage(HomeTab);
         }
 
-        private void TestInterface_Click(object sender, RoutedEventArgs e)
+        private void Navigate_Click(object sender, RoutedEventArgs e)
         {
-            UpdateStatus(SuccessMessage);
+            ShowPage((RadioButton)sender);
         }
 
-        private void Reset_Click(object sender, RoutedEventArgs e)
+        private void StartRequested(object sender, EventArgs e)
         {
-            UpdateStatus(WelcomeMessage);
+            ShowPage(LibraryTab);
+            LibraryTab.Focus();
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPage(SettingsTab);
+            SettingsTab.Focus();
+        }
+
+        private void ReturnHome_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPage(HomeTab);
+            HomeTab.Focus();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -37,16 +47,35 @@ namespace ITDigitacao.App
             Close();
         }
 
-        private void UpdateStatus(string message)
+        private void ShowPage(RadioButton tab)
         {
-            if (StatusMessage.Text == message)
-            {
-                return;
-            }
+            tab.IsChecked = true;
+            bool isHome = tab == HomeTab;
+            HomePage.Visibility = isHome ? Visibility.Visible : Visibility.Collapsed;
+            SectionPage.Visibility = isHome ? Visibility.Collapsed : Visibility.Visible;
+            PageScroller.ScrollToTop();
 
-            StatusMessage.Text = message;
-            UIElementAutomationPeer.CreatePeerForElement(StatusMessage)
-                ?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
+            SelectedPlan.Visibility = Visibility.Collapsed;
+            if (tab == LibraryTab)
+            {
+                SectionTitle.Text = "Biblioteca educativa";
+                SectionDescription.Text = "Aqui você encontrará assuntos para praticar e aprender.";
+                SelectedPlan.Text = $"Tempo de prática selecionado: {HomePage.SelectedMinutes} minutos";
+                SelectedPlan.Visibility = Visibility.Visible;
+                SectionStatus.Text = "As categorias e atividades chegarão na próxima fase.";
+            }
+            else if (tab == GuideTab)
+            {
+                SectionTitle.Text = "Como digitar";
+                SectionDescription.Text = "Conheça o teclado e desenvolva bons hábitos de digitação.";
+                SectionStatus.Text = "O guia do teclado ABNT2 e as orientações de postura chegarão em uma fase futura.";
+            }
+            else if (tab == SettingsTab)
+            {
+                SectionTitle.Text = "Configurações";
+                SectionDescription.Text = "Personalize sua experiência de aprendizado.";
+                SectionStatus.Text = "As preferências de leitura e prática chegarão em uma fase futura.";
+            }
         }
     }
 }

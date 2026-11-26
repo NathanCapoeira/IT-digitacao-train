@@ -1,4 +1,4 @@
-name: Build da Fase 1
+name: Build do IT Digitação
 
 on:
   push:
@@ -34,9 +34,22 @@ jobs:
           @("Commit: $commit", 'Configuração: Release', 'Plataforma: x86', 'Framework: .NET Framework 4.8') |
             Set-Content -LiteralPath '.\dist\build-info.txt' -Encoding UTF8
 
-      - name: Publicar artefato da Fase 1
+      - name: Validar interface WPF e gerar captura
+        shell: powershell
+        run: |
+          & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-wpf.ps1 -Executable .\dist\IT-Digitacao.exe -CaptureDirectory .\captures
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Publicar captura da tela inicial
         uses: actions/upload-artifact@v4
         with:
-          name: IT-Digitacao-Fase-1-x86-${{ github.sha }}
+          name: IT-Digitacao-Captura-WPF-${{ github.sha }}
+          path: captures/
+          if-no-files-found: error
+
+      - name: Publicar pacote Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: IT-Digitacao-x86-${{ github.sha }}
           path: dist/
           if-no-files-found: error
