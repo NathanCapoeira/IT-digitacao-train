@@ -88,9 +88,13 @@ internal static class LegacyLayoutSmoke
             double editorHeight = editor.ActualHeight;
             double referenceOffset = referenceScroll.VerticalOffset;
             entry.Text = string.Join("\n", Enumerable.Repeat("Linha de teste com texto suficiente para rolar.", 40).ToArray());
-            entry.ScrollToEnd();
             Layout(window);
-            Require(entry.ExtentHeight > entry.ViewportHeight && entry.VerticalOffset > 0, "The input should scroll independently.");
+            ScrollViewer inputScroll = (ScrollViewer)entry.Template.FindName("PART_ContentHost", entry);
+            inputScroll.ScrollToBottom();
+            Layout(window);
+            Require(inputScroll.ScrollableHeight > 0 && inputScroll.VerticalOffset > 0,
+                "The input should scroll independently. Scrollable height: " + inputScroll.ScrollableHeight +
+                "; offset: " + inputScroll.VerticalOffset + ".");
             Require(Math.Abs(referenceScroll.VerticalOffset - referenceOffset) <= 1, "Scrolling the input moved the reference.");
             Require(Math.Abs(editor.ActualHeight - editorHeight) <= 1, "Long input expanded the editor.");
             Console.WriteLine("Legacy layout checks passed: four work-area sizes, narrow stacking, equal font and height, and independent scrolling.");
