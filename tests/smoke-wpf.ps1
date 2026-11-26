@@ -19,7 +19,7 @@ Assert-That ($assembly.GetName().Version.ToString() -eq '1.3.0.0') 'Unexpected e
 
 $app = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.App', $true))
 $app.InitializeComponent()
-$testPreferenceFile = Join-Path ([IO.Path]::GetTempPath()) (([Guid]::NewGuid().ToString()) + '.json')
+$testPreferenceFile = [IO.Path]::Combine([IO.Path]::GetTempPath(), [Guid]::NewGuid().ToString() + '.json')
 $privateInstance = [Reflection.BindingFlags]'NonPublic, Instance'
 $windowType = $assembly.GetType('ITDigitacao.App.MainWindow', $true)
 $testConstructor = $windowType.GetConstructor($privateInstance, $null, [type[]]@([string]), $null)
