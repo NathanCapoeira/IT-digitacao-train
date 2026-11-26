@@ -39,14 +39,14 @@ jobs:
       - name: Generate ZIP SHA-256
         shell: pwsh
         run: |
-          $zip='IT-Digitacao-Legacy-2.0.0-beta.1-Portable-x86.zip'
+          $zip='IT-Digitacao-Legacy-2.0.0-beta.2-Portable-x86.zip'
           $hash=(Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash *$zip" | Set-Content SHA256SUMS.txt -Encoding ascii
       - name: Upload portable beta
         uses: actions/upload-artifact@v4
         with:
-          name: IT-Digitacao-Legacy-2.0.0-beta.1-Portable-x86
+          name: IT-Digitacao-Legacy-2.0.0-beta.2-Portable-x86
           path: |
-            IT-Digitacao-Legacy-2.0.0-beta.1-Portable-x86.zip
+            IT-Digitacao-Legacy-2.0.0-beta.2-Portable-x86.zip
             SHA256SUMS.txt
           if-no-files-found: error

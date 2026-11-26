@@ -4,8 +4,8 @@ Base de auditoria: Standard em `d8962ed`; Legacy completa iniciada em `legacy/ne
 
 | Área da Standard | Recursos encontrados | Estado Legacy |
 |---|---|---|
-| Início | duração 5–30 min, boas-vindas, mascote, início de sessão | A implementar |
-| Biblioteca | catálogo `content/atividades.json`, categorias e ilustrações | A implementar, catálogo integral obrigatório |
+| Início | duração 5–30 min, boas-vindas, mascote, início de sessão | Parcial na beta.2: banner em duas colunas, seleção em cards e benefícios; revisar responsividade e fidelidade visual |
+| Biblioteca | catálogo `content/atividades.json`, categorias e ilustrações | Parcial na beta.2: 10 cards ilustrados, contagens, busca, filtros e atividades; revisar estados e comportamento de retomada |
 | Prática | editor, comparação caractere a caractere, progresso, cronômetro, precisão, velocidade | A implementar |
 | Resultados | resumo e métricas da sessão | A implementar |
 | Conquistas | regras em `SessionAwards` e apresentação visual | A implementar |
@@ -22,7 +22,7 @@ Base de auditoria: Standard em `d8962ed`; Legacy completa iniciada em `legacy/ne
 - Regras: `src/ITDigitacao.Core/{ActivityRepository,TypingEngine,SessionManager,SessionAwards,Preferences}.cs`.
 - Recursos: `src/ITDigitacao.App/Assets/` e `content/atividades.json`.
 
-Esta tabela é um checklist de implementação, não uma alegação de equivalência concluída. Cada item deve ser atualizado após implementação e teste.
+Esta tabela é um checklist de implementação, não uma alegação de equivalência concluída. Cada item deve ser atualizado após implementação e teste. Home e Biblioteca foram parcialmente migradas na beta.2 e ainda precisam de comparação visual/teste presencial.
 
 ## Auditoria de compatibilidade da base Standard
 
