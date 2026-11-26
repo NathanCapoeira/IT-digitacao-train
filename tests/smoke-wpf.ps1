@@ -20,18 +20,18 @@ $app.InitializeComponent()
 $window = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.MainWindow', $true))
 try {
     $window.Show()
-    $home = $window.FindName('HomePage')
-    $durationGrid = $home.FindName('DurationGrid')
+    $homeView = $window.FindName('HomePage')
+    $durationGrid = $homeView.FindName('DurationGrid')
     $plan = $window.FindName('SelectedPlan')
     $sectionTitle = $window.FindName('SectionTitle')
-    Assert-That ($home.SelectedMinutes -eq 10) 'Expected a default duration of 10 minutes.'
+    Assert-That ($homeView.SelectedMinutes -eq 10) 'Expected a default duration of 10 minutes.'
 
     foreach ($asset in @('logo-it-digitacao.png', 'logo-instituto.png', 'mascote-boas-vindas.png')) {
         $uri = [Uri]::new("pack://application:,,,/IT-Digitacao;component/Assets/$asset")
         $bitmap = [System.Windows.Media.Imaging.BitmapImage]::new($uri)
         Assert-That ($bitmap.PixelWidth -gt 0 -and $bitmap.PixelHeight -gt 0) "Could not decode $asset."
     }
-    Assert-That ($home.FindName('WelcomeMascot').Source.PixelWidth -eq 640) 'Welcome mascot is missing.'
+    Assert-That ($homeView.FindName('WelcomeMascot').Source.PixelWidth -eq 640) 'Welcome mascot is missing.'
 
     $window.Width = 660
     $window.UpdateLayout()
@@ -40,7 +40,7 @@ try {
     $window.Height = 720
     $window.UpdateLayout()
     Assert-That ($durationGrid.Columns -eq 6) 'Expected 6 duration columns in a wide window.'
-    Assert-That ($home.FindName('HeroTitle').ActualHeight -gt 0) 'The heading has no layout.'
+    Assert-That ($homeView.FindName('HeroTitle').ActualHeight -gt 0) 'The heading has no layout.'
 
     New-Item -ItemType Directory -Path $CaptureDirectory -Force | Out-Null
     $surface = $window.Content
@@ -60,7 +60,7 @@ try {
 
     foreach ($card in $durationGrid.Children) {
         $card.IsChecked = $true
-        Assert-That ($home.SelectedMinutes -eq [int]$card.Content) 'Duration selection did not update.'
+        Assert-That ($homeView.SelectedMinutes -eq [int]$card.Content) 'Duration selection did not update.'
         Assert-That (@($durationGrid.Children | Where-Object IsChecked).Count -eq 1) 'Duration selection is not exclusive.'
     }
 
@@ -68,7 +68,7 @@ try {
         $Control.RaiseEvent([System.Windows.RoutedEventArgs]::new([System.Windows.Controls.Primitives.ButtonBase]::ClickEvent))
     }
 
-    Send-Click ($home.FindName('StartButton'))
+    Send-Click ($homeView.FindName('StartButton'))
     Assert-That ($window.FindName('LibraryTab').IsChecked -and $sectionTitle.Text -eq 'Biblioteca educativa') 'Start did not open the library.'
     Assert-That ($plan.Text -match '30 minutos' -and $plan.Visibility -eq 'Visible') 'The library lost the selected duration.'
 
@@ -77,7 +77,7 @@ try {
     Send-Click ($window.FindName('SettingsTab'))
     Assert-That ($sectionTitle.Text -eq 'Configurações') 'Settings navigation failed.'
     Send-Click ($window.FindName('HomeTab'))
-    Assert-That ($home.Visibility -eq 'Visible' -and $home.SelectedMinutes -eq 30) 'Home lost the session selection.'
+    Assert-That ($homeView.Visibility -eq 'Visible' -and $homeView.SelectedMinutes -eq 30) 'Home lost the session selection.'
     Write-Host 'WPF smoke test passed: embedded art, layout, duration and navigation.'
 }
 finally {
