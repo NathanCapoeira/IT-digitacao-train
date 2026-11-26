@@ -1,4 +1,4 @@
-$ErrorActionPreference='Stop'
+﻿$ErrorActionPreference='Stop'
 $core=(Resolve-Path 'src/ITDigitacao.Legacy.Core/bin/x86/Release/ITDigitacao.Legacy.Core.dll').Path
 Add-Type -Path $core
 $catalogPath=(Resolve-Path 'src/ITDigitacao.Legacy.App/atividades.json').Path
@@ -10,8 +10,15 @@ try {
  if(!$stream.CanRead){throw 'ActivityRepository.Load closed its caller-owned stream.'}
  if($repository.Find('tecnologia',$null,$null).Count -lt 1){throw 'Catalog search failed.'}
 } finally {$stream.Dispose()}
-$engine=New-Object ITDigitacao.Core.TypingEngine 'ação coração'
-$engine.Apply('ação cora')
+# Build Portuguese strings from Unicode code points so PowerShell 5.1 ANSI fallback cannot alter the test data.
+$cedilla=[char]0x00E7; $tildeA=[char]0x00E3
+$expected='a'+$cedilla+$tildeA+'o cora'+$cedilla+$tildeA+'o'
+$typed='a'+$cedilla+$tildeA+'o cora'
+$engine=[Activator]::CreateInstance([ITDigitacao.Core.TypingEngine],[object[]]@($expected))
+$engine.Apply($typed)
+# CurrentCorrect counts matching Unicode text elements; the entered prefix has 9 elements.
+if($engine.Entered -ne 9){throw "Typing input should contain 9 text elements, got $($engine.Entered)"}
 if($engine.CurrentCorrect -ne 9){throw "Typing engine accent handling failed: $($engine.CurrentCorrect)"}
+if($engine.CurrentErrors -ne 0){throw "Typing engine reported unexpected errors: $($engine.CurrentErrors)"}
 if($engine.Progress -le 0){throw 'Typing progress did not advance.'}
 Write-Host 'Legacy beta smoke checks passed: catalog counts, stream ownership, search, accented typing and progress.'
