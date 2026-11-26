@@ -1,4 +1,6 @@
 ﻿$ErrorActionPreference='Stop'
+$legacySources=Get-ChildItem 'src\ITDigitacao.Legacy.*' -Filter '*.cs' -Recurse -File
+foreach($source in $legacySources){$text=[IO.File]::ReadAllText($source.FullName);if($text -match 'Path\.Combine\([^()]*,[^()]*,[^()]*\)'){throw "Path.Combine with three arguments is incompatible with .NET 3.5: $($source.FullName)"}}
 $core=(Resolve-Path 'src/ITDigitacao.Legacy.Core/bin/x86/Release/ITDigitacao.Legacy.Core.dll').Path
 Add-Type -Path $core
 $catalogPath=(Resolve-Path 'src/ITDigitacao.Legacy.App/atividades.json').Path

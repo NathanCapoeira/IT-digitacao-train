@@ -6,10 +6,10 @@ Base de auditoria: Standard em `d8962ed`; Legacy completa iniciada em `legacy/ne
 |---|---|---|
 | Início | duração 5–30 min, boas-vindas, mascote, início de sessão | Parcial na beta.2: banner em duas colunas, seleção em cards e benefícios; revisar responsividade e fidelidade visual |
 | Biblioteca | catálogo `content/atividades.json`, categorias e ilustrações | Parcial na beta.2: 10 cards ilustrados, contagens, busca, filtros e atividades; revisar estados e comportamento de retomada |
-| Prática | editor, comparação caractere a caractere, progresso, cronômetro, precisão, velocidade | Parcial na beta.2: dois painéis adaptáveis, progresso, cronômetro e quatro métricas; falta realce por caractere e ferramentas completas |
+| Prática | editor, comparação caractere a caractere, progresso, cronômetro, precisão, velocidade | Parcial na beta.2: painéis adaptáveis, realce de acertos/erros/próximo caractere, cronômetro, métricas e controles básicos; falta comparar fidelidade e completar estados/ações |
 | Resultados | resumo e métricas da sessão | A implementar |
 | Conquistas | regras em `SessionAwards` e apresentação visual | A implementar |
-| Guia ABNT2 | mapa de teclas, dedos e exercício guiado | A implementar |
+| Guia ABNT2 | mapa de teclas, dedos e exercício guiado | Parcial na beta.2: teclado visual interativo, cores por dedo, posição inicial e orientação de postura; precisa validação presencial/mapeamento completo |
 | Perguntas | pergunta real do catálogo, alternativas, resposta e explicação | Parcial na beta.2: fluxo usa QuizQuestion do catálogo e apresenta feedback; integração visual ainda requer validação |
 | Configurações | fonte, som, métricas, concentração, feedback e efeitos | Persistência JSON implementada na beta.2; aplicação de algumas opções ainda parcial |
 | Persistência | preferências JSON no perfil do usuário | Implementada via Core Legacy em LocalApplicationData; coberta por teste de round-trip |

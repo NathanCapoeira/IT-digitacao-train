@@ -6,4 +6,7 @@ IT Digitação Legacy 2.0.0-beta.2
 - Configurações passam a salvar preferências JSON no perfil do usuário e aplicar tamanho de fonte/som.
 - Atividades com Quiz no catálogo exibem a pergunta real, alternativas, feedback de resposta e explicação antes de continuar a sessão.
 - Pesquisa e filtro por dificuldade atualizam a lista ao editar o campo/seleção; os cards de duração se reorganizam em janelas menores.
+- Editor destaca caracteres corretos, incorretos e o próximo caractere; reiniciar respeita o ciclo da sessão e controles básicos de fonte, som e concentração foram adicionados.
+- Guia ABNT2 ganhou teclado visual colorido por dedo, destaque interativo da tecla pressionada e conteúdo de postura.
+- A composição do caminho de configuração foi adaptada à sobrecarga Path.Combine disponível no .NET Framework 3.5.
 - Componentes reutilizáveis e cores institucionais foram centralizados.
