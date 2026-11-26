@@ -1,0 +1,566 @@
+{
+  "Categories": [
+    {
+      "Id": "tecnologia",
+      "Name": "Informática e tecnologia",
+      "Description": "Explore ferramentas digitais e as ideias por trás delas.",
+      "Color": "#DCEFFD"
+    },
+    {
+      "Id": "ciencias",
+      "Name": "Ciências e curiosidades",
+      "Description": "Observe fenômenos, seres vivos e o espaço.",
+      "Color": "#EEE3FA"
+    },
+    {
+      "Id": "ambiente",
+      "Name": "Meio ambiente",
+      "Description": "Cuide dos recursos e conheça os ambientes naturais.",
+      "Color": "#E1F4E5"
+    },
+    {
+      "Id": "financas",
+      "Name": "Educação financeira",
+      "Description": "Aprenda a organizar escolhas e usar dinheiro com cuidado.",
+      "Color": "#FFF0CC"
+    },
+    {
+      "Id": "seguranca",
+      "Name": "Segurança digital",
+      "Description": "Proteja seus dados e reconheça mensagens suspeitas.",
+      "Color": "#FBE1E4"
+    },
+    {
+      "Id": "cidadania",
+      "Name": "Ética e cidadania",
+      "Description": "Pratique respeito, cooperação e cuidado com o que é de todos.",
+      "Color": "#FFE9DF"
+    },
+    {
+      "Id": "desenvolvimento",
+      "Name": "Desenvolvimento pessoal",
+      "Description": "Experimente maneiras de aprender e organizar sua rotina.",
+      "Color": "#F0E5FC"
+    },
+    {
+      "Id": "profissoes",
+      "Name": "Mundo profissional",
+      "Description": "Conheça trabalhos e habilidades usadas em equipe.",
+      "Color": "#FFF1D9"
+    },
+    {
+      "Id": "historia",
+      "Name": "História e geografia",
+      "Description": "Explore lugares, memórias e mudanças ao longo do tempo.",
+      "Color": "#DFECFC"
+    },
+    {
+      "Id": "saude",
+      "Name": "Saúde e bons hábitos",
+      "Description": "Conheça cuidados com o corpo e a rotina.",
+      "Color": "#FCE4EB"
+    }
+  ],
+  "Activities": [
+    {
+      "Id": "tecnologia-1",
+      "CategoryId": "tecnologia",
+      "Title": "Conhecendo o computador",
+      "Description": "Conheça peças e funções do computador.",
+      "Difficulty": "Iniciante",
+      "Text": "O computador recebe informações, trabalha com elas e mostra resultados. O teclado ajuda a escrever. O mouse permite escolher itens, e a tela mostra o que está acontecendo. Quando você salva um desenho, pode abrir o mesmo arquivo depois. Que parte do computador você usa para digitar?",
+      "Sources": []
+    },
+    {
+      "Id": "tecnologia-2",
+      "CategoryId": "tecnologia",
+      "Title": "Atalhos que facilitam a vida",
+      "Description": "Pratique formas de editar pelo teclado.",
+      "Difficulty": "Intermediário",
+      "Text": "Um atalho é uma combinação de teclas que executa uma ação. Em muitos programas no Windows, Ctrl e C copiam o que foi selecionado. Ctrl e V inserem a cópia em outro lugar. Ctrl e Z costumam desfazer a última ação. Esses atalhos ajudam durante a revisão de um trabalho. Primeiro, escreva uma frase curta em um editor. Depois, selecione a frase e faça uma cópia. Cole o trecho em outra linha e compare as duas versões. Alguns aplicativos usam combinações diferentes. Se um atalho não funcionar, procure a ação no menu antes de tentar novamente.",
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "Qual é uma vantagem dos atalhos?",
+        "Options": [
+          "Aumentar o peso do computador.",
+          "Realizar algumas tarefas com maior agilidade.",
+          "Desligar o mouse."
+        ],
+        "AnswerIndex": 1,
+        "Explanation": "Atalhos executam ações sem procurar o comando no menu."
+      }
+    },
+    {
+      "Id": "tecnologia-3",
+      "CategoryId": "tecnologia",
+      "Title": "O mundo da inteligência artificial",
+      "Description": "Descubra como sistemas aprendem padrões e podem errar.",
+      "Difficulty": "Avançado",
+      "Text": "Imagine uma ferramenta que recebe muitas fotografias de plantas e aprende a encontrar semelhanças entre elas. Com exemplos, ela pode sugerir a espécie de uma folha que nunca viu. A sugestão depende das imagens usadas para treinar o sistema e da qualidade da foto nova. Uma folha fora de foco pode levá-lo a errar. Fotos de poucas espécies também limitam o que a ferramenta consegue reconhecer.\nHá sistemas que produzem textos, imagens ou sons. Nesses casos, a resposta pode parecer convincente ainda que contenha um erro. Se uma ferramenta citar um livro, procure o título em um catálogo ou verifique com um professor. Quando a tarefa envolver uma informação importante, compare a resposta com fontes que você possa abrir e examinar.\nVocê pode investigar o funcionamento desses sistemas sem compartilhar dados pessoais. Teste a mesma pergunta com duas formulações. Anote o que mudou e destaque as afirmações que podem ser conferidas. O exercício ajuda a observar como a forma de pedir influencia a resposta e por que revisar o resultado faz parte do trabalho.",
+      "Sources": []
+    },
+    {
+      "Id": "ciencias-1",
+      "CategoryId": "ciencias",
+      "Title": "Por que o céu é azul?",
+      "Description": "Entenda o que acontece com a luz na atmosfera.",
+      "Difficulty": "Iniciante",
+      "Text": "A luz do Sol parece branca, mas reúne várias cores. Ao atravessar o ar, uma parte da luz se espalha. O azul se espalha com facilidade e chega aos nossos olhos de muitas direções. Ao amanhecer ou entardecer, o caminho da luz no ar é maior e o céu pode parecer alaranjado.",
+      "Sources": []
+    },
+    {
+      "Id": "ciencias-2",
+      "CategoryId": "ciencias",
+      "Title": "Conhecendo o sistema solar",
+      "Description": "Viaje pelos diferentes vizinhos do Sol.",
+      "Difficulty": "Intermediário",
+      "Text": "O Sol é uma estrela e está no centro do sistema solar. Oito planetas giram ao seu redor. Os quatro mais próximos, Mercúrio, Vênus, Terra e Marte, têm superfícies sólidas. Mais longe estão Júpiter, Saturno, Urano e Netuno. Muitos planetas têm luas. A Lua que observamos da Terra é o nosso satélite natural.\nUma maquete pode mostrar a ordem dos planetas, mas é difícil representar os tamanhos e as distâncias na mesma folha. Se o professor desenhar os planetas muito próximos, pergunte se a figura está em escala. Essa diferença ajuda a ler mapas e desenhos científicos.",
+      "Sources": []
+    },
+    {
+      "Id": "ciencias-3",
+      "CategoryId": "ciencias",
+      "Title": "A importância das abelhas",
+      "Description": "Explore a polinização e o cuidado com ambientes diversos.",
+      "Difficulty": "Avançado",
+      "Text": "Em uma manhã de sol, uma abelha pode visitar muitas flores em busca de néctar ou pólen. Grãos de pólen aderem ao seu corpo e podem ser transportados até outra flor da mesma espécie. Esse transporte é uma forma de polinização. Em várias plantas, ele contribui para a formação de sementes e frutos.\nHá muitas espécies de abelhas. Algumas vivem em colônias e outras vivem sozinhas. Nem todas produzem mel como o que se encontra no mercado. Borboletas, besouros, aves e outros animais também podem atuar como polinizadores. Além disso, há plantas que dependem do vento para transportar o pólen.\nEm um jardim da escola, flores de espécies diferentes podem oferecer alimento em épocas diferentes. Antes de plantar, converse com quem cuida do espaço e procure opções adequadas à região. Durante uma observação, mantenha distância de colmeias e evite tocar nos animais. Registre a hora, a cor da flor e o que o visitante fez. Comparar anotações de vários dias é uma maneira de descobrir padrões sem interferir na vida dos insetos.",
+      "Sources": []
+    },
+    {
+      "Id": "ambiente-1",
+      "CategoryId": "ambiente",
+      "Title": "Cada gota conta",
+      "Description": "Perceba o valor da água nas tarefas diárias.",
+      "Difficulty": "Iniciante",
+      "Text": "Usamos água para beber, preparar alimentos e limpar. Podemos evitar desperdício ao fechar a torneira enquanto ensaboamos as mãos ou escovamos os dentes. Um vazamento pequeno também merece atenção: conte a um adulto se perceber uma torneira pingando. Cuidar da água começa com o que observamos no dia a dia.",
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "O que fazer ao perceber uma torneira pingando?",
+        "Options": [
+          "Avisar um adulto.",
+          "Abrir ainda mais a torneira.",
+          "Deixar a água correr por horas."
+        ],
+        "AnswerIndex": 0,
+        "Explanation": "Avisar um adulto ajuda a corrigir o vazamento e evitar desperdício."
+      }
+    },
+    {
+      "Id": "ambiente-2",
+      "CategoryId": "ambiente",
+      "Title": "Reciclagem e reaproveitamento",
+      "Description": "Separe materiais e prolongue a vida de objetos.",
+      "Difficulty": "Intermediário",
+      "Text": "Quando uma caixa vira um organizador, estamos reaproveitando um objeto. Quando uma fábrica transforma fibras de papel usado em papel novo, ocorre reciclagem. Para esse processo funcionar bem, os materiais precisam ser separados conforme as orientações da coleta local. Papéis muito engordurados, por exemplo, podem atrapalhar a reciclagem de um lote.\nUma turma pode fazer um mapa das lixeiras da escola. Antes de preparar as placas, descubra o que o serviço de coleta aceita. Combine exemplos que todos consigam reconhecer. De vez em quando, verifique se as placas ajudam mesmo na separação e ajuste o texto se necessário.",
+      "Sources": []
+    },
+    {
+      "Id": "ambiente-3",
+      "CategoryId": "ambiente",
+      "Title": "A importância das florestas",
+      "Description": "Entenda como as florestas sustentam a vida e protegem o solo.",
+      "Difficulty": "Avançado",
+      "Text": "Uma floresta abriga organismos que ocupam lugares diferentes. Árvores altas recebem mais luz, enquanto plantas adaptadas à sombra crescem no chão. Folhas caídas servem de abrigo e alimento para pequenos seres vivos. Ao se decompor, deixam nutrientes que podem voltar a ser utilizados pelas plantas.\nEm muitas paisagens, raízes ajudam a manter o solo no lugar. A camada de folhas reduz o impacto direto da chuva, e parte da água pode penetrar no chão. Quando a cobertura vegetal é retirada, a enxurrada pode carregar terra para córregos e rios. O efeito varia com o relevo, o tipo de solo e a intensidade da chuva.\nRestaurar uma área exige conhecer o ambiente original e cuidar das mudas depois do plantio. Em alguns locais, proteger a vegetação que já está nascendo é mais adequado do que espalhar sementes sem planejamento. A proteção das florestas envolve também o trabalho das comunidades que vivem perto delas. Pergunte quais nascentes ou áreas verdes existem no seu município e o que as pessoas fazem para preservá-las.",
+      "Sources": []
+    },
+    {
+      "Id": "financas-1",
+      "CategoryId": "financas",
+      "Title": "Aprendendo a economizar",
+      "Description": "Planeje uma meta e acompanhe seus passos.",
+      "Difficulty": "Iniciante",
+      "Text": "Economizar é reservar uma parte do dinheiro para usar depois. Se você quer comprar um livro, descubra o preço e anote quanto já tem. Mesmo guardar um valor pequeno com regularidade pode ajudar. Converse com um adulto sobre um lugar seguro para guardar sua economia e acompanhar sua meta.",
+      "Sources": []
+    },
+    {
+      "Id": "financas-2",
+      "CategoryId": "financas",
+      "Title": "Necessidades e desejos",
+      "Description": "Diferencie o que é essencial do que pode esperar.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma necessidade é algo importante para viver ou realizar uma tarefa essencial. Um desejo é algo que gostaríamos de ter, como um jogo novo. A diferença depende da situação. Um casaco pode ser necessário em um dia frio, embora ter vários casacos parecidos seja apenas uma preferência.\nImagine que sua turma recebeu um valor para uma atividade. Antes de gastar, listem o que todos precisam para participar. Comparem preços e decidam o que pode ficar para depois. Ao explicar a escolha, diga quais critérios orientaram o grupo. Um planejamento claro dá espaço para conversar quando alguém discorda.",
+      "Sources": []
+    },
+    {
+      "Id": "financas-3",
+      "CategoryId": "financas",
+      "Title": "Planejando nossas escolhas financeiras",
+      "Description": "Compare opções, custos e prazos antes de decidir.",
+      "Difficulty": "Avançado",
+      "Text": "Um orçamento registra de onde vem o dinheiro e quais despesas precisam ser pagas. Para uma família, alguns gastos são frequentes, como comida e transporte. Outros acontecem de vez em quando. Anotar os dois tipos evita a impressão de que todo o dinheiro que sobra em um dia está livre para gastar.\nConsidere a compra de uma mochila. Compare o preço à vista e a soma das parcelas. Observe também a durabilidade, a garantia e a possibilidade de consertar uma mochila que você já usa. Se duas opções custam o mesmo, uma pode servir melhor ao objetivo. Se as parcelas parecerem pequenas, confira por quanto tempo serão pagas e se existe cobrança adicional.\nUm imprevisto pode mudar o plano. Uma reserva ajuda a lidar com despesas que não estavam na lista. Quando uma meta fica difícil, vale rever o prazo ou ajustar outras escolhas antes de comprometer um gasto essencial. Em uma simulação de sala, mude um preço e recalcule o orçamento. Explique qual decisão mudou e qual permaneceu.",
+      "Sources": []
+    },
+    {
+      "Id": "seguranca-1",
+      "CategoryId": "seguranca",
+      "Title": "O poder das senhas",
+      "Description": "Cuide do acesso às suas contas.",
+      "Difficulty": "Iniciante",
+      "Text": "Uma senha protege informações, como mensagens e trabalhos. Prefira uma senha longa e difícil de adivinhar. Evite usar sua data de nascimento ou repetir a mesma senha em vários serviços. Se alguém pedir seu código de acesso por mensagem, fale com um adulto de confiança antes de responder.",
+      "Sources": []
+    },
+    {
+      "Id": "seguranca-2",
+      "CategoryId": "seguranca",
+      "Title": "Cuidados ao navegar na internet",
+      "Description": "Confira endereços e proteja suas informações.",
+      "Difficulty": "Intermediário",
+      "Text": "Antes de preencher um formulário na internet, verifique se você chegou ao site pelo endereço que já conhece. Mensagens podem levar a páginas que imitam uma empresa. O cadeado do navegador indica que a comunicação é protegida, mas sozinho não comprova que a página pertence à empresa que diz representar.\nEvite informar endereço, escola ou telefone em espaços públicos. Pergunte a um adulto quando um aplicativo solicitar permissões que não parecem necessárias. Um jogo simples pode não precisar de acesso aos seus contatos. Revisar permissões é uma forma de decidir com mais calma o que compartilhar.",
+      "Sources": []
+    },
+    {
+      "Id": "seguranca-3",
+      "CategoryId": "seguranca",
+      "Title": "Identificando golpes digitais",
+      "Description": "Aprenda a reconhecer pressão e a conferir pedidos por outros canais.",
+      "Difficulty": "Avançado",
+      "Text": "Uma mensagem pode chegar com a foto de alguém conhecido e pedir dinheiro com urgência. A foto, por si só, não prova a identidade do remetente. Em vez de usar o telefone informado na própria mensagem, procure a pessoa pelo número que você já tinha. Se isso não for possível, peça ajuda a um adulto de confiança.\nGolpes também aparecem em ofertas exageradas ou em avisos assustadores sobre contas bloqueadas. A pressa reduz o tempo para comparar informações. Uma forma de proteção é abrir o aplicativo oficial ou digitar o endereço conhecido sem tocar no link recebido. Confira se o aviso também aparece por esse caminho.\nNunca envie códigos de verificação para atender a um pedido inesperado. Esses códigos podem liberar acesso à conta. Caso já tenha compartilhado uma informação, conte a um adulto imediatamente. Juntos, vocês podem buscar os canais de suporte adequados e trocar credenciais quando necessário. Ao estudar um exemplo na escola, retire nomes, números e dados reais. Descreva o sinal de alerta e o que você faria antes de responder.",
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "Como conferir um pedido urgente de alguém conhecido?",
+        "Options": [
+          "Usar somente o número informado na mensagem.",
+          "Enviar o código de verificação.",
+          "Procurar a pessoa pelo contato que você já tinha."
+        ],
+        "AnswerIndex": 2,
+        "Explanation": "Um canal que você já conhecia ajuda a confirmar quem fez o pedido."
+      }
+    },
+    {
+      "Id": "cidadania-1",
+      "CategoryId": "cidadania",
+      "Title": "Respeito ao próximo",
+      "Description": "Escute e conviva com pessoas diferentes.",
+      "Difficulty": "Iniciante",
+      "Text": "Respeitar alguém inclui ouvir com atenção e evitar apelidos que machucam. Em uma conversa, espere sua vez de falar. Você pode discordar de uma ideia sem insultar a pessoa. Se perceber que um colega ficou de fora de uma brincadeira, convide-o a participar e pergunte como ele gostaria de ajudar.",
+      "Sources": []
+    },
+    {
+      "Id": "cidadania-2",
+      "CategoryId": "cidadania",
+      "Title": "Aprendendo a trabalhar em equipe",
+      "Description": "Organize tarefas e ajude o grupo a avançar.",
+      "Difficulty": "Intermediário",
+      "Text": "Para preparar uma apresentação, um grupo precisa combinar o que vai fazer e quando. Uma pessoa pode pesquisar, outra pode organizar as imagens, e outra pode ensaiar a explicação. A divisão muda conforme as necessidades da tarefa. O importante é que todos entendam sua parte e possam pedir ajuda.\nPerto da entrega, façam uma leitura em conjunto. Confiram se as informações se repetem ou se algum ponto está faltando. Quando houver opiniões diferentes, escutem o motivo de cada proposta. A decisão final pode aproveitar ideias de várias pessoas. Deixem anotado quem fará os últimos ajustes.",
+      "Sources": []
+    },
+    {
+      "Id": "cidadania-3",
+      "CategoryId": "cidadania",
+      "Title": "Direitos, deveres e responsabilidade",
+      "Description": "Veja como regras justas podem melhorar a convivência.",
+      "Difficulty": "Avançado",
+      "Text": "Crianças e adolescentes têm direito à educação, à proteção e ao respeito. Esses direitos ajudam a criar condições para aprender, brincar e crescer com segurança. Na escola, uma regra de convivência pode concretizar um direito. Garantir que cada pessoa tenha vez de falar, por exemplo, ajuda diferentes ideias a serem ouvidas.\nViver em grupo também envolve responsabilidades. Usar uma praça pública significa poder aproveitar o espaço e contribuir para que ele continue acessível a outras pessoas. Levar o lixo até uma lixeira e respeitar áreas de circulação são cuidados simples. Quem precisa de ajuda para cumprir um combinado deve poder conversar e buscar apoio.\nQuando uma regra parece injusta, vale entender sua finalidade e apresentar uma proposta de mudança pelos canais disponíveis. Em uma assembleia de turma, descreva o problema, diga quem é afetado e proponha um teste por alguns dias. Depois, verifiquem o resultado juntos. Uma solução pode precisar de ajustes para incluir pessoas com necessidades diferentes. Esse processo ensina que participar de decisões envolve escutar, argumentar e acompanhar as consequências.",
+      "Sources": []
+    },
+    {
+      "Id": "desenvolvimento-1",
+      "CategoryId": "desenvolvimento",
+      "Title": "A importância da leitura",
+      "Description": "Descubra novas ideias em um texto.",
+      "Difficulty": "Iniciante",
+      "Text": "Ler ajuda a conhecer histórias, palavras e modos diferentes de pensar. Se uma palavra for nova, observe a frase para tentar descobrir o sentido. Depois, consulte um dicionário ou pergunte a alguém. Ao terminar uma leitura, conte a um colega a parte que mais despertou sua curiosidade.",
+      "Sources": []
+    },
+    {
+      "Id": "desenvolvimento-2",
+      "CategoryId": "desenvolvimento",
+      "Title": "Organizando nosso tempo",
+      "Description": "Escolha prioridades e planeje pausas.",
+      "Difficulty": "Intermediário",
+      "Text": "Organizar o tempo começa por decidir o que precisa ser feito. Anote compromissos com horário e tarefas que podem ser realizadas em momentos diferentes. Uma atividade grande pode ficar mais clara quando é dividida em partes menores. Em vez de escrever apenas fazer o trabalho, anote escolher o tema, pesquisar e revisar.\nReserve um intervalo para levantar e descansar. Se uma tarefa levou mais tempo que o esperado, ajuste o plano para o próximo dia. Ao final da semana, compare o planejado com o que aconteceu. Use essa observação para estimar melhor quanto tempo cada tipo de tarefa costuma ocupar.",
+      "Sources": []
+    },
+    {
+      "Id": "desenvolvimento-3",
+      "CategoryId": "desenvolvimento",
+      "Title": "Como construir bons hábitos de estudo",
+      "Description": "Experimente práticas de revisão e acompanhe o que aprende.",
+      "Difficulty": "Avançado",
+      "Text": "Uma rotina de estudo pode começar com um compromisso pequeno. Escolha um horário possível e prepare o material antes de sentar. Estudar sempre no mesmo lugar pode ajudar algumas pessoas, mas ter uma tarefa clara é mais importante do que esperar pelas condições perfeitas.\nDepois de ler uma explicação, feche o caderno e tente contar a ideia com suas próprias palavras. Em seguida, confira o que ficou incompleto. Esse esforço de lembrar ajuda a revelar quais pontos pedem nova revisão. Você também pode resolver uma questão diferente sobre o assunto e explicar por que cada passo faz sentido.\nRevisar em dias diferentes permite reencontrar o tema depois de algum esquecimento. Anote dúvidas para levar à próxima aula. Se uma técnica não ajudou, experimente outra e compare os resultados em uma atividade concreta. Um colega pode preferir esquemas, enquanto você entende melhor com exemplos. Avalie o que consegue explicar e aplicar, além do tempo que passou estudando. Uma pausa quando a atenção cai pode facilitar a retomada com um objetivo pequeno.",
+      "Sources": []
+    },
+    {
+      "Id": "profissoes-1",
+      "CategoryId": "profissoes",
+      "Title": "Conhecendo as profissões",
+      "Description": "Observe como trabalhos diferentes ajudam a comunidade.",
+      "Difficulty": "Iniciante",
+      "Text": "Uma escola precisa de pessoas com trabalhos diferentes. Há quem ensine, quem prepare refeições, quem organize materiais e quem cuide dos espaços. Cada tarefa exige conhecimentos e atenção. Pense em um profissional que você encontra no seu bairro. Que problema o trabalho dessa pessoa ajuda a resolver?",
+      "Sources": []
+    },
+    {
+      "Id": "profissoes-2",
+      "CategoryId": "profissoes",
+      "Title": "Comunicação e trabalho em equipe",
+      "Description": "Faça perguntas claras e confirme os combinados.",
+      "Difficulty": "Intermediário",
+      "Text": "Em uma oficina, duas pessoas podem dividir o conserto de uma bicicleta. Uma confere os freios enquanto a outra verifica as rodas. Se alguém encontrar um problema, precisa dizer em qual peça ele está e por que merece atenção. Mensagens claras tornam mais fácil organizar o trabalho.\nUm combinado importante pode ser repetido com outras palavras. Assim, a equipe verifica se todos entenderam o mesmo. Se houver dúvida, pergunte antes de agir. Ao terminar, registre o que foi feito e o que ainda falta. Essa prática ajuda tanto em trabalhos escolares como em muitas atividades profissionais.",
+      "Sources": []
+    },
+    {
+      "Id": "profissoes-3",
+      "CategoryId": "profissoes",
+      "Title": "Introdução ao empreendedorismo",
+      "Description": "Planeje uma ideia a partir de um problema real.",
+      "Difficulty": "Avançado",
+      "Text": "Empreender pode começar quando alguém percebe um problema e decide testar uma solução. Imagine estudantes que precisam de um jeito simples de organizar livros de uma feira de troca. Antes de criar caixas e etiquetas, eles conversam com os colegas para descobrir como preferem procurar os livros.\nUma solução pode ser testada em uma mesa pequena antes de ocupar todo o pátio. Durante o teste, a equipe observa o que funciona, onde aparecem filas e quais sinais confundem as pessoas. Um primeiro resultado ruim pode indicar que vale mudar a ideia, sem transformar o teste em desperdício.\nSe o projeto envolver venda, compare o custo dos materiais com o valor que poderá ser cobrado. Pense também no tempo de trabalho e em como explicar o produto com honestidade. Uma ideia sustentável precisa funcionar para quem oferece e para quem usa. Divida as tarefas, defina como serão tomadas as decisões e registre o que foi aprendido. Mesmo uma atividade sem lucro pode ensinar a planejar, negociar e melhorar uma solução com base em observações.",
+      "Sources": []
+    },
+    {
+      "Id": "historia-1",
+      "CategoryId": "historia",
+      "Title": "Conhecendo o Brasil",
+      "Description": "Observe a diversidade de paisagens e modos de viver.",
+      "Difficulty": "Iniciante",
+      "Text": "O Brasil é um país da América do Sul. Tem cidades grandes, pequenas comunidades e paisagens como praias, florestas e campos. As pessoas que vivem no país têm histórias e tradições variadas. Procure seu município em um mapa e observe o nome de um rio, estrada ou cidade vizinha.",
+      "Sources": []
+    },
+    {
+      "Id": "historia-2",
+      "CategoryId": "historia",
+      "Title": "As regiões brasileiras",
+      "Description": "Leia mapas e descubra como o território é organizado.",
+      "Difficulty": "Intermediário",
+      "Text": "Para apresentar informações sobre um país tão grande, o IBGE reúne os estados e o Distrito Federal em cinco grandes regiões: Norte, Nordeste, Centro-Oeste, Sudeste e Sul. Essa divisão é útil para comparar dados de população, clima e economia. As paisagens e os modos de viver também variam dentro de cada região.\nVeja em um mapa em que região está sua cidade. Escolha outra região e compare a distância até a costa ou a posição de dois rios. Leia a legenda para saber o que cada cor representa. Mapas diferentes ajudam a responder perguntas diferentes sobre o mesmo território.",
+      "Sources": []
+    },
+    {
+      "Id": "historia-3",
+      "CategoryId": "historia",
+      "Title": "A evolução dos meios de comunicação",
+      "Description": "Compare maneiras de enviar mensagens em épocas diferentes.",
+      "Difficulty": "Avançado",
+      "Text": "Antes das chamadas por vídeo, notícias viajavam por cartas, jornais e outros meios. Uma carta podia cruzar grandes distâncias, mas o tempo dependia do transporte e das rotas disponíveis. O telégrafo permitiu enviar mensagens codificadas usando sinais elétricos. O rádio trouxe notícias e programas a muitas pessoas ao mesmo tempo.\nAs tecnologias passaram a conviver em vez de simplesmente desaparecer a cada invenção. Há quem continue escrevendo cartas em datas especiais e quem ouça rádio para saber das notícias locais. Serviços digitais permitem enviar mensagens com grande rapidez em lugares conectados, mas o acesso à internet e a familiaridade com aparelhos variam de pessoa para pessoa.\nPara investigar como a comunicação mudou em sua região, converse com alguém de outra geração. Pergunte de que maneira recebia notícias e como avisava parentes que moravam longe. Compare dois relatos e observe se as experiências coincidem. Ao anotar, registre a época e o lugar mencionados. Esses detalhes ajudam a entender por que uma mudança que foi rápida em uma cidade pode ter demorado em outra.",
+      "Sources": []
+    },
+    {
+      "Id": "saude-1",
+      "CategoryId": "saude",
+      "Title": "Higiene no cotidiano",
+      "Description": "Cuide da limpeza e do bem-estar.",
+      "Difficulty": "Iniciante",
+      "Text": "Lavar as mãos com água e sabão ajuda a remover sujeira e microrganismos. Lembre-se de lavar as mãos antes de comer e depois de usar o banheiro. Ao tossir ou espirrar, cubra a boca com o braço dobrado ou use um lenço. Pequenos cuidados ajudam quem está perto de você.",
+      "Sources": []
+    },
+    {
+      "Id": "saude-2",
+      "CategoryId": "saude",
+      "Title": "A importância do sono",
+      "Description": "Entenda como o descanso ajuda na rotina.",
+      "Difficulty": "Intermediário",
+      "Text": "O sono ajuda o corpo a descansar e participa de processos ligados à memória e à aprendizagem. Depois de uma noite mal dormida, é comum sentir dificuldade para prestar atenção. A quantidade de sono de que uma pessoa precisa varia com a idade e outros fatores.\nHorários regulares ajudam a criar uma rotina. Perto da hora de dormir, tente reduzir atividades estimulantes e deixe as telas de lado por um tempo. Um ambiente tranquilo pode facilitar o descanso. Se a dificuldade para dormir se repetir e prejudicar seu dia, conte a um adulto para que ele possa orientar os próximos passos.",
+      "Sources": []
+    },
+    {
+      "Id": "saude-3",
+      "CategoryId": "saude",
+      "Title": "Alimentação e hábitos saudáveis",
+      "Description": "Observe como as escolhas do dia a dia se combinam.",
+      "Difficulty": "Avançado",
+      "Text": "Uma alimentação variada pode incluir alimentos como arroz, feijão, frutas, verduras, ovos e outras opções disponíveis na família ou na comunidade. Alimentos diferentes oferecem nutrientes diferentes. A água também é importante, e beber ao longo do dia ajuda a repor o que o corpo perde, especialmente quando faz calor ou durante brincadeiras.\nComer em um lugar tranquilo e prestar atenção à fome e à saciedade pode ajudar a perceber como o corpo se sente. Provar um alimento novo é uma oportunidade de conhecer sabores. A forma de preparar muda a experiência: legumes podem ser assados, cozidos ou combinados a outras receitas, conforme o alimento e os costumes locais.\nCuidar da saúde envolve mais do que a comida. Dormir, brincar, movimentar-se e conviver com outras pessoas também fazem parte de uma rotina de bem-estar. As condições de cada família influenciam as escolhas possíveis. Na escola, você pode conversar sobre o que facilita levar água ou encontrar um lanche adequado. Quando surgir uma dúvida pessoal sobre alimentação, procure um adulto e, se necessário, orientação de um profissional de saúde.",
+      "Sources": []
+    },
+    {
+      "Id": "tecnologia-4",
+      "CategoryId": "tecnologia",
+      "Title": "Meu primeiro algoritmo",
+      "Description": "Organize instruções em uma sequência que alguém possa seguir.",
+      "Difficulty": "Iniciante",
+      "Text": "Um algoritmo é uma sequência de instruções para realizar uma tarefa. Imagine explicar a um colega como guardar os livros de uma estante por ordem alfabética. Diga primeiro como comparar os títulos e depois onde colocar cada livro. Se duas pessoas interpretarem uma instrução de modo diferente, revise o passo.",
+      "Sources": []
+    },
+    {
+      "Id": "tecnologia-5",
+      "CategoryId": "tecnologia",
+      "Title": "Da carta ao arquivo digital",
+      "Description": "Compare maneiras de guardar a mesma informação.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma carta guarda palavras em papel. Um texto digital guarda informações que um programa interpreta e mostra na tela. Em ambos os casos, a mensagem pode ser legível para quem conhece o idioma. O suporte, porém, muda a forma de duplicar, editar e transportar o trabalho.\nImagine que a turma vai guardar depoimentos sobre a história da escola. Uma pasta física protege as folhas, enquanto uma cópia digital pode facilitar consultas. Dê nomes claros aos arquivos e mantenha uma cópia em outro local autorizado. Predetermine quem pode consultar o material e evite incluir dados pessoais desnecessários.",
+      "Sources": []
+    },
+    {
+      "Id": "ciencias-4",
+      "CategoryId": "ciencias",
+      "Title": "A sombra muda de lugar",
+      "Description": "Observe a relação entre a luz e a sombra.",
+      "Difficulty": "Iniciante",
+      "Text": "Uma sombra aparece quando um objeto bloqueia a passagem da luz. Use um lápis em pé sobre a mesa e ilumine-o com uma lanterna. Mude a posição da lanterna e observe onde a sombra se forma. Desenhe duas posições. O que aconteceu quando você aproximou a luz da mesa?",
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "O que pode mudar quando movemos a lanterna?",
+        "Options": [
+          "O idioma do desenho.",
+          "A posição e a forma da sombra.",
+          "O material do lápis."
+        ],
+        "AnswerIndex": 1,
+        "Explanation": "A sombra depende da posição e do ângulo da fonte de luz."
+      }
+    },
+    {
+      "Id": "ciencias-5",
+      "CategoryId": "ciencias",
+      "Title": "Como as sementes viajam",
+      "Description": "Descubra maneiras de uma planta chegar a outros lugares.",
+      "Difficulty": "Intermediário",
+      "Text": "Ao cair perto da planta que a produziu, uma semente pode disputar espaço com outras plantas. Muitas espécies possuem formas de espalhar suas sementes. Sementes leves podem ser levadas pelo vento. Algumas ficam dentro de frutos que servem de alimento a animais. Outras se prendem ao pelo de um animal e caem em outro lugar.\nObserve sementes diferentes sem arrancar plantas. Compare o peso, o formato e a presença de estruturas que parecem asas ou ganchos. Proponha uma hipótese para cada uma. Uma hipótese é uma explicação provisória que pode ser avaliada com novas observações.",
+      "Sources": []
+    },
+    {
+      "Id": "ambiente-4",
+      "CategoryId": "ambiente",
+      "Title": "O caminho da chuva",
+      "Description": "Siga a água depois que ela toca o chão.",
+      "Difficulty": "Iniciante",
+      "Text": "Quando chove, parte da água entra no solo e parte corre pela superfície. Em ruas cobertas por asfalto, há menos espaço para a infiltração. Nas áreas com terra e plantas, a água pode seguir outro caminho. Depois de uma chuva, observe de um lugar seguro onde surgem poças.",
+      "Sources": []
+    },
+    {
+      "Id": "ambiente-5",
+      "CategoryId": "ambiente",
+      "Title": "Uma horta em pequenos espaços",
+      "Description": "Planeje um cultivo com as condições de que você dispõe.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma horta pode aproveitar vasos, canteiros ou recipientes adequados que tenham furos para escoar água. Antes de escolher as plantas, observe quanto tempo o local recebe luz ao longo do dia. Diferentes espécies pedem diferentes condições. Excesso de água pode prejudicar plantas tanto quanto a falta.\nCombine com um adulto quem vai verificar os vasos e quando a terra será observada. Um registro com datas, pequenas fotografias e desenhos ajuda a acompanhar o crescimento. Se duas plantas se desenvolverem de modo diferente, procure quais fatores variaram antes de concluir por que isso aconteceu.",
+      "Sources": []
+    },
+    {
+      "Id": "financas-4",
+      "CategoryId": "financas",
+      "Title": "Comparando preços por quantidade",
+      "Description": "Use o mesmo tamanho de porção para comparar dois preços.",
+      "Difficulty": "Iniciante",
+      "Text": "Dois pacotes do mesmo produto podem ter tamanhos diferentes. Para comparar preços, veja quanto cada um custa pela mesma quantidade. Um pacote maior pode custar menos por quilo e ainda assim sobrar. Na hora de escolher, pense também em quanto será usado e em quanto dinheiro está disponível hoje.",
+      "Sources": []
+    },
+    {
+      "Id": "financas-5",
+      "CategoryId": "financas",
+      "Title": "Planejando uma feira de troca",
+      "Description": "Crie regras simples para trocar objetos com cuidado.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma feira de troca ajuda a aproveitar objetos que já existem. Antes do encontro, decidam quais itens podem ser levados e em que condições precisam estar. Um livro rasgado ou um jogo incompleto deve ser apresentado com clareza. Cada pessoa pode aceitar ou recusar uma oferta sem pressão.\nFaçam uma lista das tarefas da turma: organizar mesas, orientar visitantes e guardar os materiais emprestados. Calculem se terão despesas com etiquetas ou cartazes e busquem materiais reaproveitáveis. No fim da feira, perguntem se a organização facilitou as trocas e o que poderia mudar em outra edição.",
+      "Sources": []
+    },
+    {
+      "Id": "seguranca-4",
+      "CategoryId": "seguranca",
+      "Title": "Uma foto carrega informações",
+      "Description": "Pense no que aparece ao fundo antes de compartilhar.",
+      "Difficulty": "Iniciante",
+      "Text": "Antes de compartilhar uma foto, observe o fundo. Uma placa com endereço, o uniforme da escola ou um papel com telefone pode aparecer sem querer. Pergunte se as pessoas da imagem aceitam o compartilhamento. Se estiver em dúvida, espere e converse com um adulto de confiança antes de publicar.",
+      "Sources": []
+    },
+    {
+      "Id": "seguranca-5",
+      "CategoryId": "seguranca",
+      "Title": "Conferindo de onde veio uma notícia",
+      "Description": "Descubra se uma imagem e sua legenda contam a mesma história.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma notícia recebida por mensagem pode ter sido recortada ou retirada de outro contexto. Leia além do título e confira qual organização publicou o conteúdo. Procure a data e veja se a notícia menciona o local. Uma fotografia antiga pode reaparecer como se tivesse sido feita ontem.\nCompare a informação com outro veículo ou com a instituição que acompanha o assunto. Uma busca pelo trecho principal pode encontrar versões diferentes. Ao encontrar um erro, evite espalhar a mensagem enquanto investiga. Se quiser conversar sobre ela na escola, explique o que você conseguiu conferir.",
+      "Sources": []
+    },
+    {
+      "Id": "cidadania-4",
+      "CategoryId": "cidadania",
+      "Title": "Cuidando da biblioteca da turma",
+      "Description": "Combine regras para que todos possam emprestar livros.",
+      "Difficulty": "Iniciante",
+      "Text": "Uma biblioteca de turma funciona melhor quando todos conseguem encontrar os livros. Ao pegar um exemplar, registre o empréstimo do jeito combinado. Guarde o livro em um lugar seco e devolva-o na data prevista. Se ele se danificar, comunique o que aconteceu para que o grupo encontre uma solução.",
+      "Sources": []
+    },
+    {
+      "Id": "cidadania-5",
+      "CategoryId": "cidadania",
+      "Title": "Um passeio que acolhe a turma",
+      "Description": "Considere diferentes necessidades ao planejar uma atividade coletiva.",
+      "Difficulty": "Avançado",
+      "Text": "Uma turma planeja visitar uma exposição. O grupo quer que todos possam participar do passeio, mas nem todas as pessoas usam o espaço da mesma maneira. Algumas preferem ler a explicação, outras entendem melhor ouvindo. Para um colega, caminhar por muito tempo pode ser cansativo. Para outro, sons altos podem tornar difícil permanecer em uma sala.\nAntes de fechar o roteiro, a turma pode levantar perguntas sobre o local. Há acesso por rampa, elevador ou caminho sem degraus? Existem lugares para sentar? É possível ler as explicações com letra maior ou usar um material de apoio? A escola pode consultar a equipe da exposição e combinar formas de aproveitar a atividade.\nDurante o passeio, as pessoas podem escolher entre algumas maneiras de observar a mesma obra. Um grupo faz desenhos, outro escuta uma explicação e outro descreve detalhes para a turma. Na volta, comparem essas experiências. Uma proposta inclusiva costuma melhorar quando as pessoas afetadas participam das decisões e conseguem dizer de que apoio precisam.",
+      "Sources": []
+    },
+    {
+      "Id": "desenvolvimento-4",
+      "CategoryId": "desenvolvimento",
+      "Title": "Um caderno de perguntas",
+      "Description": "Transforme uma dúvida em ponto de partida para aprender.",
+      "Difficulty": "Iniciante",
+      "Text": "Separe uma página do caderno para registrar perguntas que surgem durante a aula. Escreva a dúvida com suas palavras e anote o tema. Depois, escolha uma pergunta para investigar. Quando encontrar uma resposta, registre onde a descobriu e deixe espaço para escrever uma nova pergunta que tenha aparecido.",
+      "Sources": []
+    },
+    {
+      "Id": "desenvolvimento-5",
+      "CategoryId": "desenvolvimento",
+      "Title": "Explicar para aprender melhor",
+      "Description": "Experimente ensinar uma ideia para descobrir o que ainda falta compreender.",
+      "Difficulty": "Avançado",
+      "Text": "Uma pessoa pode reconhecer uma ideia quando lê sobre ela e ainda ter dificuldade de explicá-la. Para descobrir onde está a dúvida, escolha um tema estudado e conte o que sabe para um colega. Procure usar suas palavras. Em vez de repetir a definição do livro, tente incluir um exemplo que faça parte da experiência de vocês.\nSe o colega interromper para fazer uma pergunta, anote o ponto. Talvez você tenha pulado uma etapa porque a considerou óbvia. Talvez tenha usado uma palavra cujo significado ainda não está claro. Abra o material de estudo e procure apenas o trecho necessário para revisar a explicação.\nDepois da revisão, faça outro teste. Apresente um exemplo diferente ou peça ao colega que tente explicar o tema de volta. Observem se a explicação ajuda a resolver um problema novo. Uma resposta pode parecer decorada quando só funciona para a mesma pergunta. Uma boa compreensão permite comparar situações, justificar uma escolha e reconhecer quando ainda falta informação.",
+      "Sources": []
+    },
+    {
+      "Id": "profissoes-4",
+      "CategoryId": "profissoes",
+      "Title": "O trabalho atrás do palco",
+      "Description": "Conheça algumas tarefas que ajudam uma apresentação a acontecer.",
+      "Difficulty": "Iniciante",
+      "Text": "Antes de uma peça começar, muitas pessoas trabalham nos bastidores. Alguém prepara as luzes. Outra pessoa confere o som, e uma equipe organiza figurinos e objetos. Quando cada função tem um responsável, fica mais fácil perceber o que falta. Quais tarefas seriam necessárias para montar uma apresentação na sua escola?",
+      "Sources": []
+    },
+    {
+      "Id": "profissoes-5",
+      "CategoryId": "profissoes",
+      "Title": "Um projeto para melhorar a escola",
+      "Description": "Aprenda a observar um problema e avaliar se uma solução ajudou.",
+      "Difficulty": "Avançado",
+      "Text": "Um grupo percebe que os materiais compartilhados da sala demoram a ser encontrados. Em vez de comprar caixas imediatamente, decide observar como as pessoas usam o armário. Durante alguns dias, a equipe faz anotações sobre quais objetos são procurados com mais frequência e onde costumam ficar depois de usados.\nA partir das observações, o grupo propõe dividir o armário por tipos de material. Cada espaço recebe uma placa com palavras e desenhos. Os materiais mais usados ficam ao alcance da maioria das pessoas. Antes de aplicar a organização em todo o armário, a turma experimenta a ideia em uma prateleira.\nApós uma semana, os estudantes perguntam aos colegas se ficou mais fácil localizar e devolver os objetos. Se algumas placas ainda causam dúvida, a equipe pode ajustar os desenhos ou mudar a posição dos itens. O objetivo é resolver o problema observado. Esse processo aparece em muitas profissões: ouvir as pessoas, testar uma ideia no tamanho adequado e acompanhar o resultado antes de ampliar o projeto.",
+      "Sources": []
+    },
+    {
+      "Id": "historia-4",
+      "CategoryId": "historia",
+      "Title": "Lendo a legenda de um mapa",
+      "Description": "Descubra o significado das cores e dos símbolos.",
+      "Difficulty": "Iniciante",
+      "Text": "A legenda de um mapa explica o que suas cores e marcas representam. Uma linha pode indicar uma rua, um rio ou uma fronteira, conforme o mapa. Antes de interpretar o desenho, leia a legenda. Depois, aponte dois símbolos e explique para um colega o significado de cada um.",
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "Onde está explicado o significado dos símbolos de um mapa?",
+        "Options": [
+          "Na legenda.",
+          "Na margem branca.",
+          "Somente no título."
+        ],
+        "AnswerIndex": 0,
+        "Explanation": "A legenda informa o que as cores, linhas e marcas representam."
+      }
+    },
+    {
+      "Id": "historia-5",
+      "CategoryId": "historia",
+      "Title": "O bairro visto em tempos diferentes",
+      "Description": "Compare mapas e relatos para entender mudanças na paisagem.",
+      "Difficulty": "Avançado",
+      "Text": "A paisagem de um bairro muda com o tempo. Uma antiga passagem pode dar lugar a uma avenida, e um terreno vazio pode virar uma praça. Nem todas as mudanças acontecem de uma vez. Para investigar quando elas ocorreram, reúna materiais que indiquem datas e possam ser examinados sem depender apenas de uma lembrança.\nUm mapa antigo revela a posição das ruas e de alguns edifícios. Uma fotografia pode mostrar fachadas, árvores ou placas que não aparecem no mapa. Relatos de moradores ajudam a entender o uso dos espaços: onde as pessoas se reuniam, por quais caminhos passavam ou que serviços precisavam procurar longe.\nQuando dois relatos são diferentes, registre os dois. É possível que as pessoas tenham vivido no bairro em épocas distintas ou frequentado partes diferentes. Compare os depoimentos com outros documentos e marque as dúvidas no seu caderno. Ao apresentar a pesquisa, distinga o que foi possível confirmar do que ainda precisa de investigação. Assim, você mostra como chegou à sua interpretação.",
+      "Sources": []
+    },
+    {
+      "Id": "saude-4",
+      "CategoryId": "saude",
+      "Title": "Uma pausa para o corpo",
+      "Description": "Observe como pequenas pausas ajudam durante tarefas longas.",
+      "Difficulty": "Iniciante",
+      "Text": "Quando passamos muito tempo na mesma posição, é útil fazer uma pausa. Levante quando for seguro, movimente-se de um jeito confortável e descanse os olhos olhando para longe. Se sentir dor ou desconforto repetido ao usar o computador, avise um adulto. A prática pode continuar em outro momento.",
+      "Sources": []
+    },
+    {
+      "Id": "saude-5",
+      "CategoryId": "saude",
+      "Title": "Cuidando do lanche coletivo",
+      "Description": "Organize um lanche com higiene e atenção às pessoas.",
+      "Difficulty": "Avançado",
+      "Text": "Antes de um piquenique da turma, é importante combinar como os alimentos serão transportados e servidos. Alimentos que precisam de refrigeração pedem cuidado para não permanecerem fora da temperatura adequada por muito tempo. Os responsáveis podem escolher opções apropriadas ao local e ao tempo de deslocamento.\nA turma também precisa conhecer as regras da escola sobre alergias e restrições alimentares. Uma aparência parecida não garante que dois alimentos tenham os mesmos ingredientes. Consulte rótulos e siga a orientação dos adultos responsáveis. Ao servir, respeite quem prefere não provar uma preparação e mantenha os utensílios que precisam ficar separados.\nProvidencie um lugar para lavar as mãos e organize um recipiente para descartar resíduos. Frutas com casca que serão cortadas devem ser preparadas conforme as orientações de higiene da escola. Depois do lanche, cada grupo pode conferir se o local ficou limpo e agradecer quem ajudou na organização. Um bom encontro coletivo depende de planejamento, cuidado com os alimentos e respeito às necessidades de cada pessoa.",
+      "Sources": []
+    }
+  ]
+}

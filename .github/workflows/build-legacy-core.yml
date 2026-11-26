@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: microsoft/setup-msbuild@v2
       - name: Restore .NET 3.5 reference assemblies
-        shell: pwsh
+        shell: powershell
         run: |
           nuget install Microsoft.NETFramework.ReferenceAssemblies.net35 -Version 1.0.3 -OutputDirectory packages -NonInteractive
           if ($LASTEXITCODE -ne 0) { throw 'Could not restore .NET 3.5 reference assemblies.' }
@@ -28,7 +28,7 @@ jobs:
         shell: pwsh
         run: .\scripts\build-legacy-core.ps1
       - name: Verify target and publish assembly artifact
-        shell: pwsh
+        shell: powershell
         run: |
           $dll = 'src/ITDigitacao.Legacy.Core/bin/x86/Release/ITDigitacao.Legacy.Core.dll'
           if (-not (Test-Path $dll)) { throw 'Legacy Core output is missing.' }

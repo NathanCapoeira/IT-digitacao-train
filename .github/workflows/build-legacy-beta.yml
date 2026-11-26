@@ -1,0 +1,38 @@
+name: Build IT Digitacao Legacy beta
+on:
+  workflow_dispatch:
+  push:
+    branches: [legacy/net35-full]
+    paths:
+      - 'src/ITDigitacao.Legacy.Core/**'
+      - 'src/ITDigitacao.Legacy.App/**'
+      - 'src/ITDigitacao.Legacy.Shortcut/**'
+      - 'scripts/build-legacy-core.ps1'
+      - 'scripts/build-legacy-beta.ps1'
+      - '.github/workflows/build-legacy-beta.yml'
+      - 'docs/legacy/**'
+jobs:
+  beta:
+    runs-on: windows-2022
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: microsoft/setup-msbuild@v2
+      - name: Restore .NET 3.5 references
+        shell: pwsh
+        run: |
+          nuget install Microsoft.NETFramework.ReferenceAssemblies.net35 -Version 1.0.3 -OutputDirectory packages -NonInteractive
+          if ($LASTEXITCODE -ne 0) { throw 'Restore .NET 3.5 references failed.' }
+          $refs=(Resolve-Path 'packages/Microsoft.NETFramework.ReferenceAssemblies.net35.1.0.3/build/.NETFramework/v3.5').Path
+          foreach($n in 'mscorlib.dll','System.ServiceModel.Web.dll'){if(!(Test-Path (Join-Path $refs $n))){throw "Missing .NET 3.5 reference: $n"}}
+          "FrameworkPathOverride=$refs" | Out-File $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Compile, verify and package fresh outputs
+        shell: powershell
+        run: .\scripts\build-legacy-beta.ps1
+      - name: Upload portable beta
+        uses: actions/upload-artifact@v4
+        with:
+          name: IT-Digitacao-Legacy-2.0.0-beta.1-Portable-x86
+          path: IT-Digitacao-Legacy-2.0.0-beta.1-Portable-x86.zip
+          if-no-files-found: error

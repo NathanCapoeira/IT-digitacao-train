@@ -1,0 +1,5 @@
+IT Digitação Legacy beta.1
+
+Esta versão ainda não possui equivalência integral com Standard. A beta inclui navegação inicial, catálogo completo com pesquisa/filtros, prática e métricas básicas, resumo, guia ABNT2 simplificado e criador de atalho.
+
+Pendências: persistência efetiva de configurações, perguntas educativas, conquistas completas, refinamento visual tela a tela em relação à Standard, validação automatizada de todos os fluxos e teste presencial desta compilação completa. A prova de conceito isolada foi validada no Windows 7, mas isso não comprova a aplicação beta.

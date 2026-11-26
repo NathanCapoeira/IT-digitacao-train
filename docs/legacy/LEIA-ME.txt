@@ -1,0 +1,3 @@
+IT Digitação Legacy beta.1 — portátil x86
+Extraia a pasta completa em local acessível ao usuário e execute IT-Digitacao.exe. O programa funciona offline e requer o .NET Framework 3.5 já habilitado no Windows.
+Criar-Atalho.exe cria o atalho do usuário atual. Se estiver em pendrive, copie primeiro a pasta para o computador.
