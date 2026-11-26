@@ -95,7 +95,7 @@
                     <Border Style="{StaticResource BannerStyle}">
                         <StackPanel>
                             <TextBlock x:Name="SectionTitle" FontSize="30" Foreground="White" FontWeight="Bold"
-                                       TextWrapping="Wrap" AutomationProperties.HeadingLevel="Level1" />
+                                       TextWrapping="Wrap" />
                             <TextBlock x:Name="SectionDescription" Foreground="White" Margin="0,6,0,0"
                                        TextWrapping="Wrap" />
                         </StackPanel>

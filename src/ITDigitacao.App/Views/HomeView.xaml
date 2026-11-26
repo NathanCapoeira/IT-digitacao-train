@@ -44,8 +44,7 @@
                     <TextBlock Text="Aprenda. Pratique. Transforme." FontWeight="SemiBold" FontSize="13"
                                Foreground="#FFF1F2" TextWrapping="Wrap" />
                     <TextBlock x:Name="HeroTitle" Text="Vamos aprender algo incrível hoje?" Margin="0,6,0,9"
-                               FontSize="35" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"
-                               AutomationProperties.HeadingLevel="Level1" />
+                               FontSize="35" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" />
                     <TextBlock Text="Descubra novos conhecimentos enquanto desenvolve suas habilidades no teclado."
                                FontSize="15" Foreground="White" TextWrapping="Wrap" MaxWidth="440"
                                HorizontalAlignment="Left" />
@@ -67,8 +66,7 @@
                    VerticalAlignment="Top" />
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="DurationTitle" Text="Escolha seu tempo de prática"
-                           FontSize="21" FontWeight="Bold" TextWrapping="Wrap"
-                           AutomationProperties.HeadingLevel="Level2" />
+                           FontSize="21" FontWeight="Bold" TextWrapping="Wrap" />
                 <TextBlock Text="Quanto tempo você tem disponível hoje?" FontSize="13"
                            Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" />
             </StackPanel>
