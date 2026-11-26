@@ -42,12 +42,27 @@ jobs:
         run: |
           $extract=Join-Path $env:RUNNER_TEMP 'legacy-beta-integrity'
           $testExe=Join-Path $extract 'legacy-layout-smoke.exe'
+          $ErrorActionPreference='Continue'
           $framework=Join-Path $env:WINDIR 'Microsoft.NET\Framework\v4.0.30319'
           $wpf=Join-Path ${env:ProgramFiles(x86)} 'Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8'
-          & (Join-Path $framework 'csc.exe') /nologo /platform:x86 "/out:$testExe" "/r:$wpf\WindowsBase.dll" "/r:$wpf\PresentationCore.dll" "/r:$wpf\PresentationFramework.dll" tests/legacy-layout-smoke.cs
-          if ($LASTEXITCODE -ne 0) { throw 'Legacy layout test compilation failed.' }
-          & $testExe
-          if ($LASTEXITCODE -ne 0) { throw 'Legacy layout tests failed.' }
+          $compilerArgs=@('/nologo','/platform:x86',"/out:$testExe")
+          foreach($reference in 'WindowsBase','PresentationCore','PresentationFramework','System.Xaml'){
+            $compilerArgs+="/reference:$wpf\$reference.dll"
+          }
+          $diagnostics=@(& (Join-Path $framework 'csc.exe') @compilerArgs tests/legacy-layout-smoke.cs 2>&1)
+          $result=$LASTEXITCODE
+          $diagnostics | Out-Host
+          if ($result -ne 0) {
+            $diagnostics | ForEach-Object { Write-Host "::error title=Legacy layout compilation::$_" }
+            exit $result
+          }
+          $diagnostics=@(& $testExe 2>&1)
+          $result=$LASTEXITCODE
+          $diagnostics | Out-Host
+          if ($result -ne 0) {
+            $diagnostics | ForEach-Object { Write-Host "::error title=Legacy layout test::$_" }
+            exit $result
+          }
       - name: Generate ZIP SHA-256
         shell: pwsh
         run: |
