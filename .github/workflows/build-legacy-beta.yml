@@ -49,7 +49,8 @@ jobs:
           foreach($reference in 'WindowsBase','PresentationCore','PresentationFramework','System.Xaml'){
             $compilerArgs+="/reference:$wpf\$reference.dll"
           }
-          $diagnostics=@(& (Join-Path $framework 'csc.exe') @compilerArgs tests/legacy-layout-smoke.cs 2>&1)
+          $testSource=(Resolve-Path -LiteralPath 'tests\legacy-layout-smoke.cs').Path
+          $diagnostics=@(& (Join-Path $framework 'csc.exe') @compilerArgs $testSource 2>&1)
           $result=$LASTEXITCODE
           $diagnostics | Out-Host
           if ($result -ne 0) {
