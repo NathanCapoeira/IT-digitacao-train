@@ -4,7 +4,7 @@ A Beta 2 aprimora o cabeçalho, Home, Biblioteca, editor e persistência de pref
 
 Pendências funcionais e visuais:
 - O editor agora tem painéis lado a lado/empilhados, barra de ferramentas básica, quatro cards de métricas e progresso; ainda faltam realce de caracteres e vários controles da Standard.
-- Perguntas educativas não foram integradas ao fluxo.
+- Perguntas educativas do catálogo agora aparecem após concluir uma atividade que tenha quiz, com alternativas, feedback e explicação. Ainda falta validação interativa no Windows.
 - Guia ABNT2 ainda não contém teclado visual interativo, legenda de dedos nem todas as orientações da Standard.
 - Preferências de fonte, som, métricas, concentração, feedback e efeitos são salvas no perfil; algumas opções ainda não são aplicadas em todas as telas.
 - Resultados e conquistas não reproduzem todos os cards, ícones, animações e regras de apresentação Standard.

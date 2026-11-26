@@ -4,4 +4,6 @@ IT Digitação Legacy 2.0.0-beta.2
 - Biblioteca ganhou banner, dez cards ilustrados, contagens, pesquisa, filtros e cards de atividade.
 - Editor ganhou cabeçalho com cronômetro, barra de ferramentas, painéis de referência/digitação com adaptação para largura menor e quatro métricas.
 - Configurações passam a salvar preferências JSON no perfil do usuário e aplicar tamanho de fonte/som.
+- Atividades com Quiz no catálogo exibem a pergunta real, alternativas, feedback de resposta e explicação antes de continuar a sessão.
+- Pesquisa e filtro por dificuldade atualizam a lista ao editar o campo/seleção; os cards de duração se reorganizam em janelas menores.
 - Componentes reutilizáveis e cores institucionais foram centralizados.

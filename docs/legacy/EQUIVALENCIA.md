@@ -10,6 +10,7 @@ Base de auditoria: Standard em `d8962ed`; Legacy completa iniciada em `legacy/ne
 | Resultados | resumo e métricas da sessão | A implementar |
 | Conquistas | regras em `SessionAwards` e apresentação visual | A implementar |
 | Guia ABNT2 | mapa de teclas, dedos e exercício guiado | A implementar |
+| Perguntas | pergunta real do catálogo, alternativas, resposta e explicação | Parcial na beta.2: fluxo usa QuizQuestion do catálogo e apresenta feedback; integração visual ainda requer validação |
 | Configurações | fonte, som, métricas, concentração, feedback e efeitos | Persistência JSON implementada na beta.2; aplicação de algumas opções ainda parcial |
 | Persistência | preferências JSON no perfil do usuário | Implementada via Core Legacy em LocalApplicationData; coberta por teste de round-trip |
 | Atalho | não existe na Standard | Novo requisito Legacy |

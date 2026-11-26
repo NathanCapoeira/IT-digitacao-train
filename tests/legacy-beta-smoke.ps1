@@ -9,6 +9,11 @@ try {
  if($repository.Activities.Count -ne 50){throw "Expected 50 activities, got $($repository.Activities.Count)"}
  if(!$stream.CanRead){throw 'ActivityRepository.Load closed its caller-owned stream.'}
  if($repository.Find('tecnologia',$null,$null).Count -lt 1){throw 'Catalog search failed.'}
+ $quizzes=@($repository.Activities | Where-Object {$null -ne $_.Quiz})
+ if($quizzes.Count -lt 1){throw 'Catalog must contain real educational questions for the Legacy question flow.'}
+ foreach($activity in $quizzes){
+  if([string]::IsNullOrWhiteSpace($activity.Quiz.Prompt) -or [string]::IsNullOrWhiteSpace($activity.Quiz.Explanation) -or $activity.Quiz.Options.Count -ne 3 -or $activity.Quiz.AnswerIndex -lt 0 -or $activity.Quiz.AnswerIndex -ge $activity.Quiz.Options.Count){throw "Invalid quiz data in $($activity.Id)."}
+ }
 } finally {$stream.Dispose()}
 # Build Portuguese strings from Unicode code points so PowerShell 5.1 ANSI fallback cannot alter the test data.
 $cedilla=[char]0x00E7; $tildeA=[char]0x00E3
