@@ -1,4 +1,4 @@
-IT Digitação Legacy 2.0.0-beta.2 — portátil x86
+IT Digitação Legacy 2.0.0-beta.3 — portátil x86
 Extraia a pasta completa em local acessível ao usuário e execute IT-Digitacao.exe. A edição foi compilada para WPF, .NET Framework 3.5, CLR 2.0 e x86. Requer o .NET Framework 3.5 já habilitado no Windows e funciona offline.
 Criar-Atalho.exe cria o atalho do usuário atual. Se estiver em pendrive, copie primeiro a pasta completa para o computador.
 Esta é uma versão beta sem equivalência completa com Standard. Consulte LIMITACOES-BETA.txt.

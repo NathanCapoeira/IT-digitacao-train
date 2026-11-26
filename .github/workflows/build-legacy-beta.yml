@@ -12,6 +12,7 @@ on:
       - '.github/workflows/build-legacy-beta.yml'
       - 'docs/legacy/**'
       - 'tests/legacy-beta-smoke.ps1'
+      - 'tests/legacy-layout-smoke.cs'
 jobs:
   beta:
     runs-on: windows-2022
@@ -36,17 +37,48 @@ jobs:
         run: |
           & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -File .\tests\legacy-beta-smoke.ps1
           if ($LASTEXITCODE -ne 0) { throw 'Legacy beta smoke tests failed.' }
+      - name: Run Legacy WPF layout smoke tests
+        shell: powershell
+        run: |
+          $extract=Join-Path $env:RUNNER_TEMP 'legacy-beta-integrity'
+          $testExe=Join-Path $extract 'legacy-layout-smoke.exe'
+          $framework=Join-Path $env:WINDIR 'Microsoft.NET\Framework\v4.0.30319'
+          $wpf=Join-Path ${env:ProgramFiles(x86)} 'Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8'
+          & (Join-Path $framework 'csc.exe') /nologo /platform:x86 "/out:$testExe" "/r:$wpf\WindowsBase.dll" "/r:$wpf\PresentationCore.dll" "/r:$wpf\PresentationFramework.dll" tests/legacy-layout-smoke.cs
+          if ($LASTEXITCODE -ne 0) { throw 'Legacy layout test compilation failed.' }
+          & $testExe
+          if ($LASTEXITCODE -ne 0) { throw 'Legacy layout tests failed.' }
       - name: Generate ZIP SHA-256
         shell: pwsh
         run: |
-          $zip='IT-Digitacao-Legacy-2.0.0-beta.2-Portable-x86.zip'
+          $zip='IT-Digitacao-Legacy-2.0.0-beta.3-Portable-x86.zip'
           $hash=(Get-FileHash $zip -Algorithm SHA256).Hash.ToLowerInvariant()
           "$hash *$zip" | Set-Content SHA256SUMS.txt -Encoding ascii
       - name: Upload portable beta
         uses: actions/upload-artifact@v4
         with:
-          name: IT-Digitacao-Legacy-2.0.0-beta.2-Portable-x86
+          name: IT-Digitacao-Legacy-2.0.0-beta.3-Portable-x86
           path: |
-            IT-Digitacao-Legacy-2.0.0-beta.2-Portable-x86.zip
+            IT-Digitacao-Legacy-2.0.0-beta.3-Portable-x86.zip
             SHA256SUMS.txt
           if-no-files-found: error
+
+  publish:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/legacy/net35-full'
+    needs: beta
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: IT-Digitacao-Legacy-2.0.0-beta.3-Portable-x86
+      - name: Publish verified Legacy pre-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha256sum --check SHA256SUMS.txt
+          gh release create v2.0.0-beta.3-legacy --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --prerelease --latest=false --title "IT Digitação Legacy 2.0.0-beta.3" \
+            --notes "Ajustes de responsividade na janela e no editor da edição Legacy (.NET Framework 3.5, x86)." \
+            IT-Digitacao-Legacy-2.0.0-beta.3-Portable-x86.zip SHA256SUMS.txt

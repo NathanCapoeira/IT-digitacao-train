@@ -64,9 +64,9 @@ foreach($file in $assemblies){
  }
 }
 $sha=(Get-FileHash (Join-Path $publish 'IT-Digitacao.exe') -Algorithm SHA256).Hash.ToLowerInvariant()
-$info=[ordered]@{Product='IT Digitação Legacy';Version='2.0.0-beta.2';Commit=(git -C $root rev-parse HEAD);Framework='.NET Framework 3.5';CLR='v2.0.50727';Architecture='x86';ApplicationSha256=$sha;BuiltUtc=[DateTime]::UtcNow.ToString('o')}
+$info=[ordered]@{Product='IT Digitação Legacy';Version='2.0.0-beta.3';Commit=(git -C $root rev-parse HEAD);Framework='.NET Framework 3.5';CLR='v2.0.50727';Architecture='x86';ApplicationSha256=$sha;BuiltUtc=[DateTime]::UtcNow.ToString('o')}
 $info|ConvertTo-Json|Set-Content (Join-Path $publish 'BUILD-INFO.json') -Encoding UTF8
-$zip=Join-Path $root 'IT-Digitacao-Legacy-2.0.0-beta.2-Portable-x86.zip'
+$zip=Join-Path $root 'IT-Digitacao-Legacy-2.0.0-beta.3-Portable-x86.zip'
 if(Test-Path $zip){Remove-Item $zip -Force}
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [IO.Compression.ZipFile]::CreateFromDirectory($publish,$zip,[IO.Compression.CompressionLevel]::Optimal,$false)

@@ -1,4 +1,4 @@
-IT Digitação Legacy 2.0.0-beta.2 — distribuição de desenvolvimento
+IT Digitação Legacy 2.0.0-beta.3 — distribuição de desenvolvimento
 
 A edição usa WPF programático, .NET Framework 3.5, CLR 2.0 e Release x86. Requer que o .NET Framework 3.5 já esteja habilitado no Windows. Funciona offline após extrair a pasta completa; não exige instalação do aplicativo nem privilégios de administrador.
 
