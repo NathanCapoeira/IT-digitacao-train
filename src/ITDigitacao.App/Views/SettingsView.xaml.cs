@@ -24,6 +24,7 @@ namespace ITDigitacao.App.Views
             UpdatePreview(value.FontPoints);
             Sounds.IsChecked = value.Sounds;
             Metrics.IsChecked = value.ShowMetrics;
+            HideMetricsInConcentration.IsChecked = value.HideMetricsInConcentration;
             Concentration.IsChecked = value.Concentration;
             VisualFeedback.IsChecked = value.VisualFeedback;
             Animations.IsChecked = value.Animations;
@@ -56,6 +57,7 @@ namespace ITDigitacao.App.Views
             FontPoints = (int)FontSlider.Value,
             Sounds = Sounds.IsChecked == true,
             ShowMetrics = Metrics.IsChecked == true,
+            HideMetricsInConcentration = HideMetricsInConcentration.IsChecked == true,
             Concentration = Concentration.IsChecked == true,
             VisualFeedback = VisualFeedback.IsChecked == true,
             Animations = Animations.IsChecked == true,

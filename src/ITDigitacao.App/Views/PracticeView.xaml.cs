@@ -50,7 +50,7 @@ namespace ITDigitacao.App.Views
             SoundButton.Content = value.Sounds ? "Som ligado" : "Som desligado";
             FocusButton.Content = value.Concentration ? "Voltar ao modo normal" : "Concentração";
             WarningText.Visibility = value.Concentration ? Visibility.Collapsed : Visibility.Visible;
-            MetricCards.Visibility = MetricText.Visibility = value.ShowMetrics && !value.Concentration
+            MetricCards.Visibility = MetricText.Visibility = value.ShowMetrics && (!value.Concentration || !value.HideMetricsInConcentration)
                 ? Visibility.Visible : Visibility.Collapsed;
             UpdatePanelHeight();
             if (runs != null && session?.Engine == renderedEngine)

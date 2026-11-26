@@ -1,5 +1,12 @@
 # Histórico de alterações
 
+## 1.3.0 — Fases 6 a 8
+
+- Editor definitivo com ferramentas de fonte, concentração, som opcional e rolagem de referência.
+- Resultados com estrelas e conquistas temporárias; guia interativo ABNT2 e exercício de posição inicial.
+- Preferências locais de leitura, prática e efeitos.
+- Biblioteca com 50 textos autorais e perguntas educativas opcionais em cinco atividades.
+
 ## 1.2.0 — Fases 4 e 5
 
 - Biblioteca offline com 10 categorias ilustradas, 30 textos em JSON, pesquisa, filtros e escolha aleatória.

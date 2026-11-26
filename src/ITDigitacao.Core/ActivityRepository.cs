@@ -147,6 +147,7 @@ namespace ITDigitacao.Core
                 var quiz = activity.Quiz;
                 if (quiz != null && (string.IsNullOrWhiteSpace(quiz.Prompt) || string.IsNullOrWhiteSpace(quiz.Explanation) ||
                     quiz.Options == null || quiz.Options.Length != 3 || quiz.Options.Any(string.IsNullOrWhiteSpace) ||
+                    quiz.Options.Distinct(StringComparer.Ordinal).Count() != quiz.Options.Length ||
                     quiz.AnswerIndex < 0 || quiz.AnswerIndex >= quiz.Options.Length))
                     throw new InvalidDataException("Pergunta educativa inválida em " + activity.Id);
 

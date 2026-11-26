@@ -35,17 +35,22 @@
     </UserControl.Resources>
     <StackPanel>
         <Border Style="{StaticResource BannerStyle}" Margin="0,0,0,12">
-            <StackPanel>
-                <TextBlock Text="Configurações" Foreground="White" FontSize="28" FontWeight="Bold" />
-                <TextBlock Text="Ajuste a leitura e a experiência de prática." Foreground="White" Margin="0,5,0,0" TextWrapping="Wrap" />
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="3*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Configurações" Foreground="White" FontSize="28" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock Text="Ajuste a leitura e a experiência de prática." Foreground="White" Margin="0,5,0,0" TextWrapping="Wrap" />
+                </StackPanel>
+                <Image Grid.Column="1" Source="/IT-Digitacao;component/Assets/mascote-ensinando.png" MaxHeight="90"
+                       Margin="8,0,0,0" />
+            </Grid>
         </Border>
         <Border Style="{StaticResource InformativeCardStyle}" Margin="0,0,0,8">
             <StackPanel>
                 <TextBlock Text="Aparência e leitura" FontSize="19" FontWeight="Bold" />
                 <TextBlock x:Name="FontLabel" Margin="0,8,0,4" />
                 <Slider x:Name="FontSlider" Minimum="12" Maximum="28" TickFrequency="1" IsSnapToTickEnabled="True"
-                        FocusVisualStyle="{StaticResource ButtonFocusStyle}" ValueChanged="Font_Changed"
+                        Style="{StaticResource PreferenceSliderStyle}" ValueChanged="Font_Changed"
                         AutomationProperties.Name="Tamanho da fonte em pontos" Margin="0,4,0,10" />
                 <Border Background="{StaticResource BrandTintBrush}" Padding="12" CornerRadius="8">
                     <TextBlock x:Name="Preview" Text="Aprender é transformar. Pratique no seu ritmo." TextWrapping="Wrap" />
@@ -58,6 +63,7 @@
                 <CheckBox x:Name="Sounds" Content="Som suave ao concluir um texto" />
                 <CheckBox x:Name="Metrics" Content="Exibir métricas durante a prática" />
                 <CheckBox x:Name="Concentration" Content="Modo concentração" />
+                <CheckBox x:Name="HideMetricsInConcentration" Content="Ocultar métricas no modo concentração" />
                 <CheckBox x:Name="VisualFeedback" Content="Mostrar acertos, erros e próximo caractere" />
             </StackPanel></Border>
             <Border Style="{StaticResource InformativeCardStyle}" Margin="4,0,4,8"><StackPanel>
@@ -68,8 +74,8 @@
         </UniformGrid>
         <TextBlock x:Name="SaveError" Foreground="{StaticResource BrandDarkBrush}" TextWrapping="Wrap" />
         <WrapPanel Margin="0,5,0,0">
-            <Button Content="Salvar preferências" Click="Save_Click" Margin="0,0,8,8" Style="{StaticResource PrimaryButtonStyle}" />
-            <Button Content="Restaurar padrões" Click="Default_Click" Margin="0,0,8,8" Style="{StaticResource SecondaryButtonStyle}" />
+            <Button x:Name="SaveButton" Content="Salvar preferências" Click="Save_Click" Margin="0,0,8,8" Style="{StaticResource PrimaryButtonStyle}" />
+            <Button x:Name="DefaultButton" Content="Restaurar padrões" Click="Default_Click" Margin="0,0,8,8" Style="{StaticResource SecondaryButtonStyle}" />
             <Button x:Name="ReturnButton" Content="Retornar" Click="Return_Click" Margin="0,0,8,8" Style="{StaticResource SecondaryButtonStyle}" />
         </WrapPanel>
     </StackPanel>

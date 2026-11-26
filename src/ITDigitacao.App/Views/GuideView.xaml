@@ -39,7 +39,7 @@
                         </Border>
                     </DataTemplate></ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Button Content="Praticar posição inicial" Style="{StaticResource PrimaryButtonStyle}"
+                <Button x:Name="ExerciseButton" Content="Praticar posição inicial" Style="{StaticResource PrimaryButtonStyle}"
                         Click="Exercise_Click" HorizontalAlignment="Left" Margin="0,6,0,0" />
             </StackPanel>
         </Border>

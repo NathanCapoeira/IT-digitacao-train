@@ -12,6 +12,7 @@ namespace ITDigitacao.Core
         [DataMember(IsRequired = true)] public int FontPoints { get; set; } = 14;
         [DataMember(IsRequired = true)] public bool Sounds { get; set; }
         [DataMember(IsRequired = true)] public bool ShowMetrics { get; set; } = true;
+        [DataMember(IsRequired = true)] public bool HideMetricsInConcentration { get; set; } = true;
         [DataMember(IsRequired = true)] public bool Concentration { get; set; }
         [DataMember(IsRequired = true)] public bool VisualFeedback { get; set; } = true;
         [DataMember(IsRequired = true)] public bool Animations { get; set; } = true;

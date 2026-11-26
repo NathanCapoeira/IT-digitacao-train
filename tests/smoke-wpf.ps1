@@ -19,7 +19,11 @@ Assert-That ($assembly.GetName().Version.ToString() -eq '1.3.0.0') 'Unexpected e
 
 $app = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.App', $true))
 $app.InitializeComponent()
-$window = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.MainWindow', $true))
+$testPreferenceFile = Join-Path ([IO.Path]::GetTempPath()) (([Guid]::NewGuid().ToString()) + '.json')
+$privateInstance = [Reflection.BindingFlags]'NonPublic, Instance'
+$windowType = $assembly.GetType('ITDigitacao.App.MainWindow', $true)
+$testConstructor = $windowType.GetConstructor($privateInstance, $null, [type[]]@([string]), $null)
+$window = $testConstructor.Invoke([object[]]@($testPreferenceFile))
 try {
     $window.Show()
     $homeView = $window.FindName('HomePage')
@@ -143,6 +147,16 @@ try {
     Assert-That ($practice.FindName('MetricCards').Visibility -eq 'Collapsed' -and $entry.Text -eq 'I') 'Focus mode lost text or left metric cards visible.'
     Send-Click $focusButton
     Assert-That ($practice.FindName('MetricCards').IsVisible -and $entry.Text -eq 'I') 'Normal mode did not restore metrics.'
+    $originalFont = $entry.FontSize
+    Send-Click ($practice.FindName('LargerButton'))
+    Assert-That ($entry.FontSize -gt $originalFont -and $entry.Text -eq 'I') 'Editor font adjustment lost input.'
+    Send-Click ($practice.FindName('SettingsButton'))
+    $editorSettings = $window.FindName('SettingsPage')
+    $editorSettings.FindName('FontSlider').Value = 28
+    $editorSettings.FindName('Animations').IsChecked = $false
+    Send-Click ($editorSettings.FindName('SaveButton'))
+    Assert-That ($practice.IsVisible -and $entry.FontSize -gt 35 -and $entry.Text -eq 'I' -and
+        [IO.File]::Exists($testPreferenceFile)) 'Saving from the editor lost input or did not persist settings.'
     Send-Click ($window.FindName('GuideTab'))
     $guide = $window.FindName('GuidePage')
     Assert-That $guide.IsVisible 'Guide navigation failed.'
@@ -157,12 +171,12 @@ try {
     Assert-That $settings.IsVisible 'Settings navigation failed.'
     $settings.FindName('FontSlider').Value = 28
     Assert-That ($settings.FindName('Preview').FontSize -gt 35) 'The font preview did not update.'
-    $settings.FindName('FontSlider').Value = 14
+    Send-Click ($settings.FindName('DefaultButton'))
+    Assert-That ($settings.FindName('FontSlider').Value -eq 14 -and -not $settings.FindName('Sounds').IsChecked) 'Restore defaults failed.'
     $window.UpdateLayout()
     Capture 'configuracoes-wpf.png'
     Send-Click ($window.FindName('HomeTab'))
     Assert-That ($homeView.Visibility -eq 'Visible' -and $homeView.SelectedMinutes -eq 30) 'Home lost the session selection.'
-    $privateInstance = [Reflection.BindingFlags]'NonPublic, Instance'
     $sessionState = $window.GetType().GetField('session', $privateInstance).GetValue($window)
     $timer = $window.GetType().GetField('displayTimer', $privateInstance).GetValue($window)
     Assert-That ($timer.IsEnabled -and $sessionState.Started) 'The display timer stopped when leaving the editor.'
@@ -174,8 +188,30 @@ try {
     Assert-That ($errorCard.Value -eq '1' -and $summary.FindName('StarIcons').Visibility -eq 'Collapsed') 'Summary displayed incorrect errors or premature stars.'
     $window.UpdateLayout()
     Capture 'resumo-wpf.png'
+    Send-Click ($window.FindName('GuideTab'))
+    Send-Click ($guide.FindName('ExerciseButton'))
+    Assert-That ($practice.IsVisible -and $practice.FindName('ActivityTitle').Text -eq 'Posição inicial das mãos') 'Guide exercise did not use the editor.'
+    $practiceSession = $window.GetType().GetField('session', $privateInstance).GetValue($window)
+    Assert-That (-not $practiceSession.Started -and $practiceSession.CompletedCount -eq 0) 'New session kept previous metrics.'
+    $entry.Text = $practiceSession.Activity.Text
+    Assert-That $practice.FindName('CompleteButton').IsEnabled 'The guide exercise could not be completed.'
+    Send-Click ($practice.FindName('CompleteButton'))
+    Assert-That ($library.IsVisible -and $practiceSession.CompletedCount -eq 1) 'Exercise completion did not return to the library.'
+
+    $search.Text = 'Atalhos que facilitam a vida'
+    Send-Click ($library.FindName('RandomButton'))
+    $entry.Text = $practiceSession.Activity.Text
+    Send-Click ($practice.FindName('CompleteButton'))
+    $question = $window.FindName('QuestionPage')
+    Assert-That ($question.IsVisible -and $question.FindName('Choices').Items.Count -eq 3 -and $timer.IsEnabled) 'The optional question or running timer is missing.'
+    $window.UpdateLayout()
+    Send-Click (Find-CardButton ($question.FindName('Choices').ItemContainerGenerator.ContainerFromIndex(1)))
+    Assert-That ($question.FindName('Feedback').Text -like 'Isso mesmo!*') 'The question did not explain the correct answer.'
+    Send-Click ($question.FindName('ContinueButton'))
+    Assert-That ($library.IsVisible -and $practiceSession.CompletedCount -eq 2) 'Question exit altered the session results.'
     Write-Host 'WPF smoke test passed: embedded art, layout, search, library, timer, input, paste, and navigation.'
 }
 finally {
     $window.Close()
+    Remove-Item -LiteralPath $testPreferenceFile -ErrorAction SilentlyContinue
 }

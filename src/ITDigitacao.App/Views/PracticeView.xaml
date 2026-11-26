@@ -22,7 +22,7 @@
                 <Button Content="A−" AutomationProperties.Name="Diminuir fonte" Click="Smaller_Click"
                         Style="{StaticResource SecondaryButtonStyle}" MinHeight="34" Padding="10,4" Margin="0,2,5,2" />
                 <TextBlock x:Name="FontValue" MinWidth="36" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,5,0" />
-                <Button Content="A+" AutomationProperties.Name="Aumentar fonte" Click="Larger_Click"
+                <Button x:Name="LargerButton" Content="A+" AutomationProperties.Name="Aumentar fonte" Click="Larger_Click"
                         Style="{StaticResource SecondaryButtonStyle}" MinHeight="34" Padding="10,4" Margin="0,2,5,2" />
                 <Button x:Name="SoundButton" Click="Sound_Click" Style="{StaticResource SecondaryButtonStyle}"
                         MinHeight="34" Padding="10,4" Margin="0,2,5,2" />
@@ -30,7 +30,7 @@
                         MinHeight="34" Padding="10,4" Margin="0,2,5,2" />
                 <Button Content="Reiniciar texto" Click="Restart_Click" Style="{StaticResource SecondaryButtonStyle}"
                         MinHeight="34" Padding="10,4" Margin="0,2,5,2" />
-                <Button Content="Configurações" Click="Settings_Click" Style="{StaticResource SecondaryButtonStyle}"
+                <Button x:Name="SettingsButton" Content="Configurações" Click="Settings_Click" Style="{StaticResource SecondaryButtonStyle}"
                         MinHeight="34" Padding="10,4" Margin="0,2,5,2" />
             </WrapPanel>
         </Border>

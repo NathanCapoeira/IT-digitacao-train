@@ -46,6 +46,10 @@ namespace ITDigitacao.App.Views
                 Award("Mira perfeita", "Atinja 95% de precisão com pelo menos 100 caracteres avaliados.", SessionAwards.PerfectAim(session.Evaluated, session.Accuracy)),
                 Award("Superpraticante", "Conclua três textos diferentes.", SessionAwards.SuperPractitioner(session.CompletedCount))
             };
+            if (preferences.ReducedEffects)
+                ResultsBanner.Background = (System.Windows.Media.Brush)FindResource("BrandDarkBrush");
+            else
+                ResultsBanner.ClearValue(Border.BackgroundProperty);
             StarCard.BeginAnimation(OpacityProperty, null);
             if (preferences.Animations && !preferences.ReducedEffects)
                 StarCard.BeginAnimation(OpacityProperty, new DoubleAnimation(0.75, 1, TimeSpan.FromMilliseconds(150)));

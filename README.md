@@ -1,6 +1,6 @@
 # IT Digitação
 
-**Instituto de Transformação • Fases 4 e 5 • Versão 1.2.0**
+**Instituto de Transformação • Fases 6 a 8 • Versão 1.3.0**
 
 *Aprenda. Pratique. Transforme.*
 
@@ -8,9 +8,9 @@ O IT Digitação é um aplicativo educacional para aproveitar o tempo restante d
 
 ## Tela inicial
 
-Escolha quanto tempo você tem para praticar, de 5 a 30 minutos. **Começar minha aventura** abre a Biblioteca, com dez categorias ilustradas e trinta textos em português. Pesquise pelo tema ou título e refine a busca por dificuldade. Você pode abrir uma categoria ou selecionar uma atividade ao acaso entre os resultados atuais.
+Escolha quanto tempo você tem para praticar, de 5 a 30 minutos. **Começar minha aventura** abre a Biblioteca, com dez categorias ilustradas e cinquenta textos em português. Pesquise pelo tema ou título e refine a busca por dificuldade. Você pode abrir uma categoria ou selecionar uma atividade ao acaso entre os resultados atuais.
 
-O cronômetro começa no primeiro caractere avaliado. Ele continua enquanto você navega ou minimiza a janela. O editor provisório aceita edição manual e impede colagem e arraste de texto nesse campo. Em **Retomar texto atual**, a digitação é preservada. Escolher outro texto encerra a tentativa atual e mantém suas métricas na sessão. Guia e Configurações continuam com telas provisórias.
+O cronômetro começa no primeiro caractere avaliado. Ele continua enquanto você navega ou minimiza a janela. O editor aceita edição manual e impede colagem e arraste de texto nesse campo. Em **Retomar texto atual**, a digitação é preservada. Escolher outro texto encerra a tentativa atual e mantém suas métricas na sessão. Use **A−/A+** para ajustar a fonte e **Concentração** para liberar espaço. O guia ABNT2 destaca teclas apenas na janela ativa e oferece um exercício que usa a sessão atual. O resumo dá estrelas após pelo menos 100 caracteres avaliados (uma abaixo de 80%, duas de 80% a menos de 95% e três a partir de 95%). A velocidade não interfere nas conquistas. Algumas atividades incluem uma pergunta opcional após a conclusão.
 
 ### Métricas e conteúdo
 
@@ -18,11 +18,13 @@ O cronômetro começa no primeiro caractere avaliado. Ele continua enquanto voc�
 - **PPM líquida** usa cinco caracteres corretos por palavra. Divide-se o total pelo tempo corrido da sessão desde a primeira tentativa, inclusive pausas, navegação e inatividade. Para cada atividade conta o maior saldo registrado ao sair dela ou o saldo atual se for maior. Redigitar o mesmo trecho ou concluir o mesmo texto outra vez não aumenta o total por atividade. Até completar dez segundos, a PPM aparece como “—”.
 - **Progresso** mede caracteres corretos na posição esperada. A conclusão exige igualdade integral após normalizar acentos equivalentes em Unicode e as quebras de linha. Letras maiúsculas, espaços e pontuação continuam significativos.
 - **Estimativa de leitura e digitação** usa 20 palavras por minuto e arredonda para cima. O tempo real depende do ritmo do aluno.
-- O catálogo em `content/atividades.json` contém textos autorais. As tentativas de consulta a IBGE Educa, Banco Central, CERT.br, Embrapa, Agência Espacial Brasileira e Ministério da Saúde foram bloqueadas neste ambiente. O campo `Sources` fica vazio enquanto aguarda revisão factual, especialmente em ciências, segurança digital, finanças, cidadania, geografia e saúde.
+- O catálogo em `content/atividades.json` contém textos autorais. As tentativas de consulta a IBGE Educa, Banco Central, CERT.br, Embrapa, Agência Espacial Brasileira e Ministério da Saúde foram bloqueadas neste ambiente. O campo `Sources` fica vazio enquanto aguarda revisão factual. O acervo tem cinco textos por categoria, com dois iniciantes em cada uma, quinze intermediários e quinze avançados no total. A meta de 100 fica para uma expansão com revisão editorial.
+
+As configurações são gravadas em `%LOCALAPPDATA%\Instituto de Transformação\IT Digitação\preferencias.json`. Um arquivo inválido carrega os padrões. O som é local, opcional e desligado por padrão. Tempo, respostas, desempenho e conquistas ficam em memória durante a sessão.
 
 ### Baixar o aplicativo
 
-Na página [GitHub Actions](https://github.com/NathanCapoeira/IT-digitacao-train/actions), abra a execução bem-sucedida mais recente de **Build do IT Digitação**. Com sua conta do GitHub conectada, baixe **IT-Digitacao-x86-…** na seção **Artifacts**. Extraia todos os arquivos e abra `IT-Digitacao.exe` na pasta extraída.
+Na página [GitHub Actions](https://github.com/NathanCapoeira/IT-digitacao-train/actions), abra a execução bem-sucedida mais recente de **Build do IT Digitação**. Com sua conta do GitHub conectada, baixe **IT-Digitacao-Train-1.3.0-Release** na seção **Artifacts**. Extraia todos os arquivos e abra `IT-Digitacao.exe` na pasta extraída.
 
 ## Estrutura
 
@@ -83,7 +85,7 @@ O script chama o MSBuild com `Rebuild`, `Configuration=Release` e `Platform=x86`
 
 ## GitHub Actions
 
-O workflow **Build do IT Digitação** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build do IT Digitação → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-x86-…** na seção **Artifacts** da execução. O arquivo `build-info.txt` registra o commit compilado. A execução também publica as capturas geradas pelo teste WPF. A distribuição contém a versão de desenvolvimento.
+O workflow **Build do IT Digitação** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build do IT Digitação → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-Train-1.3.0-Release** na seção **Artifacts** da execução. O arquivo `build-info.txt` registra o commit compilado. A execução publica sete capturas geradas pelo teste WPF no Windows, da tela inicial às configurações. A distribuição contém a versão de desenvolvimento.
 
 ## Validação no Windows
 

@@ -1,6 +1,9 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Automation.Peers;
+using System.Windows.Threading;
 using ITDigitacao.Core;
 
 namespace ITDigitacao.App.Views
@@ -22,12 +25,20 @@ namespace ITDigitacao.App.Views
             ContinueButton.Content = "Pular pergunta";
         }
 
-        public void FocusChoices() => ContinueButton.Focus();
+        public void FocusChoices()
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() =>
+            {
+                if (IsVisible && !Choices.MoveFocus(new TraversalRequest(FocusNavigationDirection.First)))
+                    ContinueButton.Focus();
+            }));
+        }
 
         private void Answer_Click(object sender, RoutedEventArgs e)
         {
             bool correct = Equals(((Button)sender).DataContext, question.Options[question.AnswerIndex]);
             Feedback.Text = (correct ? "Isso mesmo! " : "Vamos conferir. ") + question.Explanation;
+            UIElementAutomationPeer.CreatePeerForElement(Feedback)?.RaiseAutomationEvent(AutomationEvents.LiveRegionChanged);
             Choices.IsEnabled = false;
             ContinueButton.Content = "Continuar";
             ContinueButton.Focus();

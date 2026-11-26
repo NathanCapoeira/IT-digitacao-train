@@ -14,9 +14,7 @@ namespace ITDigitacao.App
     {
         private readonly DispatcherTimer displayTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(250) };
         private SessionManager session;
-        private readonly string preferencesPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "Instituto de Transformação", "IT Digitação", "preferencias.json");
+        private readonly string preferencesPath;
         private Preferences preferences;
         private FrameworkElement settingsReturn;
         private FrameworkElement visiblePage;
@@ -25,8 +23,15 @@ namespace ITDigitacao.App
         private SoundPlayer completionSound;
         private HwndSource windowSource;
 
-        public MainWindow()
+        public MainWindow() : this(Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "Instituto de Transformação", "IT Digitação", "preferencias.json"))
         {
+        }
+
+        internal MainWindow(string preferencesPath)
+        {
+            this.preferencesPath = preferencesPath;
             InitializeComponent();
             preferences = Preferences.Load(preferencesPath);
             pages = new FrameworkElement[] { HomePage, LibraryPage, PracticePage, GuidePage, SettingsPage, SummaryPage, QuestionPage };
@@ -232,7 +237,11 @@ namespace ITDigitacao.App
                 if (completionSound == null)
                 {
                     var uri = new Uri("/IT-Digitacao;component/Assets/conclusao.wav", UriKind.Relative);
-                    completionSound = new SoundPlayer(Application.GetResourceStream(uri).Stream);
+                    var resource = Application.GetResourceStream(uri);
+                    if (resource == null)
+                        return;
+
+                    completionSound = new SoundPlayer(resource.Stream);
                     completionSound.Load();
                 }
                 completionSound.Play();
