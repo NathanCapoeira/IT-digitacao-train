@@ -1,12 +1,11 @@
-IT Digitação Legacy 2.0.0-beta.2
-- Janela recebeu cabeçalho/rodapé institucionais e navegação mais próxima da Standard.
-- Home ganhou banner em duas colunas, mascote, duração em cards e benefícios.
-- Biblioteca ganhou banner, dez cards ilustrados, contagens, pesquisa, filtros e cards de atividade.
-- Editor ganhou cabeçalho com cronômetro, barra de ferramentas, painéis de referência/digitação com adaptação para largura menor e quatro métricas.
-- Configurações passam a salvar preferências JSON no perfil do usuário e aplicar tamanho de fonte/som.
-- Atividades com Quiz no catálogo exibem a pergunta real, alternativas, feedback de resposta e explicação antes de continuar a sessão.
-- Pesquisa e filtro por dificuldade atualizam a lista ao editar o campo/seleção; os cards de duração se reorganizam em janelas menores.
-- Editor destaca caracteres corretos, incorretos e o próximo caractere; reiniciar respeita o ciclo da sessão e controles básicos de fonte, som e concentração foram adicionados.
-- Guia ABNT2 ganhou teclado visual colorido por dedo, destaque interativo da tecla pressionada e conteúdo de postura.
-- A composição do caminho de configuração foi adaptada à sobrecarga Path.Combine disponível no .NET Framework 3.5.
-- Componentes reutilizáveis e cores institucionais foram centralizados.
+IT Digitação Legacy — atualização funcional baseada na Standard
+
+- Alinhadas as telas programáticas de Início, Biblioteca, Editor, Perguntas, Resultados, Conquistas, Guia ABNT2 e Configurações aos fluxos e conteúdos dos XAML/code-behind Standard.
+- Biblioteca mantém o catálogo original, categorias ilustradas, contagens, busca, dificuldades, seleção aleatória, retomada da sessão e encerramento.
+- Editor agora bloqueia colagem/arraste, acompanha contagem de tempo e avisos, realça erros com sublinhado, mostra erros corrigidos e preserva a atividade ao retornar à biblioteca.
+- Pergunta educativa pode ser respondida ou pulada; ambas as opções levam à biblioteca com a mensagem de incentivo Standard.
+- Resultados exibem estrelas e conquistas calculadas pelas regras compartilhadas do Core, seis métricas e ações correspondentes.
+- Preferências preservam o destino de retorno e se aplicam ao retomar a atividade.
+- Corrigidas chamadas Path.Combine para a sobrecarga disponível no .NET Framework 3.5.
+
+A edição continua Beta: a recriação programática não é visualmente idêntica por comprovação, e esta compilação ainda requer comparação renderizada e teste presencial no Windows 7 SP1. Ver docs/legacy/EQUIVALENCIA.md e LIMITACOES-BETA.txt.

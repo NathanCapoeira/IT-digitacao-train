@@ -1,40 +1,23 @@
-# IT Digitação Legacy — checklist de equivalência
+# IT Digitação Legacy — estado da migração
 
-Base de auditoria: Standard em `d8962ed`; Legacy completa iniciada em `legacy/net35-full`.
+A Standard em `src/ITDigitacao.App/` é a referência funcional e visual. O Legacy reutiliza o `ITDigitacao.Legacy.Core`, o catálogo e os recursos originais, e constrói a interface em WPF programático para evitar a etapa XAML/BAML que falhou com as bibliotecas WPF antigas. Os comportamentos abaixo foram comparados com os code-behind e XAML Standard durante a implementação. Ainda não há validação visual automatizada por captura nem teste presencial desta compilação.
 
-| Área da Standard | Recursos encontrados | Estado Legacy |
+| Área da Standard | Estado implementado no Legacy | Diferença e validação pendente |
 |---|---|---|
-| Início | duração 5–30 min, boas-vindas, mascote, início de sessão | Parcial na beta.2: banner em duas colunas, seleção em cards e benefícios; revisar responsividade e fidelidade visual |
-| Biblioteca | catálogo `content/atividades.json`, categorias e ilustrações | Parcial na beta.2: 10 cards ilustrados, contagens, busca, filtros e atividades; revisar estados e comportamento de retomada |
-| Prática | editor, comparação caractere a caractere, progresso, cronômetro, precisão, velocidade | Parcial na beta.2: painéis adaptáveis, realce de acertos/erros/próximo caractere, cronômetro, métricas e controles básicos; falta comparar fidelidade e completar estados/ações |
-| Resultados | resumo e métricas da sessão | A implementar |
-| Conquistas | regras em `SessionAwards` e apresentação visual | A implementar |
-| Guia ABNT2 | mapa de teclas, dedos e exercício guiado | Parcial na beta.2: teclado visual interativo, cores por dedo, posição inicial e orientação de postura; precisa validação presencial/mapeamento completo |
-| Perguntas | pergunta real do catálogo, alternativas, resposta e explicação | Parcial na beta.2: fluxo usa QuizQuestion do catálogo e apresenta feedback; integração visual ainda requer validação |
-| Configurações | fonte, som, métricas, concentração, feedback e efeitos | Persistência JSON implementada na beta.2; aplicação de algumas opções ainda parcial |
-| Persistência | preferências JSON no perfil do usuário | Implementada via Core Legacy em LocalApplicationData; coberta por teste de round-trip |
-| Atalho | não existe na Standard | Novo requisito Legacy |
-| Offline | assets e catálogo locais | Obrigatório |
+| Início | Banner com mascote, seleção de duração de 5 a 30 minutos, início de sessão e benefícios. | Os cards e ícones foram recriados em código. Espaçamentos, tipografia e comportamento responsivo precisam de comparação visual com a Standard. |
+| Biblioteca | Carrega o catálogo integral; exibe categorias ilustradas e atividades, pesquisa, filtro por dificuldade, estado vazio, seleção aleatória, retomada e encerramento da sessão. | Os cards são construídos individualmente em vez dos `ItemsControl`/`DataTemplate` originais. A aparência e os estados de pesquisa/categoria precisam ser conferidos em tela. |
+| Editor de digitação | Usa o mesmo motor, texto por elementos Unicode, destaque de acertos/erros/próximo caractere, bloqueio de colagem, métricas, progresso, contagem regressiva, avisos, fonte ajustável, som, concentração, reinício, retorno/abandono e encerramento. | O acompanhamento automático do trecho de referência e os mesmos detalhes de layout/altura do editor Standard ainda não foram reproduzidos. Os handlers e comandos precisam ser validados em WPF 3.5 real. |
+| Perguntas educativas | Usa a pergunta, opções, resposta correta e explicação existentes no catálogo; permite responder ou pular antes de retornar à biblioteca. | A tela usa controles programáticos próprios. Ainda falta confirmar interação por teclado/leitor assistivo e equivalência visual. |
+| Resultados | Exibe mensagem, estrelas pelas regras `SessionAwards`, seis métricas, três conquistas e ações de nova atividade/início/saída. | Conteúdo e regras foram portados; cartões e animação não foram comparados renderizados com a Standard. |
+| Guia ABNT2 | Apresenta teclado colorido por dedo, realce de teclas pressionadas, orientação de postura e exercício da fileira inicial. | É uma reconstrução programática. O mapeamento completo de teclas ABNT2 e a correspondência de posição/dedo precisam de teste presencial. |
+| Configurações | Preferências JSON de fonte, som, métricas, concentração, feedback visual, animações e efeitos reduzidos; salva no perfil do usuário e permite restaurar padrões. | A persistência foi exercitada no pipeline anterior. O round-trip das opções, retorno à tela/atividade e sua aplicação em Windows 7 ainda precisam de validação presencial. |
+| Catálogo e núcleo | Core Legacy separado para .NET 3.5; catálogo original com 10 categorias e 50 atividades, busca e serialização JSON. | Os testes automatizados de catálogo e motor devem passar no workflow de cada commit. |
+| Atalho e distribuição | `Criar-Atalho.exe`, projetos x86, pacote portátil e workflow independentes do Standard. | A criação do atalho e os requisitos de unidade removível precisam de teste no Windows do instituto. |
 
-## Fontes da auditoria
+## Critério de versão
 
-- Telas: `src/ITDigitacao.App/Views/{Home,Library,Practice,Results,Guide,Settings,Question}View.xaml`.
-- Navegação e ciclo de vida: `src/ITDigitacao.App/MainWindow.xaml(.cs)`.
-- Regras: `src/ITDigitacao.Core/{ActivityRepository,TypingEngine,SessionManager,SessionAwards,Preferences}.cs`.
-- Recursos: `src/ITDigitacao.App/Assets/` e `content/atividades.json`.
+Esta compilação não deve ser chamada de RC. A equivalência visual integral ainda não foi comprovada, há diferenças de layout explicitadas acima e não houve teste presencial da compilação atual no Windows 7 SP1. A versão distribuída pelo workflow permanece Beta até essas verificações serem concluídas.
 
-Esta tabela é um checklist de implementação, não uma alegação de equivalência concluída. Cada item deve ser atualizado após implementação e teste. Home e Biblioteca foram parcialmente migradas na beta.2 e ainda precisam de comparação visual/teste presencial.
+## Decisão sobre XAML
 
-## Auditoria de compatibilidade da base Standard
-
-A inspeção confirmou que o código compartilhado não pode ser simplesmente ligado ao projeto .NET 3.5. A base usa recursos da linguagem e da biblioteca posteriores ao framework alvo, incluindo `IReadOnlyList<T>`, `Array.Empty<T>`, interpolação de strings, filtros `catch when`, `out var`, `nameof`, membros com corpo de expressão e operadores `?.`/`??`. Alguns podem ser aceitos pelo compilador moderno quando direcionado ao framework antigo, mas dependências de BCL como `IReadOnlyList<T>` e `Array.Empty<T>` não existem no .NET 3.5 e precisam ser removidas/substituídas no código Legacy.
-
-O catálogo e as preferências usam `DataContractJsonSerializer` (disponível na família .NET 3.5 com referência a `System.Runtime.Serialization`), enquanto a interface Standard depende de XAML/BAML e serviços WPF adicionais. A prova de conceito confirma apenas que o WPF sem XAML inicia no equipamento validado; ela não demonstra a compatibilidade das telas completas.
-
-### Migração necessária
-
-- Criar projetos Legacy separados para UI, regras e utilitário de atalhos, todos direcionados a v3.5/x86.
-- Adaptar o Core para APIs BCL 3.5 e manter as regras sem alterações semânticas.
-- Implementar as telas via construção programática de controles WPF, reaproveitando texto, imagens e catálogo locais.
-- Manter testes de equivalência para a biblioteca e o motor; comparar contagem e IDs do catálogo com a Standard.
-- Compilar em Windows Actions e testar a inicialização e fluxos no Windows 7 SP1 real antes de declarar compatibilidade.
+O Legacy mantém a infraestrutura WPF sem compilação XAML/BAML da prova de conceito. Os XAML e code-behind Standard foram usados como especificação de conteúdo, regras, eventos e apresentação. Os controles e templates foram reexpressos programaticamente; não se carrega XAML Standard dinamicamente, pois recursos, nomes, bindings, templates e handlers dependem de recursos de framework e code-behind que não foram validados no runtime 3.5. Portanto, esta é uma migração de comportamento e aparência, não uma conversão literal já comprovada dos arquivos XAML.

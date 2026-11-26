@@ -1,13 +1,15 @@
-IT Digitação Legacy 2.0.0-beta.2
+IT Digitação Legacy 2.0.0-beta.2 — distribuição de desenvolvimento
 
-A Beta 2 aprimora o cabeçalho, Home, Biblioteca, editor e persistência de preferências, mas ainda NÃO alcança equivalência integral com a Standard.
+A edição usa WPF programático, .NET Framework 3.5, CLR 2.0 e Release x86. Requer que o .NET Framework 3.5 já esteja habilitado no Windows. Funciona offline após extrair a pasta completa; não exige instalação do aplicativo nem privilégios de administrador.
 
-Pendências funcionais e visuais:
-- O editor agora tem painéis lado a lado/empilhados, barra de ferramentas básica, quatro cards de métricas e progresso; ainda faltam realce de caracteres e vários controles da Standard.
-- Perguntas educativas do catálogo agora aparecem após concluir uma atividade que tenha quiz, com alternativas, feedback e explicação. Ainda falta validação interativa no Windows.
-- Guia ABNT2 agora contém teclado visual interativo, cores por dedo, indicação da tecla pressionada e exercício de posição inicial; o mapeamento das teclas ainda requer teste em Windows e não reproduz cada detalhe visual da Standard.
-- Preferências de fonte, som, métricas, concentração, feedback e efeitos são salvas no perfil; algumas opções ainda não são aplicadas em todas as telas.
-- Resultados e conquistas não reproduzem todos os cards, ícones, animações e regras de apresentação Standard.
-- A equivalência visual requer comparação renderizada em resoluções de referência.
+O Core, catálogo, preferências, aplicativo, criador de atalhos e empacotamento são compilados/validados pelo workflow do GitHub Actions. Consulte o log do workflow associado ao commit para saber o resultado desta compilação específica.
 
-A Beta 1 foi validada presencialmente no Windows 7. Essa validação não comprova automaticamente esta nova compilação Beta 2. Não houve teste presencial desta versão.
+A interface e as funcionalidades principais foram migradas com base nos XAML e code-behind da Standard. Esta compilação ainda não satisfaz o critério de equivalência integral para RC:
+- O layout é recriado por controles programáticos e não foi comparado por capturas de tela nas resoluções da Standard.
+- O editor ainda não acompanha automaticamente o trecho visível de referência; os tamanhos e alturas podem diferir da Standard.
+- O teclado ABNT2 e o mapeamento das teclas/dedos precisam de conferência no equipamento-alvo.
+- Resultados, conquistas, perguntas, configurações e retomada foram implementados, mas seus fluxos visuais e interação precisam de validação no WPF 3.5.
+- A versão desta entrega não foi testada presencialmente no Windows 7 SP1.
+- A execução de Criar-Atalho.exe, inclusive o aviso para unidade removível, deve ser confirmada nos computadores do instituto.
+
+Não trate a Beta como compatibilidade definitiva, equivalência completa ou RC. Preserve a pasta extraída inteira. Para criar o atalho do usuário atual, execute Criar-Atalho.exe a partir da pasta do aplicativo.
