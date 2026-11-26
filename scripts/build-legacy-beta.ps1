@@ -26,12 +26,25 @@ Copy-Item (Join-Path $app 'Assets') (Join-Path $publish 'Assets') -Recurse
 Copy-Item (Join-Path $root 'docs\legacy\LEIA-ME.txt') $publish
 Copy-Item (Join-Path $root 'docs\legacy\LIMITACOES-BETA.txt') $publish
 $assemblies=@((Join-Path $publish 'IT-Digitacao.exe'),(Join-Path $publish 'Criar-Atalho.exe'),(Join-Path $publish 'ITDigitacao.Legacy.Core.dll'))
+$coreIdentity=[Reflection.AssemblyName]::GetAssemblyName((Join-Path $publish 'ITDigitacao.Legacy.Core.dll'))
+if($coreIdentity.Name -ne 'ITDigitacao.Legacy.Core'){throw "Unexpected Core identity: $($coreIdentity.Name)"}
+$frameworkVersions=@{
+ 'mscorlib'='2.0.0.0'; 'System'='2.0.0.0'; 'System.Core'='3.5.0.0';
+ 'WindowsBase'='3.0.0.0'; 'PresentationCore'='3.0.0.0'; 'PresentationFramework'='3.0.0.0';
+ 'System.Runtime.Serialization'='3.0.0.0'; 'System.ServiceModel.Web'='3.5.0.0'
+}
 foreach($file in $assemblies){
  $asm=[Reflection.Assembly]::ReflectionOnlyLoadFrom($file)
  if($asm.ImageRuntimeVersion -ne 'v2.0.50727'){throw "$file targets $($asm.ImageRuntimeVersion), expected CLR 2.0"}
  if($asm.GetName().ProcessorArchitecture -ne 'X86'){throw "$file is not x86"}
- $allowed=@('mscorlib','System','System.Core','WindowsBase','PresentationCore','PresentationFramework','System.Runtime.Serialization','System.ServiceModel.Web')
- foreach($reference in $asm.GetReferencedAssemblies()){if($allowed -notcontains $reference.Name){throw "$file has unsupported external dependency $($reference.Name)"}}
+ foreach($reference in $asm.GetReferencedAssemblies()){
+  if($reference.Name -eq 'ITDigitacao.Legacy.Core'){
+   if($reference.Name -ne $coreIdentity.Name -or $reference.Version -ne $coreIdentity.Version){throw "$file references a mismatched Core identity $($reference.FullName)"}
+   continue
+  }
+  if(!$frameworkVersions.ContainsKey($reference.Name)){throw "$file has unsupported external dependency $($reference.Name)"}
+  if($reference.Version.ToString() -ne $frameworkVersions[$reference.Name]){throw "$file references unexpected framework assembly version $($reference.FullName)"}
+ }
 }
 $sha=(Get-FileHash (Join-Path $publish 'IT-Digitacao.exe') -Algorithm SHA256).Hash.ToLowerInvariant()
 $info=[ordered]@{Product='IT Digitação Legacy';Version='2.0.0-beta.1';Commit=(git -C $root rev-parse HEAD);Framework='.NET Framework 3.5';CLR='v2.0.50727';Architecture='x86';ApplicationSha256=$sha;BuiltUtc=[DateTime]::UtcNow.ToString('o')}
