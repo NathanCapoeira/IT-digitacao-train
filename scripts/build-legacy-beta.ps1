@@ -28,22 +28,25 @@ Copy-Item (Join-Path $root 'docs\legacy\LIMITACOES-BETA.txt') $publish
 $assemblies=@((Join-Path $publish 'IT-Digitacao.exe'),(Join-Path $publish 'Criar-Atalho.exe'),(Join-Path $publish 'ITDigitacao.Legacy.Core.dll'))
 $coreIdentity=[Reflection.AssemblyName]::GetAssemblyName((Join-Path $publish 'ITDigitacao.Legacy.Core.dll'))
 if($coreIdentity.Name -ne 'ITDigitacao.Legacy.Core'){throw "Unexpected Core identity: $($coreIdentity.Name)"}
-$frameworkVersions=@{
- 'mscorlib'='2.0.0.0'; 'System'='2.0.0.0'; 'System.Core'='3.5.0.0';
- 'WindowsBase'='3.0.0.0'; 'PresentationCore'='3.0.0.0'; 'PresentationFramework'='3.0.0.0';
- 'System.Runtime.Serialization'='3.0.0.0'; 'System.ServiceModel.Web'='3.5.0.0'
+$frameworkReferences=@{}
+foreach($referenceFile in Get-ChildItem -LiteralPath $refs -Filter '*.dll' -File){
+ try{$identity=[Reflection.AssemblyName]::GetAssemblyName($referenceFile.FullName)}catch{continue}
+ if($frameworkReferences.ContainsKey($identity.Name)){throw "Ambiguous official .NET 3.5 reference identity: $($identity.Name)"}
+ $frameworkReferences[$identity.Name]=$identity
 }
+if(!$frameworkReferences.ContainsKey('System.Xml')){throw 'Official .NET 3.5 references do not contain System.Xml.dll.'}
 foreach($file in $assemblies){
  $asm=[Reflection.Assembly]::ReflectionOnlyLoadFrom($file)
  if($asm.ImageRuntimeVersion -ne 'v2.0.50727'){throw "$file targets $($asm.ImageRuntimeVersion), expected CLR 2.0"}
  if($asm.GetName().ProcessorArchitecture -ne 'X86'){throw "$file is not x86"}
  foreach($reference in $asm.GetReferencedAssemblies()){
   if($reference.Name -eq 'ITDigitacao.Legacy.Core'){
-   if($reference.Name -ne $coreIdentity.Name -or $reference.Version -ne $coreIdentity.Version){throw "$file references a mismatched Core identity $($reference.FullName)"}
+   if($reference.FullName -ne $coreIdentity.FullName){throw "$file references a mismatched Core identity $($reference.FullName), packaged Core is $($coreIdentity.FullName)"}
    continue
   }
-  if(!$frameworkVersions.ContainsKey($reference.Name)){throw "$file has unsupported external dependency $($reference.Name)"}
-  if($reference.Version.ToString() -ne $frameworkVersions[$reference.Name]){throw "$file references unexpected framework assembly version $($reference.FullName)"}
+  if(!$frameworkReferences.ContainsKey($reference.Name)){throw "$file depends on assembly absent from official .NET 3.5 references: $($reference.FullName)"}
+  $official=$frameworkReferences[$reference.Name]
+  if($reference.FullName -ne $official.FullName){throw "$file references identity $($reference.FullName), but .NET 3.5 provides $($official.FullName)"}
  }
 }
 $sha=(Get-FileHash (Join-Path $publish 'IT-Digitacao.exe') -Algorithm SHA256).Hash.ToLowerInvariant()
