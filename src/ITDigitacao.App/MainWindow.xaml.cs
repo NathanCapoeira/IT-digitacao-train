@@ -26,6 +26,7 @@ namespace ITDigitacao.App
             Closed += (sender, args) => displayTimer.Stop();
             LibraryPage.PracticeRequested += OpenActivity;
             LibraryPage.ResumeRequested += () => OpenActivity(session.Activity);
+            LibraryPage.EndRequested += RequestEnd;
             LibraryPage.PageChanged += () => PageScroller.ScrollToTop();
             PracticePage.Changed += RefreshSession;
             PracticePage.BackRequested += OpenLibrary;

@@ -28,7 +28,7 @@ try {
     $sectionTitle = $window.FindName('SectionTitle')
     Assert-That ($homeView.SelectedMinutes -eq 10) 'Expected a default duration of 10 minutes.'
 
-    foreach ($asset in @('logo-it-digitacao.png', 'logo-instituto.png', 'mascote-boas-vindas.png', 'mascote-ensinando.png', 'Categorias/tecnologia.png')) {
+    foreach ($asset in @('logo-it-digitacao.png', 'logo-instituto.png', 'mascote-boas-vindas.png', 'mascote-ensinando.png', 'mascote-digitando.png', 'Categorias/tecnologia.png')) {
         $uri = [Uri]::new("pack://application:,,,/IT-Digitacao;component/Assets/$asset")
         $bitmap = [System.Windows.Media.Imaging.BitmapImage]::new($uri)
         Assert-That ($bitmap.PixelWidth -gt 0 -and $bitmap.PixelHeight -gt 0) "Could not decode $asset."
@@ -79,6 +79,32 @@ try {
     Assert-That ($library.FindName('SessionText').Text -match '30 minutos') 'The library lost the selected duration.'
     Assert-That ($library.FindName('CategoryCards').Items.Count -eq 10) 'Library does not show ten categories.'
     Capture 'biblioteca-wpf.png'
+
+    function Find-CardButton($Visual) {
+        if ($Visual -is [System.Windows.Controls.Button]) { return $Visual }
+        for ($i = 0; $i -lt [System.Windows.Media.VisualTreeHelper]::GetChildrenCount($Visual); $i++) {
+            $result = Find-CardButton ([System.Windows.Media.VisualTreeHelper]::GetChild($Visual, $i))
+            if ($null -ne $result) { return $result }
+        }
+    }
+    $categories = $library.FindName('CategoryCards')
+    Send-Click (Find-CardButton ($categories.ItemContainerGenerator.ContainerFromIndex(0)))
+    Assert-That ($library.FindName('TitleText').Text -eq 'Informática e tecnologia' -and
+        $library.FindName('ActivityCards').Items.Count -eq 3) 'Category did not open its three activities.'
+    $window.UpdateLayout()
+    Capture 'categoria-wpf.png'
+    $intermediate = $library.FindName('IntermediateFilter')
+    $intermediate.IsChecked = $true
+    Send-Click $intermediate
+    Assert-That ($library.FindName('ActivityCards').Items.Count -eq 1) 'Category did not honor the difficulty filter.'
+    $activities = $library.FindName('ActivityCards')
+    $window.UpdateLayout()
+    Send-Click (Find-CardButton ($activities.ItemContainerGenerator.ContainerFromIndex(0)))
+    Assert-That ($window.FindName('PracticePage').FindName('ActivityTitle').Text -eq 'Atalhos que facilitam a vida') 'Individual practice did not open the requested activity.'
+    Send-Click ($window.FindName('LibraryTab'))
+    $all = $library.FindName('AllFilter')
+    $all.IsChecked = $true
+    Send-Click $all
 
     $search = $library.FindName('SearchBox')
     $search.Text = 'ZZZ inexistente'

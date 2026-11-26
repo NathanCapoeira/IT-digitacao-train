@@ -102,8 +102,8 @@ namespace ITDigitacao.Core
             Tick();
             if (Finished || Engine == null || !Engine.Complete)
                 return false;
-            if (completed.Add(Activity.Id))
-                LastCompletedId = Activity.Id;
+            completed.Add(Activity.Id);
+            LastCompletedId = Activity.Id;
             CloseActivity();
             return true;
         }

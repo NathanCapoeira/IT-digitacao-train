@@ -76,6 +76,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Assets\mascote-ensinando.png" />
+    <Resource Include="Assets\mascote-digitando.png" />
     <Resource Include="Assets\Categorias\*.png" />
     <Resource Include="Assets\logo-it-digitacao.png" />
     <Resource Include="Assets\logo-instituto.png" />

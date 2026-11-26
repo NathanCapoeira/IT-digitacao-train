@@ -43,6 +43,7 @@ namespace ITDigitacao.App.Views
         public event Action<Activity> PracticeRequested;
         public event Action ResumeRequested;
         public event Action PageChanged;
+        public event Action EndRequested;
 
         public void Open(SessionManager current)
         {
@@ -64,12 +65,16 @@ namespace ITDigitacao.App.Views
                 ? $"Sessão em andamento · {time:mm\\:ss} restantes"
                 : $"Tempo de prática selecionado: {session.Duration.TotalMinutes:0} minutos";
             ResumeButton.Visibility = session.Activity == null ? Visibility.Collapsed : Visibility.Visible;
+            SessionActions.Visibility = session.Activity != null || session.Started ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Layout_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.WidthChanged)
-                CategoryCards.Tag = Math.Max(1, Math.Min(5, (int)(e.NewSize.Width / 173)));
+            if (!e.WidthChanged)
+                return;
+
+            CategoryCards.Tag = Math.Max(1, Math.Min(5, (int)(e.NewSize.Width / 173)));
+            RandomMascot.Visibility = e.NewSize.Width >= 610 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Render()
@@ -138,6 +143,8 @@ namespace ITDigitacao.App.Views
             SearchBox.Clear();
             Render();
         }
+
+        private void End_Click(object sender, RoutedEventArgs e) => EndRequested?.Invoke();
 
         private void Resume_Click(object sender, RoutedEventArgs e) => ResumeRequested?.Invoke();
 

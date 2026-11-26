@@ -91,7 +91,7 @@
         <WrapPanel Margin="0,0,0,7">
             <RadioButton x:Name="AllFilter" Content="Todas" Click="Filter_Click" Style="{StaticResource FilterStyle}" />
             <RadioButton Content="Iniciante" Tag="Iniciante" Click="Filter_Click" Style="{StaticResource FilterStyle}" />
-            <RadioButton Content="Intermediário" Tag="Intermediário" Click="Filter_Click" Style="{StaticResource FilterStyle}" />
+            <RadioButton x:Name="IntermediateFilter" Content="Intermediário" Tag="Intermediário" Click="Filter_Click" Style="{StaticResource FilterStyle}" />
             <RadioButton Content="Avançado" Tag="Avançado" Click="Filter_Click" Style="{StaticResource FilterStyle}" />
         </WrapPanel>
 
@@ -100,8 +100,12 @@
                    Foreground="{StaticResource BrandDarkBrush}" FontWeight="SemiBold" Margin="0,0,0,8" />
         <TextBlock x:Name="SessionText" FontWeight="SemiBold" FontSize="14" TextWrapping="Wrap" Margin="0,0,0,8"
                    Foreground="{StaticResource BrandDarkBrush}" />
-        <Button x:Name="ResumeButton" Content="Retomar texto atual" HorizontalAlignment="Left" Margin="0,0,0,10"
-                Click="Resume_Click" Style="{StaticResource SecondaryButtonStyle}" Visibility="Collapsed" />
+        <WrapPanel x:Name="SessionActions" Visibility="Collapsed">
+            <Button x:Name="ResumeButton" Content="Retomar texto atual" Margin="0,0,8,10"
+                    Click="Resume_Click" Style="{StaticResource SecondaryButtonStyle}" />
+            <Button Content="Encerrar sessão" Margin="0,0,0,10"
+                    Click="End_Click" Style="{StaticResource SecondaryButtonStyle}" />
+        </WrapPanel>
 
         <Border x:Name="EmptyCard" Style="{StaticResource InformativeCardStyle}" Visibility="Collapsed" Margin="0,0,0,10">
             <StackPanel>
@@ -121,12 +125,17 @@
         <ItemsControl x:Name="ActivityCards" ItemTemplate="{StaticResource ActivityTemplate}" />
 
         <Border Style="{StaticResource InformativeCardStyle}" Background="{StaticResource BrandTintBrush}" Margin="0,10,0,0">
-            <StackPanel>
+            <DockPanel>
+                <Image x:Name="RandomMascot" DockPanel.Dock="Right" Width="116" Height="82" Margin="14,0,0,0"
+                       Source="/IT-Digitacao;component/Assets/mascote-digitando.png"
+                       AutomationProperties.Name="Mascote praticando digitação" Visibility="Collapsed" />
+                <StackPanel>
                 <TextBlock Text="⇄  Surpreenda-me!" FontSize="19" FontWeight="Bold" TextWrapping="Wrap" />
                 <TextBlock Text="Escolha uma atividade ao acaso entre os resultados atuais." TextWrapping="Wrap" Margin="0,3,0,8" />
                 <Button x:Name="RandomButton" Content="Escolher atividade" HorizontalAlignment="Left"
                         Click="Random_Click" Style="{StaticResource PrimaryButtonStyle}" />
-            </StackPanel>
+                </StackPanel>
+            </DockPanel>
         </Border>
     </StackPanel>
 </UserControl>
