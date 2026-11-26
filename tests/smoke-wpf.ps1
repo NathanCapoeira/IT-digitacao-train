@@ -14,7 +14,6 @@ function Assert-That([bool]$Condition, [string]$Message) {
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 $assembly = [Reflection.Assembly]::LoadFrom((Resolve-Path -LiteralPath $Executable).Path)
 Assert-That ($assembly.GetName().Version.ToString() -eq '1.1.0.0') 'Unexpected executable version.'
-[System.Windows.Application]::ResourceAssembly = $assembly
 
 $app = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.App', $true))
 $app.InitializeComponent()

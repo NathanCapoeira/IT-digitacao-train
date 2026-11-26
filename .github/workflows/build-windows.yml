@@ -21,7 +21,15 @@ jobs:
 
       - name: Compilar e preparar distribuição
         shell: powershell
-        run: .\scripts\build.ps1
+        run: |
+          cmd.exe /d /c 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts\build.ps1 > "%RUNNER_TEMP%\it-build.log" 2>&1'
+          $result = $LASTEXITCODE
+          $log = Get-Content -LiteralPath "$env:RUNNER_TEMP\it-build.log"
+          $log | Write-Host
+          if ($result -ne 0) {
+            $log | Select-String -Pattern 'error|erro|failed|not found' | Select-Object -First 12 | ForEach-Object { Write-Host "::error::$($_.Line)" }
+            exit $result
+          }
 
       - name: Verificar distribuição e registrar o commit
         shell: powershell
@@ -37,8 +45,14 @@ jobs:
       - name: Validar interface WPF e gerar captura
         shell: powershell
         run: |
-          & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-wpf.ps1 -Executable .\dist\IT-Digitacao.exe -CaptureDirectory .\captures
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $ErrorActionPreference = 'Continue'
+          $messages = & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-wpf.ps1 -Executable .\dist\IT-Digitacao.exe -CaptureDirectory .\captures 2>&1
+          $result = $LASTEXITCODE
+          $messages | Out-Host
+          if ($result -ne 0) {
+            $messages | Select-Object -First 14 | ForEach-Object { Write-Host "::error::$_" }
+            exit $result
+          }
 
       - name: Publicar captura da tela inicial
         uses: actions/upload-artifact@v4
