@@ -27,5 +27,6 @@
     <Compile Include="MainWindow.xaml.cs"><DependentUpon>MainWindow.xaml</DependentUpon></Compile>
     <None Include="app.manifest"/><Resource Include="Assets\logo-instituto.png"><Link>Assets\logo-instituto.png</Link></Resource>
   </ItemGroup>
+  <Import Project="$(WinFXTargetsPath)" Condition="Exists('$(WinFXTargetsPath)')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
