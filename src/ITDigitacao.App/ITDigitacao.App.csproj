@@ -8,6 +8,8 @@
     <ProjectTypeGuids>{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ITDigitacao.App</RootNamespace>
+    <ApplicationIcon>Assets\it-digitacao.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>IT-Digitacao</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <PlatformTarget>x86</PlatformTarget>
@@ -95,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="app.manifest" />
+    <None Include="Assets\it-digitacao.ico" />
     <Content Include="..\..\content\atividades.json">
       <Link>atividades.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

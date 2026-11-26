@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using ITDigitacao.Core;
 
 namespace ITDigitacao.App.Views
@@ -12,7 +13,9 @@ namespace ITDigitacao.App.Views
     public partial class LibraryView : UserControl
     {
         private readonly Random random = new Random();
-        private readonly ActivityRepository repository;
+        private ActivityRepository repository;
+        private bool catalogLoaded;
+        private readonly Dictionary<string, BitmapSource> artwork = new Dictionary<string, BitmapSource>();
         private string loadError;
         private string difficulty;
         private Category category;
@@ -24,6 +27,13 @@ namespace ITDigitacao.App.Views
             InitializeComponent();
             CategoryCards.Tag = 5;
             AllFilter.IsChecked = true;
+        }
+
+        private void LoadCatalog()
+        {
+            if (catalogLoaded)
+                return;
+            catalogLoaded = true;
             try
             {
                 using (var stream = File.OpenRead(Path.Combine(Path.GetDirectoryName(typeof(LibraryView).Assembly.Location), "atividades.json")))
@@ -37,7 +47,6 @@ namespace ITDigitacao.App.Views
             {
                 loadError = "Não foi possível abrir atividades.json. Mantenha o arquivo na pasta do aplicativo.";
             }
-            Render();
         }
 
         public event Action<Activity> PracticeRequested;
@@ -47,6 +56,7 @@ namespace ITDigitacao.App.Views
 
         public void Open(SessionManager current)
         {
+            LoadCatalog();
             session = current;
             Encouragement.Visibility = Visibility.Collapsed;
             category = null;
@@ -81,13 +91,13 @@ namespace ITDigitacao.App.Views
         {
             TitleText.Text = category?.Name ?? "Biblioteca educativa";
             DescriptionText.Text = category?.Description ?? "Descubra coisas incríveis enquanto pratica digitação";
-            BannerArt.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri(AssetPath(category == null
-                ? "mascote-ensinando.png" : "Categorias/" + category.Id + ".png"), UriKind.Absolute));
+            BannerArt.Source = Artwork(category == null ? "mascote-ensinando.png" : "Categorias/" + category.Id + ".png",
+                category == null ? 384 : 448);
             BackButton.Visibility = category == null ? Visibility.Collapsed : Visibility.Visible;
             matches = repository?.Find(SearchBox.Text, difficulty, category?.Id) ?? new List<Activity>();
             bool showActivities = category != null || !string.IsNullOrWhiteSpace(SearchBox.Text);
             CategoryCards.ItemsSource = showActivities || repository == null ? null : repository.Categories
-                .Select(item => new CategoryCard(item, matches.Count(activity => activity.CategoryId == item.Id)))
+                .Select(item => new CategoryCard(item, matches.Count(activity => activity.CategoryId == item.Id), this))
                 .Where(item => item.Count > 0).ToArray();
             ActivityCards.ItemsSource = showActivities ? matches.Select(activity => new ActivityCard(activity)).ToArray() : null;
             CountsText.Text = repository == null ? "" : category == null
@@ -102,7 +112,37 @@ namespace ITDigitacao.App.Views
             RandomButton.IsEnabled = matches.Count != 0;
         }
 
-        private static string AssetPath(string relative) => "pack://application:,,,/IT-Digitacao;component/Assets/" + relative;
+        private BitmapSource Artwork(string relative, int width)
+        {
+            if (artwork.TryGetValue(relative, out var existing))
+                return existing;
+            BitmapSource result = null;
+            try
+            {
+                var uri = new Uri("/IT-Digitacao;component/Assets/" + relative, UriKind.Relative);
+                var resource = Application.GetResourceStream(uri);
+                if (resource != null)
+                {
+                    using (var stream = resource.Stream)
+                    {
+                        var image = new BitmapImage();
+                        image.BeginInit();
+                        image.CacheOption = BitmapCacheOption.OnLoad;
+                        image.DecodePixelWidth = width;
+                        image.StreamSource = stream;
+                        image.EndInit();
+                        image.Freeze();
+                        result = image;
+                    }
+                }
+            }
+            catch (Exception error) when (error is IOException || error is NotSupportedException || error is FormatException)
+            {
+                // The category text and its accent surface remain available if the illustration cannot load.
+            }
+            artwork[relative] = result;
+            return result;
+        }
 
         private void Search_Changed(object sender, TextChangedEventArgs e)
         {
@@ -165,11 +205,12 @@ namespace ITDigitacao.App.Views
 
         private sealed class CategoryCard
         {
-            public CategoryCard(Category category, int count)
+            public CategoryCard(Category category, int count, LibraryView view)
             {
                 Category = category;
                 Count = count;
                 Accent = (Brush)new BrushConverter().ConvertFromString(category.Color);
+                Artwork = view.Artwork("Categorias/" + category.Id + ".png", 448);
             }
 
             public Category Category { get; }
@@ -177,7 +218,7 @@ namespace ITDigitacao.App.Views
             public Brush Accent { get; }
             public string Name => Category.Name;
             public string Description => Category.Description;
-            public string Artwork => AssetPath("Categorias/" + Category.Id + ".png");
+            public BitmapSource Artwork { get; }
             public string CountLabel => Count == 1 ? "1 atividade  →" : $"{Count} atividades  →";
         }
 

@@ -31,24 +31,23 @@ jobs:
             exit $result
           }
 
-      - name: Verificar distribuição e registrar o commit
+      - name: Gerar e verificar o ZIP portátil
         shell: powershell
-        run: |
-          $ErrorActionPreference = 'Stop'
-          $exe = Get-Item -LiteralPath '.\dist\IT-Digitacao.exe'
-          if ($exe.Length -eq 0) { throw 'O executável está vazio.' }
-          $commit = git rev-parse --verify HEAD
-          if ($LASTEXITCODE -ne 0) { throw 'Não foi possível identificar o commit compilado.' }
-          @("Commit: $commit", 'Configuração: Release', 'Plataforma: x86', 'Framework: .NET Framework 4.8') |
-            Set-Content -LiteralPath '.\dist\build-info.txt' -Encoding UTF8
+        env:
+          SOURCE_BRANCH: ${{ github.base_ref || github.ref_name }}
+        run: .\scripts\package.ps1 -Distribution .\dist -Output .\release-output -Branch $env:SOURCE_BRANCH
 
       - name: Testar catálogo e motor de digitação
         shell: powershell
         run: |
           $ErrorActionPreference = 'Continue'
-          $messages = & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-core.ps1 -Distribution .\dist 2>&1
+          $messages = & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-core.ps1 -Distribution .\release-output\extracted 2>&1
           $result = $LASTEXITCODE
           $messages | Out-Host
+          $messages | Where-Object { "$_" -match 'checks passed:' } | ForEach-Object {
+            Write-Host "::notice::$_"
+            "- $_" | Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY
+          }
           if ($result -ne 0) {
             $messages | Select-Object -First 14 | ForEach-Object { Write-Host "::error::$_" }
             exit $result
@@ -58,13 +57,28 @@ jobs:
         shell: powershell
         run: |
           $ErrorActionPreference = 'Continue'
-          $messages = & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-wpf.ps1 -Executable .\dist\IT-Digitacao.exe -CaptureDirectory .\captures 2>&1
+          $messages = & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -STA -File .\tests\smoke-wpf.ps1 -Executable .\release-output\extracted\IT-Digitacao.exe -CaptureDirectory .\captures 2>&1
           $result = $LASTEXITCODE
           $messages | Out-Host
+          $messages | Where-Object { "$_" -match 'checks passed:' } | ForEach-Object {
+            Write-Host "::notice::$_"
+            "- $_" | Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY
+          }
           if ($result -ne 0) {
             $messages | Select-Object -First 14 | ForEach-Object { Write-Host "::error::$_" }
             exit $result
           }
+
+      - name: Executar o portátil extraído e medir inicialização
+        shell: powershell
+        run: .\tests\runtime.ps1 -Extracted .\release-output\extracted -EvidencePath .\release-output\publish\runtime.json
+
+      - name: Validar sessão real de cinco minutos
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: powershell
+        run: |
+          & "$env:WINDIR\SysWOW64\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -ExecutionPolicy Bypass -File .\tests\runtime.ps1 -RealSessionOnly -Extracted .\release-output\extracted -EvidencePath .\release-output\publish\real-session.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Publicar capturas WPF
         uses: actions/upload-artifact@v4
@@ -76,6 +90,34 @@ jobs:
       - name: Publicar pacote Windows
         uses: actions/upload-artifact@v4
         with:
-          name: IT-Digitacao-Train-1.3.0-Release
-          path: dist/
+          name: IT-Digitacao-2.0.0-rc.1-Portable-x86
+          path: release-output/publish/
           if-no-files-found: error
+
+
+  publish:
+    name: Publicar pré-release
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: IT-Digitacao-2.0.0-rc.1-Portable-x86
+          path: publish
+      - name: Anexar ZIP e evidências ao commit validado
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag=v2.0.0-rc.1
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo 'A edição candidata já foi publicada.'
+            exit 0
+          fi
+          (cd publish && sha256sum --check SHA256SUMS.txt)
+          gh release create "$tag" --target "$GITHUB_SHA" --prerelease --latest=false \
+            --title 'IT Digitação 2.0.0-rc.1' --notes-file docs/distribuicao/NOTAS-RC.md publish/*

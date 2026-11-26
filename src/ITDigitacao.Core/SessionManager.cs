@@ -20,6 +20,7 @@ namespace ITDigitacao.Core
     {
         private readonly IMonotonicClock clock;
         private readonly Dictionary<string, int> bestCharacters = new Dictionary<string, int>();
+        private readonly Dictionary<string, HashSet<int>> evaluatedByActivity = new Dictionary<string, HashSet<int>>();
         private readonly HashSet<string> completed = new HashSet<string>();
         private TimeSpan? started;
         private TimeSpan? ended;
@@ -47,6 +48,20 @@ namespace ITDigitacao.Core
         public string LastCompletedId { get; private set; }
         public int TotalCorrect => correctAttempts + (Engine?.CorrectAttempts ?? 0);
         public int Evaluated => TotalCorrect + TotalErrors;
+        public int CreditedCorrect => bestCharacters.Where(pair => pair.Key != Activity?.Id).Sum(pair => pair.Value) +
+            (Activity == null ? 0 : Math.Max(GetBest(Activity.Id), Engine.CurrentCorrect));
+        public int AwardCoverage
+        {
+            get
+            {
+                int archived = evaluatedByActivity.Values.Sum(positions => positions.Count);
+                if (Engine == null)
+                    return archived;
+                return archived + (evaluatedByActivity.TryGetValue(Activity.Id, out var visited)
+                    ? Engine.EvaluatedPositions.Count(position => !visited.Contains(position))
+                    : Engine.EvaluatedPositions.Count());
+            }
+        }
         public int TotalErrors => errors + (Engine?.ErrorAttempts ?? 0);
         public int CurrentErrors => Engine?.CurrentErrors ?? 0;
         public int CorrectedErrors => corrected + (Engine?.ResolvedErrors ?? 0);
@@ -58,10 +73,7 @@ namespace ITDigitacao.Core
                 var elapsed = Elapsed;
                 if (elapsed < TimeSpan.FromSeconds(10))
                     return null;
-                var count = bestCharacters.Where(pair => pair.Key != Activity?.Id).Sum(pair => pair.Value);
-                if (Activity != null)
-                    count += Math.Max(GetBest(Activity.Id), Engine.CurrentCorrect);
-                return count / 5.0 / elapsed.TotalMinutes;
+                return CreditedCorrect / 5.0 / elapsed.TotalMinutes;
             }
         }
 
@@ -138,6 +150,12 @@ namespace ITDigitacao.Core
             if (Engine == null)
                 return;
             bestCharacters[Activity.Id] = Math.Max(GetBest(Activity.Id), Engine.CurrentCorrect);
+            if (!evaluatedByActivity.TryGetValue(Activity.Id, out var visited))
+            {
+                visited = new HashSet<int>();
+                evaluatedByActivity.Add(Activity.Id, visited);
+            }
+            visited.UnionWith(Engine.EvaluatedPositions);
             correctAttempts += Engine.CorrectAttempts;
             errors += Engine.ErrorAttempts;
             corrected += Engine.ResolvedErrors;

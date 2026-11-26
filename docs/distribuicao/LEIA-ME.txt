@@ -1,0 +1,16 @@
+IT Digitação • Instituto de Transformação • 2.0.0-rc.1
+
+O aplicativo ajuda a praticar digitação com atividades educativas durante
+o tempo disponível na aula. Esta é uma versão candidata para validação.
+
+1. Extraia todos os arquivos para uma pasta local.
+2. Abra IT-Digitacao.exe.
+3. Escolha o tempo disponível, de 5 a 30 minutos.
+4. Abra a biblioteca e escolha um texto. O relógio começa ao digitar.
+5. Use Encerrar sessão para ver o resumo ou aguarde o fim do tempo.
+6. Em Configurações você pode ajustar a fonte, o som e a concentração.
+7. Use Sair ou feche a janela para encerrar o programa.
+
+Mantenha todos os arquivos juntos. A biblioteca e os recursos são locais.
+O programa guarda apenas preferências neste perfil Windows. Resultados
+e texto digitado ficam na memória somente durante o uso do aplicativo.

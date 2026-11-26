@@ -1,5 +1,13 @@
 # Histórico de alterações
 
+## 2.0.0-rc.1 — Candidata ao piloto
+
+- Impede que redigitar a mesma posição infle o crédito de caracteres ou a elegibilidade de estrelas.
+- Carrega o catálogo sob demanda e reutiliza as imagens da biblioteca.
+- Acrescenta ícone institucional ao executável e manifesto sem elevação.
+- Gera ZIP portátil, identificação do commit, SHA-256 e evidências do Windows.
+- Acrescenta documentação para instalação e validação presencial.
+
 ## 1.3.0 — Fases 6 a 8
 
 - Editor definitivo com ferramentas de fonte, concentração, som opcional e rolagem de referência.

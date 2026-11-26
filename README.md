@@ -1,6 +1,6 @@
 # IT Digitação
 
-**Instituto de Transformação • Fases 6 a 8 • Versão 1.3.0**
+**Instituto de Transformação • Versão candidata 2.0.0-rc.1**
 
 *Aprenda. Pratique. Transforme.*
 
@@ -10,7 +10,7 @@ O IT Digitação é um aplicativo educacional para aproveitar o tempo restante d
 
 Escolha quanto tempo você tem para praticar, de 5 a 30 minutos. **Começar minha aventura** abre a Biblioteca, com dez categorias ilustradas e cinquenta textos em português. Pesquise pelo tema ou título e refine a busca por dificuldade. Você pode abrir uma categoria ou selecionar uma atividade ao acaso entre os resultados atuais.
 
-O cronômetro começa no primeiro caractere avaliado. Ele continua enquanto você navega ou minimiza a janela. O editor aceita edição manual e impede colagem e arraste de texto nesse campo. Em **Retomar texto atual**, a digitação é preservada. Escolher outro texto encerra a tentativa atual e mantém suas métricas na sessão. Use **A−/A+** para ajustar a fonte e **Concentração** para liberar espaço. O guia ABNT2 destaca teclas apenas na janela ativa e oferece um exercício que usa a sessão atual. O resumo dá estrelas após pelo menos 100 caracteres avaliados (uma abaixo de 80%, duas de 80% a menos de 95% e três a partir de 95%). A velocidade não interfere nas conquistas. Algumas atividades incluem uma pergunta opcional após a conclusão.
+O cronômetro começa no primeiro caractere avaliado. Ele continua enquanto você navega ou minimiza a janela. O editor aceita edição manual e impede colagem e arraste de texto nesse campo. Em **Retomar texto atual**, a digitação é preservada. Escolher outro texto encerra a tentativa atual e mantém suas métricas na sessão. Use **A−/A+** para ajustar a fonte e **Concentração** para liberar espaço. O guia ABNT2 destaca teclas apenas na janela ativa e oferece um exercício que usa a sessão atual. O resumo dá estrelas após pelo menos 100 posições diferentes avaliadas (uma abaixo de 80%, duas de 80% a menos de 95% e três a partir de 95%). A velocidade não interfere nas conquistas. Algumas atividades incluem uma pergunta opcional após a conclusão.
 
 ### Métricas e conteúdo
 
@@ -24,7 +24,9 @@ As configurações são gravadas em `%LOCALAPPDATA%\Instituto de Transformação
 
 ### Baixar o aplicativo
 
-Na página [GitHub Actions](https://github.com/NathanCapoeira/IT-digitacao-train/actions), abra a execução bem-sucedida mais recente de **Build do IT Digitação**. Com sua conta do GitHub conectada, baixe **IT-Digitacao-Train-1.3.0-Release** na seção **Artifacts**. Extraia todos os arquivos e abra `IT-Digitacao.exe` na pasta extraída.
+O ZIP portátil está na [pré-release oficial](https://github.com/NathanCapoeira/IT-digitacao-train/releases/tag/v2.0.0-rc.1). Veja o [guia de instalação](docs/INSTALACAO.md), a [auditoria](docs/AUDITORIA-2.0.0.md) e o [checklist presencial](docs/VALIDACAO-PRESENCIAL.md).
+
+Na página [GitHub Actions](https://github.com/NathanCapoeira/IT-digitacao-train/actions), abra a execução bem-sucedida mais recente de **Build do IT Digitação**. Com sua conta do GitHub conectada, baixe **IT-Digitacao-2.0.0-rc.1-Portable-x86** na seção **Artifacts**. Extraia todos os arquivos e abra `IT-Digitacao.exe` na pasta extraída.
 
 ## Estrutura
 
@@ -85,7 +87,7 @@ O script chama o MSBuild com `Rebuild`, `Configuration=Release` e `Platform=x86`
 
 ## GitHub Actions
 
-O workflow **Build do IT Digitação** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build do IT Digitação → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-Train-1.3.0-Release** na seção **Artifacts** da execução. O arquivo `build-info.txt` registra o commit compilado. A execução publica sete capturas geradas pelo teste WPF no Windows, da tela inicial às configurações. A distribuição contém a versão de desenvolvimento.
+O workflow **Build do IT Digitação** roda em Windows nas atualizações de `main`, nos pull requests para `main` e por disparo manual em **Actions → Build do IT Digitação → Run workflow**. Após um job bem-sucedido, baixe **IT-Digitacao-2.0.0-rc.1-Portable-x86** na seção **Artifacts** da execução. O arquivo `BUILD-INFO.json`, dentro do ZIP portátil, registra o commit compilado. O arquivo `SHA256SUMS.txt` fica junto ao ZIP. A execução publica sete capturas geradas pelo teste WPF no Windows, da tela inicial às configurações. A distribuição contém a versão de desenvolvimento.
 
 ## Validação no Windows
 

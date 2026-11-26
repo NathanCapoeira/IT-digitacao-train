@@ -7,3 +7,4 @@ dist/
 *.suo
 
 captures/
+release-output/

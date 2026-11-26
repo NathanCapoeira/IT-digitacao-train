@@ -2,7 +2,9 @@
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
+$script:checks = 0
 function Assert-That([bool]$Condition, [string]$Message) {
+    $script:checks++
     if (-not $Condition) { throw $Message }
 }
 
@@ -112,6 +114,24 @@ foreach ($minutes in 5,10,15,20,25,30) {
     $retry.End()
     Assert-That ($retry.Finished -and $retry.CompletedCount -eq 0 -and $null -eq $retry.Accuracy) 'New or manual session did not reset metrics.'
 }
+$probe = [ITDigitacao.Core.SessionManager]::new(5, [TestClock]::new())
+$probe.Open($repository.Activities[0]) | Out-Null
+$firstCharacter = $probe.Activity.Text.Substring(0,1)
+for ($i = 0; $i -lt 120; $i++) {
+    $probe.Apply($firstCharacter)
+    $probe.Apply('')
+}
+$probe.Apply($firstCharacter)
+Assert-That ($probe.Evaluated -eq 121 -and $probe.CreditedCorrect -eq 1 -and $probe.AwardCoverage -eq 1) 'Repetition inflated credit or award eligibility.'
+$probe.RestartActivity() | Out-Null
+$probe.Apply($firstCharacter)
+Assert-That ($probe.AwardCoverage -eq 1 -and $probe.CompletedCount -eq 0) 'Restart duplicated progress coverage.'
+$probe.AbandonActivity()
+Assert-That ($probe.Engine -eq $null -and $probe.CompletedCount -eq 0 -and $probe.AwardCoverage -eq 1) 'Abandonment was credited as completion.'
+foreach ($query in @('  O ceu e azul  ', 'POR QUE O CÉU', 'céu é az')) {
+    Assert-That ($repository.Find($query,'Iniciante',$null).Count -eq 1) 'Normalized query returned unexpected results.'
+}
+
 Assert-That ([ITDigitacao.Core.SessionAwards]::Stars(99,100) -eq 0) 'Stars were awarded below 100 attempts.'
 Assert-That ([ITDigitacao.Core.SessionAwards]::Stars(100,79) -eq 1 -and
     [ITDigitacao.Core.SessionAwards]::Stars(100,80) -eq 2 -and
@@ -134,4 +154,5 @@ try {
     [IO.File]::WriteAllText($preferenceFile,'{')
     Assert-That ([ITDigitacao.Core.Preferences]::Load($preferenceFile).FontPoints -eq 14) 'Invalid preferences did not fall back.'
 } finally { Remove-Item -LiteralPath $preferenceFile -ErrorAction SilentlyContinue }
+Write-Host "Core checks passed: $script:checks"
 Write-Host 'Core smoke test passed: 50 texts, 10 categories, Unicode, edits, metrics and all six session durations.'

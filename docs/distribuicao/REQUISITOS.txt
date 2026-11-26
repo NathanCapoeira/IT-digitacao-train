@@ -1,0 +1,15 @@
+IT Digitação • 2.0.0-rc.1 • Pacote portátil x86
+
+Runtime: Microsoft .NET Framework 4.8 ou atualização compatível (4.8.1).
+Uso normal: conta de usuário comum com permissão de ler a pasta extraída.
+Nenhuma ferramenta de desenvolvimento precisa ser instalada.
+
+Sistemas pretendidos: Windows 10, Windows 11 e Windows 7 SP1.
+CI: compilação e testes executados em Windows Server 2022 x64.
+Windows 7 SP1, Windows 10 e Windows 11 aguardam validação presencial.
+Windows 7 exige pré-requisitos adicionais e está fora do suporte regular.
+Mantenha máquinas legadas isoladas da internet quando possível.
+
+A operação com 2 GB de RAM é uma meta, sujeita a testes nas máquinas do
+Instituto. Consulte BUILD-INFO.json para o tamanho medido dos arquivos
+distribuídos antes da inclusão do próprio BUILD-INFO.json.

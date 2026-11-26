@@ -7,7 +7,9 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
+$script:checks = 0
 function Assert-That([bool]$Condition, [string]$Message) {
+    $script:checks++
     if (-not $Condition) { throw $Message }
 }
 
@@ -15,7 +17,7 @@ Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 $executablePath = (Resolve-Path -LiteralPath $Executable).Path
 [Reflection.Assembly]::LoadFrom((Join-Path (Split-Path -Parent $executablePath) 'ITDigitacao.Core.dll')) | Out-Null
 $assembly = [Reflection.Assembly]::LoadFrom($executablePath)
-Assert-That ($assembly.GetName().Version.ToString() -eq '1.3.0.0') 'Unexpected executable version.'
+Assert-That ($assembly.GetName().Version.ToString() -eq '2.0.0.0') 'Unexpected executable version.'
 
 $app = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.App', $true))
 $app.InitializeComponent()
@@ -209,6 +211,7 @@ try {
     Assert-That ($question.FindName('Feedback').Text -like 'Isso mesmo!*') 'The question did not explain the correct answer.'
     Send-Click ($question.FindName('ContinueButton'))
     Assert-That ($library.IsVisible -and $practiceSession.CompletedCount -eq 2) 'Question exit altered the session results.'
+    Write-Host "WPF checks passed: $script:checks"
     Write-Host 'WPF smoke test passed: embedded art, layout, search, library, timer, input, paste, and navigation.'
 }
 finally {

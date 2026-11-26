@@ -11,6 +11,7 @@ namespace ITDigitacao.Core
     {
         private static readonly Regex UnpairedSurrogate = new Regex(
             @"[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]");
+        private readonly HashSet<int> evaluatedPositions = new HashSet<int>();
         private string[] input = Array.Empty<string>();
         private bool[] unresolvedAttempts = Array.Empty<bool>();
 
@@ -22,6 +23,7 @@ namespace ITDigitacao.Core
         }
 
         public IReadOnlyList<string> Reference { get; }
+        internal IEnumerable<int> EvaluatedPositions => evaluatedPositions;
         public int CorrectAttempts { get; private set; }
         public int ErrorAttempts { get; private set; }
         public int ResolvedErrors { get; private set; }
@@ -79,6 +81,8 @@ namespace ITDigitacao.Core
 
                 if (countAttempts && index >= prefix && index < updated.Length - suffix)
                 {
+                    if (index < Reference.Count)
+                        evaluatedPositions.Add(index);
                     if (correct)
                         CorrectAttempts++;
                     else

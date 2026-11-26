@@ -26,10 +26,10 @@ namespace ITDigitacao.App.Views
                 "Você está desenvolvendo uma nova habilidade.", "Continue descobrindo coisas novas." };
             Message.Text = !session.Started ? "Comece uma atividade quando estiver pronto para praticar." :
                 messages[random.Next(messages.Length)];
-            int stars = SessionAwards.Stars(session.Evaluated, session.Accuracy);
+            int stars = SessionAwards.Stars(session.AwardCoverage, session.Accuracy);
             StarIcons.Text = stars > 0 ? new string('★', stars) + new string('☆', 3 - stars) : "";
             StarIcons.Visibility = stars == 0 ? Visibility.Collapsed : Visibility.Visible;
-            StarExplanation.Text = stars == 0 ? "As estrelas aparecem a partir de 100 caracteres avaliados. Pratique no seu ritmo!" :
+            StarExplanation.Text = stars == 0 ? "As estrelas aparecem a partir de 100 posições diferentes avaliadas. Pratique no seu ritmo!" :
                 $"{stars} de 3 estrelas • 1 abaixo de 80%, 2 de 80% a menos de 95%, 3 a partir de 95%.";
             MetricGrid.ItemsSource = new[]
             {
@@ -37,13 +37,13 @@ namespace ITDigitacao.App.Views
                 new { Label = "Precisão", Value = PracticeView.Percent(session.Accuracy) },
                 new { Label = "Palavras por minuto", Value = PracticeView.Number(session.WordsPerMinute) },
                 new { Label = "Erros cometidos", Value = session.TotalErrors.ToString() },
-                new { Label = "Caracteres corretos (tentativas)", Value = session.TotalCorrect.ToString() },
+                new { Label = "Caracteres corretos creditados", Value = session.CreditedCorrect.ToString() },
                 new { Label = "Textos concluídos", Value = session.CompletedCount.ToString() }
             };
             AchievementList.ItemsSource = new[]
             {
                 Award("Primeira missão", "Conclua um texto.", SessionAwards.FirstMission(session.CompletedCount)),
-                Award("Mira perfeita", "Atinja 95% de precisão com pelo menos 100 caracteres avaliados.", SessionAwards.PerfectAim(session.Evaluated, session.Accuracy)),
+                Award("Mira perfeita", "Atinja 95% de precisão com pelo menos 100 posições diferentes avaliadas.", SessionAwards.PerfectAim(session.AwardCoverage, session.Accuracy)),
                 Award("Superpraticante", "Conclua três textos diferentes.", SessionAwards.SuperPractitioner(session.CompletedCount))
             };
             if (preferences.ReducedEffects)
