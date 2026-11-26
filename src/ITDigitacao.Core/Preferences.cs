@@ -50,7 +50,7 @@ namespace ITDigitacao.Core
             try
             {
                 using (var stream = File.Create(pending))
-                    CreateSerializer().WriteObject(stream);
+                    CreateSerializer().WriteObject(stream, this);
                 if (File.Exists(path))
                     File.Replace(pending, path, null);
                 else
