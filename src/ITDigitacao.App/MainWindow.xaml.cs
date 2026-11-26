@@ -1,4 +1,7 @@
 using System;
+using System.IO;
+using System.Media;
+using System.Windows.Interop;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -11,10 +14,30 @@ namespace ITDigitacao.App
     {
         private readonly DispatcherTimer displayTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(250) };
         private SessionManager session;
+        private readonly string preferencesPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "Instituto de Transformação", "IT Digitação", "preferencias.json");
+        private Preferences preferences;
+        private FrameworkElement settingsReturn;
+        private FrameworkElement visiblePage;
+        private FrameworkElement[] pages;
+        private RadioButton settingsReturnTab;
+        private SoundPlayer completionSound;
+        private HwndSource windowSource;
 
         public MainWindow()
         {
             InitializeComponent();
+            preferences = Preferences.Load(preferencesPath);
+            pages = new FrameworkElement[] { HomePage, LibraryPage, PracticePage, GuidePage, SettingsPage, SummaryPage, QuestionPage };
+            PracticePage.ApplyPreferences(preferences);
+            PracticePage.SetAvailableHeight(PageScroller.ViewportHeight);
+            PageScroller.SizeChanged += (sender, args) => PracticePage.SetAvailableHeight(PageScroller.ActualHeight);
+            SourceInitialized += (sender, args) =>
+            {
+                windowSource = PresentationSource.FromVisual(this) as HwndSource;
+                windowSource?.AddHook(GuideKeyMessage);
+            };
 
             Rect workArea = SystemParameters.WorkArea;
             MinWidth = Math.Min(MinWidth, workArea.Width);
@@ -23,7 +46,12 @@ namespace ITDigitacao.App
             Height = Math.Min(Height, workArea.Height);
 
             displayTimer.Tick += (sender, args) => RefreshSession();
-            Closed += (sender, args) => displayTimer.Stop();
+            Closed += (sender, args) =>
+            {
+                displayTimer.Stop();
+                windowSource?.RemoveHook(GuideKeyMessage);
+                completionSound?.Dispose();
+            };
             LibraryPage.PracticeRequested += OpenActivity;
             LibraryPage.ResumeRequested += () => OpenActivity(session.Activity);
             LibraryPage.EndRequested += RequestEnd;
@@ -32,6 +60,16 @@ namespace ITDigitacao.App
             PracticePage.BackRequested += OpenLibrary;
             PracticePage.Completed += CompleteActivity;
             PracticePage.EndRequested += RequestEnd;
+            PracticePage.Abandoned += OpenLibrary;
+            PracticePage.SettingsRequested += OpenSettings;
+            PracticePage.PreferencesChanged += ApplyPreferences;
+            SettingsPage.SaveRequested += SavePreferences;
+            SettingsPage.ReturnRequested += ReturnFromSettings;
+            GuidePage.ExerciseRequested += () => { EnsureSession(); OpenActivity(Activity.HomeRowExercise()); };
+            SummaryPage.NewRequested += () => { session = null; OpenLibrary(); };
+            SummaryPage.BackRequested += () => ShowPage(HomeTab);
+            SummaryPage.ExitRequested += () => Close();
+            QuestionPage.ContinueRequested += ShowEncouragement;
             ShowPage(HomeTab);
         }
 
@@ -43,16 +81,63 @@ namespace ITDigitacao.App
             LibraryTab.Focus();
         }
 
-        private void Settings_Click(object sender, RoutedEventArgs e)
+        private void Settings_Click(object sender, RoutedEventArgs e) => OpenSettings();
+
+        private void OpenSettings()
         {
-            ShowPage(SettingsTab);
+            if (SettingsPage.IsVisible)
+                return;
+            settingsReturn = visiblePage;
+            settingsReturnTab = HomeTab.IsChecked == true ? HomeTab : GuideTab.IsChecked == true ? GuideTab : LibraryTab;
+            if (settingsReturn == HomePage)
+                settingsReturnTab = HomeTab;
+            else if (settingsReturn == GuidePage)
+                settingsReturnTab = GuideTab;
+            SettingsPage.Open(preferences, settingsReturn == PracticePage);
+            Reveal(SettingsPage, SettingsTab);
             SettingsTab.Focus();
         }
 
-        private void ReturnHome_Click(object sender, RoutedEventArgs e)
+        private void ReturnFromSettings()
         {
-            ShowPage(HomeTab);
-            HomeTab.Focus();
+            if (settingsReturn == PracticePage && session?.Engine != null && !session.Finished)
+                OpenActivity(session.Activity);
+            else
+                Reveal(settingsReturn ?? HomePage, settingsReturnTab ?? HomeTab);
+        }
+
+        private void SavePreferences(Preferences value)
+        {
+            try
+            {
+                value.Save(preferencesPath);
+            }
+            catch (Exception error) when (error is IOException || error is UnauthorizedAccessException)
+            {
+                SettingsPage.ShowSaveError();
+                return;
+            }
+            preferences = value;
+            ApplyPreferences();
+            ReturnFromSettings();
+        }
+
+        private void ApplyPreferences()
+        {
+            if (!preferences.Sounds)
+                completionSound?.Stop();
+            PracticePage.ApplyPreferences(preferences);
+            NavigationBar.Visibility = visiblePage == PracticePage && preferences.Concentration
+                ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private IntPtr GuideKeyMessage(IntPtr handle, int message, IntPtr key, IntPtr details, ref bool handled)
+        {
+            const int KeyDown = 0x100;
+            const int SystemKeyDown = 0x104;
+            if ((message == KeyDown || message == SystemKeyDown) && IsActive && GuidePage.IsVisible)
+                GuidePage.ShowKey((int)((details.ToInt64() >> 16) & 0x1ff));
+            return IntPtr.Zero;
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -63,48 +148,39 @@ namespace ITDigitacao.App
                 Close();
         }
 
-        private void NewSession_Click(object sender, RoutedEventArgs e)
-        {
-            session = null;
-            ReturnHome_Click(sender, e);
-        }
-
         private void Reveal(FrameworkElement page, RadioButton tab)
         {
+            visiblePage = page;
             tab.IsChecked = true;
-            foreach (var element in new FrameworkElement[] { HomePage, LibraryPage, PracticePage, SectionPage, SummaryPage })
+            foreach (var element in pages)
                 element.Visibility = element == page ? Visibility.Visible : Visibility.Collapsed;
+            NavigationBar.Visibility = page == PracticePage && preferences.Concentration
+                ? Visibility.Collapsed : Visibility.Visible;
             PageScroller.ScrollToTop();
         }
 
         private void ShowPage(RadioButton tab)
         {
             if (tab == LibraryTab)
-            {
                 OpenLibrary();
-                return;
-            }
-
-            if (tab == HomeTab)
-            {
+            else if (tab == HomeTab)
                 Reveal(HomePage, tab);
-                return;
-            }
-
-            bool guide = tab == GuideTab;
-            SectionTitle.Text = guide ? "Como digitar" : "Configurações";
-            SectionDescription.Text = guide ? "Conheça o teclado e desenvolva bons hábitos de digitação." :
-                "Personalize sua experiência de aprendizado.";
-            SectionStatus.Text = guide ? "O guia ABNT2 e as orientações de postura chegarão em uma fase futura." :
-                "As preferências de leitura e prática chegarão em uma fase futura.";
-            Reveal(SectionPage, tab);
+            else if (tab == GuideTab)
+                Reveal(GuidePage, tab);
+            else
+                OpenSettings();
         }
 
-        private void OpenLibrary()
+        private void EnsureSession()
         {
             if (session == null || session.Finished || !session.Started && session.Activity == null &&
                 session.Duration.TotalMinutes != HomePage.SelectedMinutes)
                 session = new SessionManager(HomePage.SelectedMinutes, new SessionClock());
+        }
+
+        private void OpenLibrary()
+        {
+            EnsureSession();
             LibraryPage.Open(session);
             Reveal(LibraryPage, LibraryTab);
         }
@@ -124,13 +200,49 @@ namespace ITDigitacao.App
 
         private void CompleteActivity()
         {
+            var question = session.Activity?.Quiz;
             if (!session.CompleteActivity())
             {
                 RefreshSession();
                 return;
             }
+            PlayCompletionSound();
+            if (question != null)
+            {
+                QuestionPage.Open(question);
+                Reveal(QuestionPage, LibraryTab);
+                QuestionPage.FocusChoices();
+            }
+            else
+                ShowEncouragement();
+        }
+
+        private void ShowEncouragement()
+        {
             OpenLibrary();
             LibraryPage.ShowEncouragement();
+        }
+
+        private void PlayCompletionSound()
+        {
+            if (!preferences.Sounds)
+                return;
+            try
+            {
+                if (completionSound == null)
+                {
+                    var uri = new Uri("/IT-Digitacao;component/Assets/conclusao.wav", UriKind.Relative);
+                    completionSound = new SoundPlayer(Application.GetResourceStream(uri).Stream);
+                    completionSound.Load();
+                }
+                completionSound.Play();
+            }
+            catch (Exception error) when (error is InvalidOperationException || error is IOException ||
+                                          error is TimeoutException || error is System.ComponentModel.Win32Exception)
+            {
+                completionSound?.Dispose();
+                completionSound = null;
+            }
         }
 
         private void RequestEnd()
@@ -163,12 +275,7 @@ namespace ITDigitacao.App
         private void ShowSummary()
         {
             displayTimer.Stop();
-            SummaryMessage.Text = session.Started ? "Cada tentativa ajuda você a evoluir. Continue praticando!" :
-                "A sessão terminou antes da primeira tentativa. Comece outra quando estiver pronto.";
-            SummaryMetrics.Text =
-                $"Tempo utilizado: {session.Elapsed:mm\\:ss}\nPrecisão: {PracticeView.Percent(session.Accuracy)}\n" +
-                $"Palavras por minuto: {PracticeView.Number(session.WordsPerMinute)}\nErros cometidos: {session.TotalErrors}\n" +
-                $"Erros corrigidos: {session.CorrectedErrors}\nTextos concluídos: {session.CompletedCount}";
+            SummaryPage.ShowResult(session, preferences);
             Reveal(SummaryPage, LibraryTab);
         }
     }

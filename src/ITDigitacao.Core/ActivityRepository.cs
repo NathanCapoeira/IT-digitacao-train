@@ -20,6 +20,15 @@ namespace ITDigitacao.Core
     }
 
     [DataContract]
+    public sealed class QuizQuestion
+    {
+        [DataMember(IsRequired = true)] public string Prompt { get; private set; }
+        [DataMember(IsRequired = true)] public string[] Options { get; private set; }
+        [DataMember(IsRequired = true)] public int AnswerIndex { get; private set; }
+        [DataMember(IsRequired = true)] public string Explanation { get; private set; }
+    }
+
+    [DataContract]
     public sealed class Activity
     {
         [DataMember(IsRequired = true)] public string Id { get; private set; }
@@ -30,6 +39,18 @@ namespace ITDigitacao.Core
         [DataMember(IsRequired = true)] public string Text { get; private set; }
         [DataMember(IsRequired = true)] public string[] Sources { get; private set; }
         [DataMember] public string Question { get; private set; }
+        [DataMember] public QuizQuestion Quiz { get; private set; }
+
+        public string CategoryName { get; internal set; }
+
+        public static Activity HomeRowExercise() => new Activity
+        {
+            Id = "exercicio-posicao-inicial",
+            CategoryName = "Guia ABNT2",
+            Title = "Posição inicial das mãos",
+            Difficulty = "Iniciante",
+            Text = "ASDF JKLÇ\nasdf jklç\nasdfg hjklç"
+        };
 
         public int WordCount => Regex.Matches(Text, @"[\p{L}\p{N}]+(?:[-’'][\p{L}\p{N}]+)*").Count;
         public int EstimatedMinutes => (int)Math.Ceiling(WordCount / 20.0);
@@ -52,6 +73,8 @@ namespace ITDigitacao.Core
             Categories = Array.AsReadOnly(categories);
             Activities = Array.AsReadOnly(activities);
             categoriesById = categories.ToDictionary(category => category.Id, StringComparer.Ordinal);
+            foreach (var activity in activities)
+                activity.CategoryName = categoriesById[activity.CategoryId].Name;
         }
 
         public IReadOnlyList<Category> Categories { get; }
@@ -120,6 +143,12 @@ namespace ITDigitacao.Core
                     string.IsNullOrWhiteSpace(activity.Description) || string.IsNullOrWhiteSpace(activity.Text) ||
                     activity.Sources == null)
                     throw new InvalidDataException("Atividade inválida ou duplicada.");
+
+                var quiz = activity.Quiz;
+                if (quiz != null && (string.IsNullOrWhiteSpace(quiz.Prompt) || string.IsNullOrWhiteSpace(quiz.Explanation) ||
+                    quiz.Options == null || quiz.Options.Length != 3 || quiz.Options.Any(string.IsNullOrWhiteSpace) ||
+                    quiz.AnswerIndex < 0 || quiz.AnswerIndex >= quiz.Options.Length))
+                    throw new InvalidDataException("Pergunta educativa inválida em " + activity.Id);
 
                 var words = activity.WordCount;
                 switch (activity.Difficulty)

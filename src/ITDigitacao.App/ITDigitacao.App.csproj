@@ -61,6 +61,30 @@
     <Compile Include="Views\PracticeView.xaml.cs">
       <DependentUpon>PracticeView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\GuideView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\GuideView.xaml.cs">
+      <DependentUpon>GuideView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\ResultsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\ResultsView.xaml.cs">
+      <DependentUpon>ResultsView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\QuestionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Views\QuestionView.xaml.cs">
+      <DependentUpon>QuestionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -76,6 +100,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Assets\mascote-ensinando.png" />
+    <Resource Include="Assets\mascote-celebrando.png" />
+    <Resource Include="Assets\conclusao.wav" />
     <Resource Include="Assets\mascote-digitando.png" />
     <Resource Include="Assets\Categorias\*.png" />
     <Resource Include="Assets\logo-it-digitacao.png" />

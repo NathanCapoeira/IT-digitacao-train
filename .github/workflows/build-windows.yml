@@ -76,6 +76,6 @@ jobs:
       - name: Publicar pacote Windows
         uses: actions/upload-artifact@v4
         with:
-          name: IT-Digitacao-x86-${{ github.sha }}
+          name: IT-Digitacao-Train-1.3.0-Release
           path: dist/
           if-no-files-found: error

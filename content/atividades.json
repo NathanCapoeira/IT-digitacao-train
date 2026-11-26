@@ -78,7 +78,17 @@
       "Description": "Pratique formas de editar pelo teclado.",
       "Difficulty": "Intermediário",
       "Text": "Um atalho é uma combinação de teclas que executa uma ação. Em muitos programas no Windows, Ctrl e C copiam o que foi selecionado. Ctrl e V inserem a cópia em outro lugar. Ctrl e Z costumam desfazer a última ação. Esses atalhos ajudam durante a revisão de um trabalho. Primeiro, escreva uma frase curta em um editor. Depois, selecione a frase e faça uma cópia. Cole o trecho em outra linha e compare as duas versões. Alguns aplicativos usam combinações diferentes. Se um atalho não funcionar, procure a ação no menu antes de tentar novamente.",
-      "Sources": []
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "Qual é uma vantagem dos atalhos?",
+        "Options": [
+          "Aumentar o peso do computador.",
+          "Realizar algumas tarefas com maior agilidade.",
+          "Desligar o mouse."
+        ],
+        "AnswerIndex": 1,
+        "Explanation": "Atalhos executam ações sem procurar o comando no menu."
+      }
     },
     {
       "Id": "tecnologia-3",
@@ -123,7 +133,17 @@
       "Description": "Perceba o valor da água nas tarefas diárias.",
       "Difficulty": "Iniciante",
       "Text": "Usamos água para beber, preparar alimentos e limpar. Podemos evitar desperdício ao fechar a torneira enquanto ensaboamos as mãos ou escovamos os dentes. Um vazamento pequeno também merece atenção: conte a um adulto se perceber uma torneira pingando. Cuidar da água começa com o que observamos no dia a dia.",
-      "Sources": []
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "O que fazer ao perceber uma torneira pingando?",
+        "Options": [
+          "Avisar um adulto.",
+          "Abrir ainda mais a torneira.",
+          "Deixar a água correr por horas."
+        ],
+        "AnswerIndex": 0,
+        "Explanation": "Avisar um adulto ajuda a corrigir o vazamento e evitar desperdício."
+      }
     },
     {
       "Id": "ambiente-2",
@@ -195,7 +215,17 @@
       "Description": "Aprenda a reconhecer pressão e a conferir pedidos por outros canais.",
       "Difficulty": "Avançado",
       "Text": "Uma mensagem pode chegar com a foto de alguém conhecido e pedir dinheiro com urgência. A foto, por si só, não prova a identidade do remetente. Em vez de usar o telefone informado na própria mensagem, procure a pessoa pelo número que você já tinha. Se isso não for possível, peça ajuda a um adulto de confiança.\nGolpes também aparecem em ofertas exageradas ou em avisos assustadores sobre contas bloqueadas. A pressa reduz o tempo para comparar informações. Uma forma de proteção é abrir o aplicativo oficial ou digitar o endereço conhecido sem tocar no link recebido. Confira se o aviso também aparece por esse caminho.\nNunca envie códigos de verificação para atender a um pedido inesperado. Esses códigos podem liberar acesso à conta. Caso já tenha compartilhado uma informação, conte a um adulto imediatamente. Juntos, vocês podem buscar os canais de suporte adequados e trocar credenciais quando necessário. Ao estudar um exemplo na escola, retire nomes, números e dados reais. Descreva o sinal de alerta e o que você faria antes de responder.",
-      "Sources": []
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "Como conferir um pedido urgente de alguém conhecido?",
+        "Options": [
+          "Usar somente o número informado na mensagem.",
+          "Enviar o código de verificação.",
+          "Procurar a pessoa pelo contato que você já tinha."
+        ],
+        "AnswerIndex": 2,
+        "Explanation": "Um canal que você já conhecia ajuda a confirmar quem fez o pedido."
+      }
     },
     {
       "Id": "cidadania-1",
@@ -330,6 +360,206 @@
       "Description": "Observe como as escolhas do dia a dia se combinam.",
       "Difficulty": "Avançado",
       "Text": "Uma alimentação variada pode incluir alimentos como arroz, feijão, frutas, verduras, ovos e outras opções disponíveis na família ou na comunidade. Alimentos diferentes oferecem nutrientes diferentes. A água também é importante, e beber ao longo do dia ajuda a repor o que o corpo perde, especialmente quando faz calor ou durante brincadeiras.\nComer em um lugar tranquilo e prestar atenção à fome e à saciedade pode ajudar a perceber como o corpo se sente. Provar um alimento novo é uma oportunidade de conhecer sabores. A forma de preparar muda a experiência: legumes podem ser assados, cozidos ou combinados a outras receitas, conforme o alimento e os costumes locais.\nCuidar da saúde envolve mais do que a comida. Dormir, brincar, movimentar-se e conviver com outras pessoas também fazem parte de uma rotina de bem-estar. As condições de cada família influenciam as escolhas possíveis. Na escola, você pode conversar sobre o que facilita levar água ou encontrar um lanche adequado. Quando surgir uma dúvida pessoal sobre alimentação, procure um adulto e, se necessário, orientação de um profissional de saúde.",
+      "Sources": []
+    },
+    {
+      "Id": "tecnologia-4",
+      "CategoryId": "tecnologia",
+      "Title": "Meu primeiro algoritmo",
+      "Description": "Organize instruções em uma sequência que alguém possa seguir.",
+      "Difficulty": "Iniciante",
+      "Text": "Um algoritmo é uma sequência de instruções para realizar uma tarefa. Imagine explicar a um colega como guardar os livros de uma estante por ordem alfabética. Diga primeiro como comparar os títulos e depois onde colocar cada livro. Se duas pessoas interpretarem uma instrução de modo diferente, revise o passo.",
+      "Sources": []
+    },
+    {
+      "Id": "tecnologia-5",
+      "CategoryId": "tecnologia",
+      "Title": "Da carta ao arquivo digital",
+      "Description": "Compare maneiras de guardar a mesma informação.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma carta guarda palavras em papel. Um texto digital guarda informações que um programa interpreta e mostra na tela. Em ambos os casos, a mensagem pode ser legível para quem conhece o idioma. O suporte, porém, muda a forma de duplicar, editar e transportar o trabalho.\nImagine que a turma vai guardar depoimentos sobre a história da escola. Uma pasta física protege as folhas, enquanto uma cópia digital pode facilitar consultas. Dê nomes claros aos arquivos e mantenha uma cópia em outro local autorizado. Predetermine quem pode consultar o material e evite incluir dados pessoais desnecessários.",
+      "Sources": []
+    },
+    {
+      "Id": "ciencias-4",
+      "CategoryId": "ciencias",
+      "Title": "A sombra muda de lugar",
+      "Description": "Observe a relação entre a luz e a sombra.",
+      "Difficulty": "Iniciante",
+      "Text": "Uma sombra aparece quando um objeto bloqueia a passagem da luz. Use um lápis em pé sobre a mesa e ilumine-o com uma lanterna. Mude a posição da lanterna e observe onde a sombra se forma. Desenhe duas posições. O que aconteceu quando você aproximou a luz da mesa?",
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "O que pode mudar quando movemos a lanterna?",
+        "Options": [
+          "O idioma do desenho.",
+          "A posição e a forma da sombra.",
+          "O material do lápis."
+        ],
+        "AnswerIndex": 1,
+        "Explanation": "A sombra depende da posição e do ângulo da fonte de luz."
+      }
+    },
+    {
+      "Id": "ciencias-5",
+      "CategoryId": "ciencias",
+      "Title": "Como as sementes viajam",
+      "Description": "Descubra maneiras de uma planta chegar a outros lugares.",
+      "Difficulty": "Intermediário",
+      "Text": "Ao cair perto da planta que a produziu, uma semente pode disputar espaço com outras plantas. Muitas espécies possuem formas de espalhar suas sementes. Sementes leves podem ser levadas pelo vento. Algumas ficam dentro de frutos que servem de alimento a animais. Outras se prendem ao pelo de um animal e caem em outro lugar.\nObserve sementes diferentes sem arrancar plantas. Compare o peso, o formato e a presença de estruturas que parecem asas ou ganchos. Proponha uma hipótese para cada uma. Uma hipótese é uma explicação provisória que pode ser avaliada com novas observações.",
+      "Sources": []
+    },
+    {
+      "Id": "ambiente-4",
+      "CategoryId": "ambiente",
+      "Title": "O caminho da chuva",
+      "Description": "Siga a água depois que ela toca o chão.",
+      "Difficulty": "Iniciante",
+      "Text": "Quando chove, parte da água entra no solo e parte corre pela superfície. Em ruas cobertas por asfalto, há menos espaço para a infiltração. Nas áreas com terra e plantas, a água pode seguir outro caminho. Depois de uma chuva, observe de um lugar seguro onde surgem poças.",
+      "Sources": []
+    },
+    {
+      "Id": "ambiente-5",
+      "CategoryId": "ambiente",
+      "Title": "Uma horta em pequenos espaços",
+      "Description": "Planeje um cultivo com as condições de que você dispõe.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma horta pode aproveitar vasos, canteiros ou recipientes adequados que tenham furos para escoar água. Antes de escolher as plantas, observe quanto tempo o local recebe luz ao longo do dia. Diferentes espécies pedem diferentes condições. Excesso de água pode prejudicar plantas tanto quanto a falta.\nCombine com um adulto quem vai verificar os vasos e quando a terra será observada. Um registro com datas, pequenas fotografias e desenhos ajuda a acompanhar o crescimento. Se duas plantas se desenvolverem de modo diferente, procure quais fatores variaram antes de concluir por que isso aconteceu.",
+      "Sources": []
+    },
+    {
+      "Id": "financas-4",
+      "CategoryId": "financas",
+      "Title": "Comparando preços por quantidade",
+      "Description": "Use o mesmo tamanho de porção para comparar dois preços.",
+      "Difficulty": "Iniciante",
+      "Text": "Dois pacotes do mesmo produto podem ter tamanhos diferentes. Para comparar preços, veja quanto cada um custa pela mesma quantidade. Um pacote maior pode custar menos por quilo e ainda assim sobrar. Na hora de escolher, pense também em quanto será usado e em quanto dinheiro está disponível hoje.",
+      "Sources": []
+    },
+    {
+      "Id": "financas-5",
+      "CategoryId": "financas",
+      "Title": "Planejando uma feira de troca",
+      "Description": "Crie regras simples para trocar objetos com cuidado.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma feira de troca ajuda a aproveitar objetos que já existem. Antes do encontro, decidam quais itens podem ser levados e em que condições precisam estar. Um livro rasgado ou um jogo incompleto deve ser apresentado com clareza. Cada pessoa pode aceitar ou recusar uma oferta sem pressão.\nFaçam uma lista das tarefas da turma: organizar mesas, orientar visitantes e guardar os materiais emprestados. Calculem se terão despesas com etiquetas ou cartazes e busquem materiais reaproveitáveis. No fim da feira, perguntem se a organização facilitou as trocas e o que poderia mudar em outra edição.",
+      "Sources": []
+    },
+    {
+      "Id": "seguranca-4",
+      "CategoryId": "seguranca",
+      "Title": "Uma foto carrega informações",
+      "Description": "Pense no que aparece ao fundo antes de compartilhar.",
+      "Difficulty": "Iniciante",
+      "Text": "Antes de compartilhar uma foto, observe o fundo. Uma placa com endereço, o uniforme da escola ou um papel com telefone pode aparecer sem querer. Pergunte se as pessoas da imagem aceitam o compartilhamento. Se estiver em dúvida, espere e converse com um adulto de confiança antes de publicar.",
+      "Sources": []
+    },
+    {
+      "Id": "seguranca-5",
+      "CategoryId": "seguranca",
+      "Title": "Conferindo de onde veio uma notícia",
+      "Description": "Descubra se uma imagem e sua legenda contam a mesma história.",
+      "Difficulty": "Intermediário",
+      "Text": "Uma notícia recebida por mensagem pode ter sido recortada ou retirada de outro contexto. Leia além do título e confira qual organização publicou o conteúdo. Procure a data e veja se a notícia menciona o local. Uma fotografia antiga pode reaparecer como se tivesse sido feita ontem.\nCompare a informação com outro veículo ou com a instituição que acompanha o assunto. Uma busca pelo trecho principal pode encontrar versões diferentes. Ao encontrar um erro, evite espalhar a mensagem enquanto investiga. Se quiser conversar sobre ela na escola, explique o que você conseguiu conferir.",
+      "Sources": []
+    },
+    {
+      "Id": "cidadania-4",
+      "CategoryId": "cidadania",
+      "Title": "Cuidando da biblioteca da turma",
+      "Description": "Combine regras para que todos possam emprestar livros.",
+      "Difficulty": "Iniciante",
+      "Text": "Uma biblioteca de turma funciona melhor quando todos conseguem encontrar os livros. Ao pegar um exemplar, registre o empréstimo do jeito combinado. Guarde o livro em um lugar seco e devolva-o na data prevista. Se ele se danificar, comunique o que aconteceu para que o grupo encontre uma solução.",
+      "Sources": []
+    },
+    {
+      "Id": "cidadania-5",
+      "CategoryId": "cidadania",
+      "Title": "Um passeio que acolhe a turma",
+      "Description": "Considere diferentes necessidades ao planejar uma atividade coletiva.",
+      "Difficulty": "Avançado",
+      "Text": "Uma turma planeja visitar uma exposição. O grupo quer que todos possam participar do passeio, mas nem todas as pessoas usam o espaço da mesma maneira. Algumas preferem ler a explicação, outras entendem melhor ouvindo. Para um colega, caminhar por muito tempo pode ser cansativo. Para outro, sons altos podem tornar difícil permanecer em uma sala.\nAntes de fechar o roteiro, a turma pode levantar perguntas sobre o local. Há acesso por rampa, elevador ou caminho sem degraus? Existem lugares para sentar? É possível ler as explicações com letra maior ou usar um material de apoio? A escola pode consultar a equipe da exposição e combinar formas de aproveitar a atividade.\nDurante o passeio, as pessoas podem escolher entre algumas maneiras de observar a mesma obra. Um grupo faz desenhos, outro escuta uma explicação e outro descreve detalhes para a turma. Na volta, comparem essas experiências. Uma proposta inclusiva costuma melhorar quando as pessoas afetadas participam das decisões e conseguem dizer de que apoio precisam.",
+      "Sources": []
+    },
+    {
+      "Id": "desenvolvimento-4",
+      "CategoryId": "desenvolvimento",
+      "Title": "Um caderno de perguntas",
+      "Description": "Transforme uma dúvida em ponto de partida para aprender.",
+      "Difficulty": "Iniciante",
+      "Text": "Separe uma página do caderno para registrar perguntas que surgem durante a aula. Escreva a dúvida com suas palavras e anote o tema. Depois, escolha uma pergunta para investigar. Quando encontrar uma resposta, registre onde a descobriu e deixe espaço para escrever uma nova pergunta que tenha aparecido.",
+      "Sources": []
+    },
+    {
+      "Id": "desenvolvimento-5",
+      "CategoryId": "desenvolvimento",
+      "Title": "Explicar para aprender melhor",
+      "Description": "Experimente ensinar uma ideia para descobrir o que ainda falta compreender.",
+      "Difficulty": "Avançado",
+      "Text": "Uma pessoa pode reconhecer uma ideia quando lê sobre ela e ainda ter dificuldade de explicá-la. Para descobrir onde está a dúvida, escolha um tema estudado e conte o que sabe para um colega. Procure usar suas palavras. Em vez de repetir a definição do livro, tente incluir um exemplo que faça parte da experiência de vocês.\nSe o colega interromper para fazer uma pergunta, anote o ponto. Talvez você tenha pulado uma etapa porque a considerou óbvia. Talvez tenha usado uma palavra cujo significado ainda não está claro. Abra o material de estudo e procure apenas o trecho necessário para revisar a explicação.\nDepois da revisão, faça outro teste. Apresente um exemplo diferente ou peça ao colega que tente explicar o tema de volta. Observem se a explicação ajuda a resolver um problema novo. Uma resposta pode parecer decorada quando só funciona para a mesma pergunta. Uma boa compreensão permite comparar situações, justificar uma escolha e reconhecer quando ainda falta informação.",
+      "Sources": []
+    },
+    {
+      "Id": "profissoes-4",
+      "CategoryId": "profissoes",
+      "Title": "O trabalho atrás do palco",
+      "Description": "Conheça algumas tarefas que ajudam uma apresentação a acontecer.",
+      "Difficulty": "Iniciante",
+      "Text": "Antes de uma peça começar, muitas pessoas trabalham nos bastidores. Alguém prepara as luzes. Outra pessoa confere o som, e uma equipe organiza figurinos e objetos. Quando cada função tem um responsável, fica mais fácil perceber o que falta. Quais tarefas seriam necessárias para montar uma apresentação na sua escola?",
+      "Sources": []
+    },
+    {
+      "Id": "profissoes-5",
+      "CategoryId": "profissoes",
+      "Title": "Um projeto para melhorar a escola",
+      "Description": "Aprenda a observar um problema e avaliar se uma solução ajudou.",
+      "Difficulty": "Avançado",
+      "Text": "Um grupo percebe que os materiais compartilhados da sala demoram a ser encontrados. Em vez de comprar caixas imediatamente, decide observar como as pessoas usam o armário. Durante alguns dias, a equipe faz anotações sobre quais objetos são procurados com mais frequência e onde costumam ficar depois de usados.\nA partir das observações, o grupo propõe dividir o armário por tipos de material. Cada espaço recebe uma placa com palavras e desenhos. Os materiais mais usados ficam ao alcance da maioria das pessoas. Antes de aplicar a organização em todo o armário, a turma experimenta a ideia em uma prateleira.\nApós uma semana, os estudantes perguntam aos colegas se ficou mais fácil localizar e devolver os objetos. Se algumas placas ainda causam dúvida, a equipe pode ajustar os desenhos ou mudar a posição dos itens. O objetivo é resolver o problema observado. Esse processo aparece em muitas profissões: ouvir as pessoas, testar uma ideia no tamanho adequado e acompanhar o resultado antes de ampliar o projeto.",
+      "Sources": []
+    },
+    {
+      "Id": "historia-4",
+      "CategoryId": "historia",
+      "Title": "Lendo a legenda de um mapa",
+      "Description": "Descubra o significado das cores e dos símbolos.",
+      "Difficulty": "Iniciante",
+      "Text": "A legenda de um mapa explica o que suas cores e marcas representam. Uma linha pode indicar uma rua, um rio ou uma fronteira, conforme o mapa. Antes de interpretar o desenho, leia a legenda. Depois, aponte dois símbolos e explique para um colega o significado de cada um.",
+      "Sources": [],
+      "Quiz": {
+        "Prompt": "Onde está explicado o significado dos símbolos de um mapa?",
+        "Options": [
+          "Na legenda.",
+          "Na margem branca.",
+          "Somente no título."
+        ],
+        "AnswerIndex": 0,
+        "Explanation": "A legenda informa o que as cores, linhas e marcas representam."
+      }
+    },
+    {
+      "Id": "historia-5",
+      "CategoryId": "historia",
+      "Title": "O bairro visto em tempos diferentes",
+      "Description": "Compare mapas e relatos para entender mudanças na paisagem.",
+      "Difficulty": "Avançado",
+      "Text": "A paisagem de um bairro muda com o tempo. Uma antiga passagem pode dar lugar a uma avenida, e um terreno vazio pode virar uma praça. Nem todas as mudanças acontecem de uma vez. Para investigar quando elas ocorreram, reúna materiais que indiquem datas e possam ser examinados sem depender apenas de uma lembrança.\nUm mapa antigo revela a posição das ruas e de alguns edifícios. Uma fotografia pode mostrar fachadas, árvores ou placas que não aparecem no mapa. Relatos de moradores ajudam a entender o uso dos espaços: onde as pessoas se reuniam, por quais caminhos passavam ou que serviços precisavam procurar longe.\nQuando dois relatos são diferentes, registre os dois. É possível que as pessoas tenham vivido no bairro em épocas distintas ou frequentado partes diferentes. Compare os depoimentos com outros documentos e marque as dúvidas no seu caderno. Ao apresentar a pesquisa, distinga o que foi possível confirmar do que ainda precisa de investigação. Assim, você mostra como chegou à sua interpretação.",
+      "Sources": []
+    },
+    {
+      "Id": "saude-4",
+      "CategoryId": "saude",
+      "Title": "Uma pausa para o corpo",
+      "Description": "Observe como pequenas pausas ajudam durante tarefas longas.",
+      "Difficulty": "Iniciante",
+      "Text": "Quando passamos muito tempo na mesma posição, é útil fazer uma pausa. Levante quando for seguro, movimente-se de um jeito confortável e descanse os olhos olhando para longe. Se sentir dor ou desconforto repetido ao usar o computador, avise um adulto. A prática pode continuar em outro momento.",
+      "Sources": []
+    },
+    {
+      "Id": "saude-5",
+      "CategoryId": "saude",
+      "Title": "Cuidando do lanche coletivo",
+      "Description": "Organize um lanche com higiene e atenção às pessoas.",
+      "Difficulty": "Avançado",
+      "Text": "Antes de um piquenique da turma, é importante combinar como os alimentos serão transportados e servidos. Alimentos que precisam de refrigeração pedem cuidado para não permanecerem fora da temperatura adequada por muito tempo. Os responsáveis podem escolher opções apropriadas ao local e ao tempo de deslocamento.\nA turma também precisa conhecer as regras da escola sobre alergias e restrições alimentares. Uma aparência parecida não garante que dois alimentos tenham os mesmos ingredientes. Consulte rótulos e siga a orientação dos adultos responsáveis. Ao servir, respeite quem prefere não provar uma preparação e mantenha os utensílios que precisam ficar separados.\nProvidencie um lugar para lavar as mãos e organize um recipiente para descartar resíduos. Frutas com casca que serão cortadas devem ser preparadas conforme as orientações de higiene da escola. Depois do lanche, cada grupo pode conferir se o local ficou limpo e agradecer quem ajudou na organização. Um bom encontro coletivo depende de planejamento, cuidado com os alimentos e respeito às necessidades de cada pessoa.",
       "Sources": []
     }
   ]

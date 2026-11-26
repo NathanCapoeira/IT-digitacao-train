@@ -1,0 +1,62 @@
+<UserControl x:Class="ITDigitacao.App.Views.GuideView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <Border Style="{StaticResource BannerStyle}" Margin="0,0,0,12">
+            <Grid MinHeight="105">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="3*" /><ColumnDefinition Width="2*" /></Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Como digitar" Foreground="White" FontSize="29" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock Text="Aprenda a encontrar as teclas do ABNT2 e pratique com conforto." Foreground="White"
+                               Margin="0,6,0,0" TextWrapping="Wrap" />
+                </StackPanel>
+                <Image Grid.Column="1" MaxHeight="118" Source="/IT-Digitacao;component/Assets/mascote-ensinando.png"
+                       AutomationProperties.Name="Mascote ensinando" />
+            </Grid>
+        </Border>
+        <Border Style="{StaticResource InformativeCardStyle}" Margin="0,0,0,8">
+            <StackPanel>
+                <TextBlock Text="Conhecendo o teclado" FontSize="19" FontWeight="Bold" />
+                <TextBlock Text="Pressione uma tecla com esta janela ativa para descobrir o dedo recomendado."
+                           TextWrapping="Wrap" Margin="0,5,0,8" />
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <Canvas x:Name="KeyboardCanvas" Width="630" Height="222" Focusable="False" />
+                </ScrollViewer>
+                <TextBlock x:Name="KeyHint" Text="Procure as pequenas marcas em F e J." MinHeight="24"
+                           FontWeight="SemiBold" Foreground="{StaticResource BrandDarkBrush}" TextWrapping="Wrap" Margin="0,8,0,0" />
+            </StackPanel>
+        </Border>
+        <Border Style="{StaticResource InformativeCardStyle}" Margin="0,0,0,8">
+            <StackPanel>
+                <TextBlock Text="Posicionamento dos dedos" FontSize="19" FontWeight="Bold" />
+                <TextBlock Text="Esquerda: mínimo no A, anelar no S, médio no D, indicador no F. Direita: indicador no J, médio no K, anelar no L, mínimo no Ç. Use os polegares na barra de espaço."
+                           TextWrapping="Wrap" Margin="0,5,0,6" />
+                <ItemsControl x:Name="FingerLegend">
+                    <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate><DataTemplate>
+                        <Border Background="{Binding Color}" Padding="7,3" Margin="0,0,5,5" CornerRadius="6">
+                            <TextBlock Text="{Binding Label}" FontSize="12" />
+                        </Border>
+                    </DataTemplate></ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="Praticar posição inicial" Style="{StaticResource PrimaryButtonStyle}"
+                        Click="Exercise_Click" HorizontalAlignment="Left" Margin="0,6,0,0" />
+            </StackPanel>
+        </Border>
+        <Border Style="{StaticResource InformativeCardStyle}">
+            <DockPanel>
+                <Viewbox DockPanel.Dock="Left" Width="66" Height="80" Margin="0,0,14,0" VerticalAlignment="Top">
+                    <Canvas Width="66" Height="78">
+                        <Path Stroke="{StaticResource BrandDarkBrush}" StrokeThickness="3" StrokeLineJoin="Round"
+                              Data="M7,66 H57 M11,66 V38 H32 M14,24 A7,7 0 1 0 28,24 A7,7 0 1 0 14,24 M20,36 V50 H34 L38,66 M22,37 L31,45 H43 M46,15 H64 V35 H46 Z M55,35 V44 M38,45 H64 M54,45 V66" />
+                    </Canvas>
+                </Viewbox>
+                <StackPanel>
+                    <TextBlock Text="Postura e boas práticas" FontSize="19" FontWeight="Bold" TextWrapping="Wrap" />
+                    <TextBlock Text="Apoie os pés confortavelmente e relaxe os ombros. Ajuste a cadeira e o monitor para enxergar sem esforço. Deixe os punhos confortáveis, toque de leve nas teclas e faça pequenas pausas quando precisar."
+                               TextWrapping="Wrap" Margin="0,5,0,0" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

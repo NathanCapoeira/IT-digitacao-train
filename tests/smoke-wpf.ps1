@@ -15,7 +15,7 @@ Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 $executablePath = (Resolve-Path -LiteralPath $Executable).Path
 [Reflection.Assembly]::LoadFrom((Join-Path (Split-Path -Parent $executablePath) 'ITDigitacao.Core.dll')) | Out-Null
 $assembly = [Reflection.Assembly]::LoadFrom($executablePath)
-Assert-That ($assembly.GetName().Version.ToString() -eq '1.2.0.0') 'Unexpected executable version.'
+Assert-That ($assembly.GetName().Version.ToString() -eq '1.3.0.0') 'Unexpected executable version.'
 
 $app = [Activator]::CreateInstance($assembly.GetType('ITDigitacao.App.App', $true))
 $app.InitializeComponent()
@@ -25,10 +25,9 @@ try {
     $homeView = $window.FindName('HomePage')
     $durationGrid = $homeView.FindName('DurationGrid')
     $library = $window.FindName('LibraryPage')
-    $sectionTitle = $window.FindName('SectionTitle')
     Assert-That ($homeView.SelectedMinutes -eq 10) 'Expected a default duration of 10 minutes.'
 
-    foreach ($asset in @('logo-it-digitacao.png', 'logo-instituto.png', 'mascote-boas-vindas.png', 'mascote-ensinando.png', 'mascote-digitando.png', 'Categorias/tecnologia.png')) {
+    foreach ($asset in @('logo-it-digitacao.png', 'logo-instituto.png', 'mascote-boas-vindas.png', 'mascote-ensinando.png', 'mascote-celebrando.png', 'mascote-digitando.png', 'Categorias/tecnologia.png')) {
         $uri = [Uri]::new("pack://application:,,,/IT-Digitacao;component/Assets/$asset")
         $bitmap = [System.Windows.Media.Imaging.BitmapImage]::new($uri)
         Assert-That ($bitmap.PixelWidth -gt 0 -and $bitmap.PixelHeight -gt 0) "Could not decode $asset."
@@ -95,13 +94,13 @@ try {
     $categories = $library.FindName('CategoryCards')
     Send-Click (Find-CardButton ($categories.ItemContainerGenerator.ContainerFromIndex(0)))
     Assert-That ($library.FindName('TitleText').Text -eq 'Informática e tecnologia' -and
-        $library.FindName('ActivityCards').Items.Count -eq 3) 'Category did not open its three activities.'
+        $library.FindName('ActivityCards').Items.Count -eq 5) 'Category did not open its five activities.'
     $window.UpdateLayout()
     Capture 'categoria-wpf.png'
     $intermediate = $library.FindName('IntermediateFilter')
     $intermediate.IsChecked = $true
     Send-Click $intermediate
-    Assert-That ($library.FindName('ActivityCards').Items.Count -eq 1) 'Category did not honor the difficulty filter.'
+    Assert-That ($library.FindName('ActivityCards').Items.Count -eq 2) 'Category did not honor the difficulty filter.'
     $activities = $library.FindName('ActivityCards')
     $window.UpdateLayout()
     Send-Click (Find-CardButton ($activities.ItemContainerGenerator.ContainerFromIndex(0)))
@@ -139,10 +138,28 @@ try {
     Assert-That ($library.FindName('ResumeButton').IsVisible) 'Library did not offer to resume.'
     Send-Click ($library.FindName('ResumeButton'))
     Assert-That ($practice.IsVisible -and $entry.Text -eq 'I') 'Editor lost the input after navigation.'
+    $focusButton = $practice.FindName('FocusButton')
+    Send-Click $focusButton
+    Assert-That ($practice.FindName('MetricCards').Visibility -eq 'Collapsed' -and $entry.Text -eq 'I') 'Focus mode lost text or left metric cards visible.'
+    Send-Click $focusButton
+    Assert-That ($practice.FindName('MetricCards').IsVisible -and $entry.Text -eq 'I') 'Normal mode did not restore metrics.'
     Send-Click ($window.FindName('GuideTab'))
-    Assert-That ($sectionTitle.Text -eq 'Como digitar') 'Guide navigation failed.'
+    $guide = $window.FindName('GuidePage')
+    Assert-That $guide.IsVisible 'Guide navigation failed.'
+    $guide.ShowKey(0x21)
+    Assert-That ($guide.FindName('KeyHint').Text -match 'Indicador esquerdo') 'The guide did not identify F.'
+    $guide.ShowKey(0x138)
+    Assert-That ($guide.FindName('KeyHint').Text -match 'AltGr') 'The guide did not identify AltGr.'
+    $window.UpdateLayout()
+    Capture 'guia-abnt2-wpf.png'
     Send-Click ($window.FindName('SettingsTab'))
-    Assert-That ($sectionTitle.Text -eq 'Configurações') 'Settings navigation failed.'
+    $settings = $window.FindName('SettingsPage')
+    Assert-That $settings.IsVisible 'Settings navigation failed.'
+    $settings.FindName('FontSlider').Value = 28
+    Assert-That ($settings.FindName('Preview').FontSize -gt 35) 'The font preview did not update.'
+    $settings.FindName('FontSlider').Value = 14
+    $window.UpdateLayout()
+    Capture 'configuracoes-wpf.png'
     Send-Click ($window.FindName('HomeTab'))
     Assert-That ($homeView.Visibility -eq 'Visible' -and $homeView.SelectedMinutes -eq 30) 'Home lost the session selection.'
     $privateInstance = [Reflection.BindingFlags]'NonPublic, Instance'
@@ -152,7 +169,9 @@ try {
     $sessionState.End()
     $window.GetType().GetMethod('RefreshSession', $privateInstance).Invoke($window, $null) | Out-Null
     Assert-That ($window.FindName('SummaryPage').IsVisible -and -not $timer.IsEnabled) 'Ending the session did not show results and stop the timer.'
-    Assert-That ($window.FindName('SummaryMetrics').Text -match 'Erros cometidos: 1') 'Summary did not preserve the attempt history.'
+    $summary = $window.FindName('SummaryPage')
+    $errorCard = $summary.FindName('MetricGrid').Items | Where-Object Label -eq 'Erros cometidos'
+    Assert-That ($errorCard.Value -eq '1' -and $summary.FindName('StarIcons').Visibility -eq 'Collapsed') 'Summary displayed incorrect errors or premature stars.'
     $window.UpdateLayout()
     Capture 'resumo-wpf.png'
     Write-Host 'WPF smoke test passed: embedded art, layout, search, library, timer, input, paste, and navigation.'

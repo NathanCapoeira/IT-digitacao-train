@@ -23,6 +23,8 @@
     <Compile Include="ActivityRepository.cs" />
     <Compile Include="TypingEngine.cs" />
     <Compile Include="SessionManager.cs" />
+    <Compile Include="SessionAwards.cs" />
+    <Compile Include="Preferences.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

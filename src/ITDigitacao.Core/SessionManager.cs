@@ -45,18 +45,12 @@ namespace ITDigitacao.Core
         public TimeSpan Remaining => Duration - Elapsed;
         public int CompletedCount => completed.Count;
         public string LastCompletedId { get; private set; }
+        public int TotalCorrect => correctAttempts + (Engine?.CorrectAttempts ?? 0);
+        public int Evaluated => TotalCorrect + TotalErrors;
         public int TotalErrors => errors + (Engine?.ErrorAttempts ?? 0);
         public int CurrentErrors => Engine?.CurrentErrors ?? 0;
         public int CorrectedErrors => corrected + (Engine?.ResolvedErrors ?? 0);
-        public double? Accuracy
-        {
-            get
-            {
-                int correct = correctAttempts + (Engine?.CorrectAttempts ?? 0);
-                int total = correct + TotalErrors;
-                return total == 0 ? (double?)null : 100.0 * correct / total;
-            }
-        }
+        public double? Accuracy => Evaluated == 0 ? (double?)null : 100.0 * TotalCorrect / Evaluated;
         public double? WordsPerMinute
         {
             get
@@ -106,6 +100,23 @@ namespace ITDigitacao.Core
             LastCompletedId = Activity.Id;
             CloseActivity();
             return true;
+        }
+
+        public bool RestartActivity()
+        {
+            Tick();
+            if (Finished || Activity == null)
+                return false;
+            var activity = Activity;
+            CloseActivity();
+            return Open(activity);
+        }
+
+        public void AbandonActivity()
+        {
+            Tick();
+            if (!Finished)
+                CloseActivity();
         }
 
         public void Tick()

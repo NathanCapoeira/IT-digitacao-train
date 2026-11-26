@@ -19,11 +19,12 @@ public sealed class TestClock : IMonotonicClock {
 
 $file = [IO.File]::OpenRead((Join-Path $folder 'atividades.json'))
 try { $repository = [ITDigitacao.Core.ActivityRepository]::Load($file) } finally { $file.Dispose() }
-Assert-That ($repository.Categories.Count -eq 10 -and $repository.Activities.Count -eq 30) 'Unexpected catalog totals.'
+Assert-That ($repository.Categories.Count -eq 10 -and $repository.Activities.Count -eq 50) 'Unexpected catalog totals.'
 foreach ($category in $repository.Categories) {
-    Assert-That ($repository.Find('', $null, $category.Id).Count -eq 3) 'Unexpected category count.'
+    Assert-That ($repository.Find('', $null, $category.Id).Count -eq 5) 'Unexpected category count.'
     foreach ($level in 'Iniciante', 'Intermediário', 'Avançado') {
-        Assert-That ($repository.Find('', $level, $category.Id).Count -eq 1) 'A difficulty is missing.'
+        $count = $repository.Find('', $level, $category.Id).Count
+        Assert-That ($count -ge 1 -and $count -le 2) 'A difficulty is missing.'
     }
 }
 Assert-That ($repository.Find('CIENCIAS', 'Avançado', $null).Count -eq 1) 'Combined filters failed.'
@@ -111,4 +112,26 @@ foreach ($minutes in 5,10,15,20,25,30) {
     $retry.End()
     Assert-That ($retry.Finished -and $retry.CompletedCount -eq 0 -and $null -eq $retry.Accuracy) 'New or manual session did not reset metrics.'
 }
-Write-Host 'Core smoke test passed: 30 texts, 10 categories, Unicode, edits, metrics and all six session durations.'
+Assert-That ([ITDigitacao.Core.SessionAwards]::Stars(99,100) -eq 0) 'Stars were awarded below 100 attempts.'
+Assert-That ([ITDigitacao.Core.SessionAwards]::Stars(100,79) -eq 1 -and
+    [ITDigitacao.Core.SessionAwards]::Stars(100,80) -eq 2 -and
+    [ITDigitacao.Core.SessionAwards]::Stars(100,95) -eq 3) 'Star thresholds failed.'
+Assert-That ([ITDigitacao.Core.SessionAwards]::FirstMission(1) -and
+    [ITDigitacao.Core.SessionAwards]::SuperPractitioner(3) -and
+    -not [ITDigitacao.Core.SessionAwards]::PerfectAim(99,100)) 'Achievement thresholds failed.'
+$preferenceFile = Join-Path ([IO.Path]::GetTempPath()) (([Guid]::NewGuid().ToString()) + '.json')
+try {
+    $defaults = [ITDigitacao.Core.Preferences]::Load($preferenceFile)
+    Assert-That ($defaults.FontPoints -eq 14 -and -not $defaults.Sounds) 'Default preferences are incorrect.'
+    $defaults.FontPoints = 28
+    $defaults.Animations = $false
+    $defaults.Sounds = $true
+    $defaults.Save($preferenceFile)
+    $saved = [ITDigitacao.Core.Preferences]::Load($preferenceFile)
+    Assert-That ($saved.FontPoints -eq 28 -and -not $saved.Animations -and $saved.Sounds) 'Preferences did not persist.'
+    ([ITDigitacao.Core.Preferences]::new()).Save($preferenceFile)
+    Assert-That ([ITDigitacao.Core.Preferences]::Load($preferenceFile).Animations) 'Restoring defaults did not persist.'
+    [IO.File]::WriteAllText($preferenceFile,'{')
+    Assert-That ([ITDigitacao.Core.Preferences]::Load($preferenceFile).FontPoints -eq 14) 'Invalid preferences did not fall back.'
+} finally { Remove-Item -LiteralPath $preferenceFile -ErrorAction SilentlyContinue }
+Write-Host 'Core smoke test passed: 50 texts, 10 categories, Unicode, edits, metrics and all six session durations.'
